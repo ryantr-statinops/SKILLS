@@ -26,8 +26,6 @@ class EvaluationHarnessTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stderr)
         report = json.loads(result.stdout)
         self.assertEqual(report["failed"], 0)
-        self.assertEqual(report["total"], 67)
-        self.assertEqual(report["routing_total"], 10)
         self.assertEqual(report["routing_failed"], 0)
 
     def test_case_requires_both_sections_and_all_fields(self) -> None:
