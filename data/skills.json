@@ -907,6 +907,19 @@
       "requires": []
     },
     {
+      "id": "personal/workflow/orca-orchestration",
+      "name": "orca-orchestration",
+      "description": "Coordinate supervised Orca workers when a user asks to dispatch, monitor, wait for, or manage a task DAG; requires the Orca runtime and its version-matched orchestration guide.",
+      "category": "personal",
+      "subject": "workflow",
+      "scope": "personal",
+      "status": "experimental",
+      "version": "1.0.0",
+      "invocation": "user",
+      "path": "personal/workflow/orca-orchestration/SKILL.md",
+      "requires": []
+    },
+    {
       "id": "personal/workflow/personal-debugging",
       "name": "personal-debugging",
       "description": "Apply Ryan's evidence-first debugging workflow to reproduce, isolate, fix, and verify a personal project failure.",

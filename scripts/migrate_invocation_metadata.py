@@ -9,11 +9,10 @@ import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 CATEGORIES = ("common", "personal", "meta")
-EXPECTED_SKILL_COUNT = 71
 VALID_INVOCATIONS = {"user", "model", "both"}
 
-# These are the only existing skills that are explicit user workflows or
-# routers. All other skills in the current 67-skill inventory are "both".
+# Explicitly classify each skill: orchestration workflows and routers are
+# opt-in; skills intentionally discoverable by agents or users use both.
 USER_INVOCATION_IDS = {
     "common/delivery/release",
     "common/foundation/task-planning",
@@ -32,6 +31,7 @@ USER_INVOCATION_IDS = {
     "personal/engineering/frontend",
     "personal/engineering/infrastructure",
     "personal/quant",
+    "personal/workflow/orca-orchestration",
 }
 
 BOTH_INVOCATION_IDS = {
@@ -158,12 +158,12 @@ def migrate_text(text: str, identifier: str, path: Path | None = None) -> str:
 def check_or_apply(apply: bool) -> int:
     paths = skill_files()
     identifiers = {skill_id(path) for path in paths}
-    if len(paths) != EXPECTED_SKILL_COUNT or identifiers != EXPECTED_SKILL_IDS:
+    if identifiers != EXPECTED_SKILL_IDS:
         unknown = sorted(identifiers - EXPECTED_SKILL_IDS)
         missing = sorted(EXPECTED_SKILL_IDS - identifiers)
         print(
-            f"error: expected the explicit {EXPECTED_SKILL_COUNT}-skill inventory; "
-            f"found {len(paths)} (unknown={unknown}, missing={missing})",
+            f"error: invocation mapping does not match the skill inventory "
+            f"(unknown={unknown}, missing={missing})",
             file=sys.stderr,
         )
         return 1

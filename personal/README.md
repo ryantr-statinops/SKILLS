@@ -9,6 +9,7 @@ project-specific instructions or a textbook collection.
 | Need | Route |
 | --- | --- |
 | Product scope or MVP | [product](product/project-scoping/SKILL.md) |
+| Supervise Orca workers or coordinate an Orca task DAG | [orca-orchestration](workflow/orca-orchestration/SKILL.md) |
 | Brainstorm or initialize work | [workflow](workflow/brainstorming/SKILL.md) |
 | Choose technology or architecture | [decision](decision/technology-selection/SKILL.md) |
 | Engineering foundations, data, AI, or backend | [engineering](engineering/SKILL.md) |

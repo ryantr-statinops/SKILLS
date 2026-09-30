@@ -7,6 +7,7 @@ remain in each skill's frontmatter.
 
 ### Added
 
+- Personal Orca orchestration skill adapted from the upstream runtime workflow.
 - Transitive `requires` metadata, schema v3 registry support, safe sync updates,
   provenance manifests, installed catalogs, and native runtime adapters.
 - Deterministic representative and boundary evaluations for all four workflow

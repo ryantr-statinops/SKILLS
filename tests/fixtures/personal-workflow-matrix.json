@@ -61,5 +61,14 @@
     "boundary_skill": "personal/workflow/personal-research",
     "artifact_or_validation": "project structure, conventions, validation path, and documentation",
     "reason": "A research decision should not initialize a project by default."
+  },
+  {
+    "name": "orca-orchestration",
+    "representative_query": "supervise Orca workers coordinate task DAG dispatch monitor wait for results",
+    "expected_skill": "personal/workflow/orca-orchestration",
+    "boundary_query": "initialize a new software project with minimal structure and validation",
+    "boundary_skill": "personal/workflow/project-init",
+    "artifact_or_validation": "settled Orca dispatch outcomes, evidence, and unresolved blockers",
+    "reason": "Project initialization does not require supervised Orca workers."
   }
 ]
