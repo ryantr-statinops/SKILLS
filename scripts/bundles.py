@@ -25,13 +25,30 @@ BUNDLE_REQUIRED_FIELDS = {
 def validate_skill_dependency_references(
     skill_records: list[dict[str, Any]],
 ) -> None:
-    skill_ids = {record["id"] for record in skill_records}
+    records_by_id = {record["id"]: record for record in skill_records}
     for record in skill_records:
         for required in record.get("requires", []):
-            if required not in skill_ids:
+            if required not in records_by_id:
                 raise ValueError(
                     f"skill dependency is missing from registry: {record['id']}: {required}"
                 )
+
+    visiting: set[str] = set()
+    visited: set[str] = set()
+
+    def visit(identifier: str) -> None:
+        if identifier in visiting:
+            raise ValueError(f"cyclic skill dependency: {identifier}")
+        if identifier in visited:
+            return
+        visiting.add(identifier)
+        for required in records_by_id[identifier].get("requires", []):
+            visit(required)
+        visiting.remove(identifier)
+        visited.add(identifier)
+
+    for record in skill_records:
+        visit(record["id"])
 
 
 def load_bundle_registry(path: Path | None = None) -> dict[str, Any]:

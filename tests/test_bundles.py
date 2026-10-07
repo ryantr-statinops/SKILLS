@@ -34,6 +34,18 @@ class BundleRegistryTests(unittest.TestCase):
                 [record("personal/statistics", requires=["common/not-real"])]
             )
 
+    def test_unbundled_dependency_cycles_are_rejected(self) -> None:
+        cycles = [
+            [record("personal/statistics", requires=["personal/statistics"])],
+            [
+                record("personal/a", requires=["personal/b"]),
+                record("personal/b", requires=["personal/a"]),
+            ],
+        ]
+        for records in cycles:
+            with self.subTest(records=records), self.assertRaisesRegex(ValueError, "cyclic"):
+                validate_skill_dependency_references(records)
+
     def test_empty_registry_is_valid(self) -> None:
         self.assertEqual(
             validate_bundle_registry({"schema_version": 1, "bundles": []}, []), []
