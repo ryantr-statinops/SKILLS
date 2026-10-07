@@ -45,12 +45,10 @@ class RuntimeAdapterTests(unittest.TestCase):
                 "",
             )
 
-    def test_fixed_opencode_cli_discovers_adapter(self) -> None:
+    def test_opencode_cli_discovers_adapter(self) -> None:
         executable = shutil.which("opencode")
         if executable is None:
             self.skipTest("opencode CLI is not installed")
-        version = subprocess.run([executable, "--version"], check=True, capture_output=True, text=True).stdout.strip()
-        self.assertEqual(version, "1.18.31")
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
             source = root / ".agent/skills/common/engineering/debugging"

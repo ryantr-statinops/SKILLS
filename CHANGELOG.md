@@ -18,6 +18,9 @@ remain in each skill's frontmatter.
 - Discovery now works from an installed catalog without the source registry.
 - Common and personal activation boundaries state concrete outcomes and nearby
   exclusions.
+### Fixed
+
+- OpenCode discovery tests verify behavior without pinning a workstation patch version.
 
 ## [0.1.0] - 2026-09-18
 
