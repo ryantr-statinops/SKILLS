@@ -31,6 +31,7 @@ remain in each skill's frontmatter.
 - Failed updates restore prior content and manifest/catalog state.
 - Installed catalogs use the current schema and preserve declared dependencies.
 - Discovery rejects non-object registries and invalid skill-list containers.
+- Discovery rejects incomplete or wrongly typed skill records before scoring.
 
 ## [0.1.0] - 2026-09-18
 

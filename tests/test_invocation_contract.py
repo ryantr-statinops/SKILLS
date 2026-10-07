@@ -48,27 +48,23 @@ class InvocationContractTests(unittest.TestCase):
         self.assertTrue(all("requires" in item for item in registry["skills"]))
 
     def test_schema_v1_defaults_legacy_records_to_both(self) -> None:
-        legacy = {
-            "schema_version": 1,
-            "skills": [{"id": "legacy/example", "name": "example"}],
-        }
-        records = normalize_registry(legacy)
+        record = dict(collect()[0])
+        record.pop("invocation")
+        record.pop("requires")
+        records = normalize_registry({"schema_version": 1, "skills": [record]})
         self.assertEqual(records[0]["invocation"], "both")
 
     def test_schema_v2_rejects_invalid_invocation(self) -> None:
-        current = {
-            "schema_version": 2,
-            "skills": [{"id": "example", "invocation": "implicit"}],
-        }
+        record = dict(collect()[0])
+        record["invocation"] = "implicit"
         with self.assertRaises(ValueError):
-            normalize_registry(current)
+            normalize_registry({"schema_version": 2, "skills": [record]})
 
     def test_schema_v2_defaults_dependencies(self) -> None:
-        current = {
-            "schema_version": 2,
-            "skills": [{"id": "example", "invocation": "both"}],
-        }
-        self.assertEqual(normalize_registry(current)[0]["requires"], [])
+        record = dict(collect()[0])
+        record.pop("requires")
+        records = normalize_registry({"schema_version": 2, "skills": [record]})
+        self.assertEqual(records[0]["requires"], [])
 
     def test_model_invocation_requires_activation_contract(self) -> None:
         incomplete = "## When to use\n\nUse this skill.\n"

@@ -15,6 +15,7 @@ from generate_skill_index import collect
 ROOT = Path(__file__).resolve().parents[1]
 TOKEN_RE = re.compile(r"[a-z0-9]+")
 VALID_INVOCATIONS = {"user", "model", "both"}
+REQUIRED_RECORD_FIELDS = ("id", "name", "description", "category", "subject", "scope", "status", "version", "path")
 
 
 def parse_args() -> argparse.Namespace:
@@ -46,8 +47,11 @@ def normalize_registry(data: dict[str, object]) -> list[dict[str, str]]:
     normalized = []
     for record in skills:
         if not isinstance(record, dict):
-            raise TypeError("skill record is not an object")
+            raise ValueError("skill record must be an object")
         item = dict(record)
+        for field in REQUIRED_RECORD_FIELDS:
+            if not isinstance(item.get(field), str) or not item[field]:
+                raise ValueError(f"invalid {field} in skill record")
         if schema_version == 1:
             item["invocation"] = "both"
         elif item.get("invocation") not in VALID_INVOCATIONS:

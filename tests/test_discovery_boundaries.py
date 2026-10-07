@@ -90,5 +90,14 @@ class DiscoveryBoundaryTests(unittest.TestCase):
             with self.subTest(registry=registry), self.assertRaises(ValueError):
                 normalize_registry(registry)
 
+    def test_incomplete_and_wrongly_typed_skill_records_are_rejected(self) -> None:
+        incomplete = dict(collect()[0])
+        incomplete.pop("name")
+        wrong_type = dict(collect()[0])
+        wrong_type["name"] = ["not", "a string"]
+        for record in (incomplete, wrong_type):
+            with self.subTest(record=record), self.assertRaises(ValueError):
+                normalize_registry({"schema_version": 3, "skills": [record]})
+
 if __name__ == "__main__":
     unittest.main()
