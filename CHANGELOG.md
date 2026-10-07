@@ -40,6 +40,7 @@ remain in each skill's frontmatter.
 - Skill evaluation cases with empty required fields no longer pass structural checks.
 - The skill validator rejects empty handoff contract values.
 - Observable evaluation checks reject duplicate workflow/case pairs.
+- Observable evaluation checks require both cases for all four workflows.
 
 ## [0.1.0] - 2026-09-18
 

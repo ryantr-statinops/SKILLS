@@ -9,6 +9,14 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 FIXTURE = ROOT / "tests/fixtures/observable-agent-evaluations.json"
+WORKFLOWS = (
+    "common/workflow/bug-fixing",
+    "common/workflow/data-analysis",
+    "common/workflow/feature-delivery",
+    "common/workflow/research-decision",
+)
+CASE_TYPES = ("representative", "boundary")
+REQUIRED_CASE_PAIRS = {(workflow, case_type) for workflow in WORKFLOWS for case_type in CASE_TYPES}
 
 
 def parse_args() -> argparse.Namespace:
@@ -21,8 +29,18 @@ def evaluate_cases(cases: list[dict[str, object]]) -> list[dict[str, object]]:
     results = []
     seen_pairs: set[tuple[str, str]] = set()
     for case in cases:
-        workflow = case["workflow"]
-        case_type = case["case"]
+        if not isinstance(case, dict):
+            results.append({"name": "invalid case", "workflow": None, "case": None, "status": "failed", "missing": ["case must be an object"]})
+            continue
+        workflow = case.get("workflow")
+        case_type = case.get("case")
+        name = case.get("name", "unnamed case")
+        if workflow not in WORKFLOWS:
+            results.append({"name": name, "workflow": workflow, "case": case_type, "status": "failed", "missing": ["unknown workflow"]})
+            continue
+        if case_type not in CASE_TYPES:
+            results.append({"name": name, "workflow": workflow, "case": case_type, "status": "failed", "missing": ["invalid case type"]})
+            continue
         pair = (workflow, case_type)
         duplicate = pair in seen_pairs
         seen_pairs.add(pair)
@@ -33,7 +51,15 @@ def evaluate_cases(cases: list[dict[str, object]]) -> list[dict[str, object]]:
         missing = [term for term in case["required_terms"] if term.lower() not in section.lower()]
         if duplicate:
             missing.append("duplicate workflow/case pair")
-        results.append({"name": case["name"], "workflow": workflow, "case": case_type, "status": "passed" if not missing else "failed", "missing": missing})
+        results.append({"name": name, "workflow": workflow, "case": case_type, "status": "passed" if not missing else "failed", "missing": missing})
+    for workflow, case_type in sorted(REQUIRED_CASE_PAIRS - seen_pairs):
+        results.append({
+            "name": f"missing {workflow} {case_type}",
+            "workflow": workflow,
+            "case": case_type,
+            "status": "failed",
+            "missing": ["required workflow/case pair is missing"],
+        })
     return results
 
 

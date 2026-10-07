@@ -36,5 +36,23 @@ class ObservableAgentEvaluationTests(unittest.TestCase):
         self.assertEqual(repeated["status"], "failed")
         self.assertIn("duplicate workflow/case pair", repeated["missing"])
 
+    def test_missing_pairs_and_invalid_case_types_fail(self) -> None:
+        fixture = ROOT / "tests/fixtures/observable-agent-evaluations.json"
+        cases = json.loads(fixture.read_text(encoding="utf-8"))
+        missing_pair = ("common/workflow/data-analysis", "boundary")
+        reduced = [
+            case for case in cases
+            if (case["workflow"], case["case"]) != missing_pair
+        ]
+        missing_results = evaluate_cases(reduced)
+        missing = next(item for item in missing_results if (item["workflow"], item["case"]) == missing_pair)
+        self.assertEqual(missing["status"], "failed")
+        self.assertIn("required workflow/case pair is missing", missing["missing"])
+
+        invalid = [dict(cases[0], case="borderline"), *cases[1:]]
+        invalid_results = evaluate_cases(invalid)
+        self.assertEqual(invalid_results[0]["status"], "failed")
+        self.assertIn("invalid case type", invalid_results[0]["missing"])
+
 if __name__ == "__main__":
     unittest.main()
