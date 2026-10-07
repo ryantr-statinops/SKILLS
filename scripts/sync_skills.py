@@ -248,9 +248,12 @@ def update_destination(
     for relative, (_, target) in new_relative.items():
         if target.exists() and relative not in old_files:
             collisions.append(str(target))
+        for parent in target.parents:
+            if parent.exists() and not parent.is_dir():
+                collisions.append(str(parent))
+                break
     if collisions:
-        raise ValueError("update would overwrite unmanaged files: " + ", ".join(collisions))
-
+        raise ValueError("update would overwrite unmanaged files or is blocked by a non-directory parent: " + ", ".join(sorted(set(collisions))))
     old_paths = set(old_files)
     new_paths = set(new_relative)
     removed = sorted(old_paths - new_paths)

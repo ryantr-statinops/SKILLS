@@ -139,5 +139,25 @@ class SyncSkillsTests(unittest.TestCase):
             self.assertEqual(updated.returncode, 0, updated.stderr)
             self.assertEqual(target.read_bytes(), (ROOT / selected / "SKILL.md").read_bytes())
 
+    def test_update_preflights_non_directory_target_ancestors(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            destination = Path(directory) / "skills"
+            first = self.run_sync(str(destination), "common/engineering/debugging")
+            self.assertEqual(first.returncode, 0, first.stderr)
+            manifest = (destination / ".skill-sync.json").read_bytes()
+            debug_skill = destination / "common/engineering/debugging/SKILL.md"
+            debug_content = debug_skill.read_bytes()
+            obstruction = destination / "common/engineering/testing"
+            obstruction.write_text("unmanaged file", encoding="utf-8")
+            checked = self.run_sync(
+                "--update", "--check", str(destination),
+                "common/engineering/debugging", "common/engineering/testing",
+            )
+            self.assertEqual(checked.returncode, 2)
+            self.assertIn(str(obstruction), checked.stderr)
+            self.assertEqual((destination / ".skill-sync.json").read_bytes(), manifest)
+            self.assertEqual(debug_skill.read_bytes(), debug_content)
+            self.assertEqual(obstruction.read_text(encoding="utf-8"), "unmanaged file")
+
 if __name__ == "__main__":
     unittest.main()
