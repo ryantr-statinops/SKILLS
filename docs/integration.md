@@ -115,7 +115,10 @@ would replace ownership metadata while leaving old files unmanaged. Use
 `--update` with the complete desired selection, not only newly added skills.
 Review with `--check --update`; apply with `--update`. Update restores managed
 files missing from the consumer and rejects locally edited files for review
-instead of overwriting them. The catalog is the preferred discovery input.
+instead of overwriting them. On caught copy or metadata-write failures, it
+restores prior managed content and ownership metadata and removes new files.
+This is not a crash- or power-loss-safe transaction. The catalog is the
+preferred discovery input.
 
 ### Direct copy or development symlink
 
