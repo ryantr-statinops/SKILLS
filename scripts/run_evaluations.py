@@ -65,6 +65,23 @@ def declared_commands(text: str) -> list[str]:
     return commands
 
 
+def field_has_value(body: str, field: str) -> bool:
+    lines = body.splitlines()
+    field_names = set(CASE_FIELDS)
+    for index, line in enumerate(lines):
+        value = line.strip()
+        if not value.startswith(field):
+            continue
+        if value[len(field):].strip():
+            return True
+        for continuation in lines[index + 1:]:
+            continuation = continuation.strip()
+            if not continuation or any(continuation.startswith(name) for name in field_names):
+                break
+            return True
+    return False
+
+
 def check_case(text: str, heading: str) -> list[str]:
     body = case_body(text, heading)
     errors = []
@@ -72,8 +89,9 @@ def check_case(text: str, heading: str) -> list[str]:
         errors.append(f"missing {heading}")
         return errors
     for field in CASE_FIELDS:
-        if field not in body:
-            errors.append(f"missing {field} in {heading}")
+        if not field_has_value(body, field):
+            state = "empty" if any(line.strip().startswith(field) for line in body.splitlines()) else "missing"
+            errors.append(f"{state} {field} in {heading}")
     return errors
 
 

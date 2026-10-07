@@ -43,6 +43,22 @@ class EvaluationHarnessTests(unittest.TestCase):
             ("Task:", "Expected:", "Failure condition:", "Validation:"),
         )
 
+    def test_case_rejects_empty_values_and_accepts_continuations(self) -> None:
+        empty = (
+            "## Representative task\nTask:\n\nExpected:\n\n"
+            "Failure condition:\n\nValidation:\n"
+        )
+        errors = check_case(empty, CASE_SECTIONS[0])
+        for field in CASE_FIELDS:
+            self.assertIn(f"empty {field} in {CASE_SECTIONS[0]}", errors)
+
+        multiline = (
+            "## Representative task\nTask:\n  Add a retry limit.\n"
+            "Expected: retries stop at the configured limit.\n"
+            "Failure condition: another retry occurs.\n"
+            "Validation: assert the call count.\n"
+        )
+        self.assertEqual(check_case(multiline, CASE_SECTIONS[0]), [])
 
 if __name__ == "__main__":
     unittest.main()

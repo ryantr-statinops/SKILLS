@@ -37,6 +37,7 @@ remain in each skill's frontmatter.
 - Registry generation and validation reject dependency cycles outside bundles.
 - Installed catalogs snapshot bundle membership for source-independent filtering.
 - Consumer bundle filtering uses installed snapshots without source-tree access.
+- Skill evaluation cases with empty required fields no longer pass structural checks.
 
 ## [0.1.0] - 2026-09-18
 
