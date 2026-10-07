@@ -5,13 +5,13 @@ from __future__ import annotations
 
 import argparse
 from pathlib import Path
-import re
 import sys
 from urllib.parse import unquote, urlparse
 from urllib.request import Request, urlopen
 
+from markdown_links import extract_markdown_link_targets
+
 ROOT = Path(__file__).resolve().parents[1]
-MARKDOWN_RE = re.compile(r"!??\[[^\]]*\]\(([^)]+)\)")
 
 
 def parse_args() -> argparse.Namespace:
@@ -66,8 +66,8 @@ def main() -> int:
     skipped_external = 0
     for source in markdown_files():
         text = source.read_text(encoding="utf-8")
-        for raw_target in MARKDOWN_RE.findall(text):
-            target = raw_target.strip().strip("<>")
+        for target in extract_markdown_link_targets(text):
+            target = target.strip()
             if not target or target.startswith(("mailto:", "tel:")):
                 continue
             if external_target(target):
