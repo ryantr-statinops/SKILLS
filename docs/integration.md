@@ -151,6 +151,23 @@ python3 scripts/export_runtime_adapter.py \
   /path/to/project/.agent/skills /path/to/project/.agents/skills
 ```
 
+### Adapter lifetime and ownership
+
+Adapter entries are symlinks, not copies or snapshots. Edits under the portable
+source tree are visible through an existing link; adding a skill requires
+another export run. The exporter does not prune links for skills removed from the
+source and does not rewrite a link that conflicts with an existing destination.
+
+Keep the portable source at the same relative location for the lifetime of the
+adapter. Moving only the source or native root can invalidate links. Run the
+exporter's `--check` before changing either path; treat a conflict as a manual
+ownership review, not permission to replace the link.
+
+To remove one adapter entry, first confirm it is a symlink created by this
+exporter and that its target is the intended source skill. Remove only that link;
+never recursively delete the native root. Retain the source tree and any
+user-managed entries.
+
 ### Cut over an existing native skill root
 
 Keep `.agent/skills/` as the content source and build or update it first with
