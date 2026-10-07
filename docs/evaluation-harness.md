@@ -1,16 +1,24 @@
 # Evaluation harness
 
-The repository evaluation harness is intentionally lightweight. It checks that
-every common and personal skill has a valid representative case, boundary case,
-required observable fields, and a skill ID present in the generated registry.
-It does not claim to score an agent's reasoning. The observable workflow cases
-in `tests/fixtures/observable-agent-evaluations.json` additionally verify the
-required terms in all four workflow representative and boundary artifacts.
-The observable checker requires one representative and one boundary case for
-each of the four workflow skills. It rejects duplicate or invalid workflow/case
-pairs and empty required-term lists; its term checks do not grade reasoning.
-Codex Action reports are evidence from a configured run, not a substitute for
-these deterministic checks.
+The repository evaluation harness checks that each common, personal, and meta
+skill has representative and boundary cases with required observable fields,
+and that each skill ID appears in the generated registry. It also checks routing
+fixture structure and declared expected/boundary skill IDs; it does not execute
+the task or simulate agent selection. These are static contract checks, not
+evidence that an agent followed a skill or produced correct work.
+
+The observable workflow checker inspects declared artifacts for required literal
+terms in one representative and one boundary case per workflow. It rejects
+missing/duplicate workflow-case coverage and invalid required-term lists, but
+term presence does not prove semantic correctness, reasoning quality, or safety.
+
+The harness includes every `SKILL.md` under `common/`, `personal/`, and `meta/`,
+regardless of promotion status. Its JSON report lists each covered skill and
+static result.
+
+Codex Action or local runtime reports provide behavioral evidence only for the
+tasks actually exercised, runtime/version, and captured outputs. They do not
+replace the static checks or establish broader claims than the run supports.
 
 ## Current commands
 
