@@ -143,6 +143,9 @@ def evaluate_routing(records: dict[str, dict[str, str]]) -> tuple[list[dict[str,
         for field in required:
             if field not in fixture:
                 errors.append(f"missing {field}")
+        task = fixture.get("task")
+        if not isinstance(task, str) or not task.strip():
+            errors.append("task must be a nonempty string")
         expected = fixture.get("expected_skill")
         boundary = fixture.get("boundary_skill")
         confirmation = fixture.get("confirmation")

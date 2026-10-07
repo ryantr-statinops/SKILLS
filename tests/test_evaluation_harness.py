@@ -87,5 +87,25 @@ class EvaluationHarnessTests(unittest.TestCase):
             ):
                 evaluate_routing({})
 
+    def test_routing_fixture_requires_nonempty_task(self) -> None:
+        fixture = {
+            "task": "   ",
+            "expected_skill": "common/engineering/testing",
+            "boundary_skill": None,
+            "expected_explanation": True,
+            "confirmation": "never",
+            "expected_validation": True,
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            fixture_path = root / "tests/fixtures/agent-routing.json"
+            fixture_path.parent.mkdir(parents=True)
+            fixture_path.write_text(json.dumps([fixture]), encoding="utf-8")
+            records = {"common/engineering/testing": {"status": "experimental"}}
+            with patch("run_evaluations.ROOT", root):
+                results, failures = evaluate_routing(records)
+            self.assertEqual(failures, 1)
+            self.assertIn("task must be a nonempty string", results[0]["errors"])
+
 if __name__ == "__main__":
     unittest.main()
