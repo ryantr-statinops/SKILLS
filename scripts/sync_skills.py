@@ -283,6 +283,7 @@ def update_destination(
             staged_file.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(source_file, staged_file)
         backups: dict[Path, bytes] = {}
+        created: set[Path] = set()
         try:
             for relative in removed:
                 target = destination / relative
@@ -293,6 +294,8 @@ def update_destination(
                 target = destination / relative
                 if target.is_file():
                     backups[target] = target.read_bytes()
+                else:
+                    created.add(target)
                 target.parent.mkdir(parents=True, exist_ok=True)
                 shutil.copy2(staging / relative, target)
             manifest_path.write_text(
@@ -304,6 +307,9 @@ def update_destination(
                 encoding="utf-8",
             )
         except Exception:
+            for target in created:
+                if target.is_file() or target.is_symlink():
+                    target.unlink()
             for target, content in backups.items():
                 target.parent.mkdir(parents=True, exist_ok=True)
                 target.write_bytes(content)

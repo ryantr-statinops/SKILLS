@@ -27,6 +27,7 @@ remain in each skill's frontmatter.
 - Update now restores managed files deleted from a consumer installation.
 - Update preflights ancestor obstructions before copying managed files.
 - Update rejects managed and catalog paths with unexpected file types before writing.
+- Failed updates now remove newly created managed files.
 
 ## [0.1.0] - 2026-09-18
 

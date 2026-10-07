@@ -197,5 +197,45 @@ class SyncSkillsTests(unittest.TestCase):
             self.assertFalse((destination / "common/engineering/testing/SKILL.md").exists())
             self.assertTrue(catalog.is_dir())
 
+    def test_failed_update_removes_newly_created_files(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            destination = Path(directory) / "skills"
+            first = self.run_sync(str(destination), "common/engineering/debugging")
+            self.assertEqual(first.returncode, 0, first.stderr)
+            manifest_path = destination / ".skill-sync.json"
+            catalog_path = destination / ".skill-catalog.json"
+            manifest = manifest_path.read_bytes()
+            catalog = catalog_path.read_bytes()
+            wrapper = """
+import pathlib, runpy, shutil, sys
+script = pathlib.Path(sys.argv[1])
+sys.path.insert(0, str(script.parent))
+destination = pathlib.Path(sys.argv[2])
+original = shutil.copy2
+copies = 0
+def fail_during_apply(source, target, *args, **kwargs):
+    global copies
+    target = pathlib.Path(target)
+    if target.is_relative_to(destination):
+        copies += 1
+        if copies == 2:
+            raise OSError("injected copy failure")
+    return original(source, target, *args, **kwargs)
+shutil.copy2 = fail_during_apply
+sys.argv = [str(script), "--update", str(destination),
+            "common/engineering/debugging", "common/engineering/testing"]
+runpy.run_path(str(script), run_name="__main__")
+"""
+            failed = subprocess.run(
+                [sys.executable, "-c", wrapper, str(SCRIPT), str(destination)],
+                cwd=ROOT, capture_output=True, text=True, check=False,
+            )
+            self.assertNotEqual(failed.returncode, 0)
+            self.assertIn("injected copy failure", failed.stderr)
+            self.assertEqual(manifest_path.read_bytes(), manifest)
+            self.assertEqual(catalog_path.read_bytes(), catalog)
+            testing = destination / "common/engineering/testing"
+            self.assertFalse(list(testing.rglob("SKILL.md")) if testing.exists() else [])
+
 if __name__ == "__main__":
     unittest.main()
