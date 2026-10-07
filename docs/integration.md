@@ -105,12 +105,13 @@ boundary, not a second copy of the skill content.
 Bundle sync validates every referenced skill and stops if any target path
 already exists. It never overwrites a selected skill implicitly.
 
-Every normal sync also writes `.skill-sync.json` (source, bundle, selected
-skills, and per-file hashes) and `.skill-catalog.json` (the installed skill
-metadata). Review a prospective change with `--check --update`; apply it with
-`--update`. An update stops if a managed file was edited in the consumer, and
-only replaces files after the complete new export has validated. The catalog is
-the preferred discovery input inside the consumer.
+Every normal sync writes `.skill-sync.json` (source, bundle, selected skills,
+and per-file hashes) and `.skill-catalog.json` (the installed skill metadata).
+Once a manifest exists, a normal install into that destination is rejected: it
+would replace ownership metadata while leaving old files unmanaged. Use
+`--update` with the complete desired selection, not only newly added skills.
+Review with `--check --update`; apply with `--update`. The catalog is the
+preferred discovery input in the consumer.
 
 ### Direct copy or development symlink
 
