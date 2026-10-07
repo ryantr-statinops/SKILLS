@@ -146,7 +146,16 @@ def export_targets(source: Path, destination: Path, skills: list[tuple[str, Path
         targets[path] = destination / path.relative_to(source)
         for resource in linked_resources(source, path):
             targets[resource] = destination / resource.relative_to(source)
-    return sorted(targets.items(), key=lambda item: str(item[1]))
+
+    selected: list[tuple[Path, Path]] = []
+    covering_directories: list[Path] = []
+    for path, target in sorted(targets.items(), key=lambda item: (len(item[0].parts), str(item[0]))):
+        if any(path.is_relative_to(parent) for parent in covering_directories):
+            continue
+        selected.append((path, target))
+        if path.is_dir():
+            covering_directories.append(path)
+    return sorted(selected, key=lambda item: str(item[1]))
 
 
 def sha256(path: Path) -> str:

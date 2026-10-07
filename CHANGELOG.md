@@ -23,6 +23,7 @@ remain in each skill's frontmatter.
 - OpenCode discovery tests verify behavior without pinning a workstation patch version.
 - Ordinary sync now rejects managed destinations; use --update with the
   complete selection.
+- Sync copy targets now collapse nested parent/child skills before installation.
 ## [0.1.0] - 2026-09-18
 
 ### Added

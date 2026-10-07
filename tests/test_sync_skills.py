@@ -105,5 +105,23 @@ class SyncSkillsTests(unittest.TestCase):
             self.assertEqual((destination / ".skill-sync.json").read_text(encoding="utf-8"), manifest)
             self.assertEqual((destination / ".skill-catalog.json").read_text(encoding="utf-8"), catalog)
 
+    def test_overlapping_parent_and_child_selection_installs_once(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            destination = Path(directory) / "skills"
+            selected = ("personal/engineering", "personal/engineering/backend/python")
+            checked = self.run_sync("--check", str(destination), *selected)
+            self.assertEqual(checked.returncode, 0, checked.stderr)
+            self.assertEqual(checked.stdout.count("would sync personal/engineering ->"), 1)
+            self.assertFalse(destination.exists())
+            installed = self.run_sync(str(destination), *selected)
+            self.assertEqual(installed.returncode, 0, installed.stderr)
+            self.assertTrue((destination / "personal/engineering/backend/python/SKILL.md").is_file())
+            catalog = json.loads((destination / ".skill-catalog.json").read_text(encoding="utf-8"))
+            catalog_ids = {skill["id"] for skill in catalog["skills"]}
+            self.assertTrue(set(selected).issubset(catalog_ids))
+            manifest = json.loads((destination / ".skill-sync.json").read_text(encoding="utf-8"))
+            paths = [item["path"] for item in manifest["files"]]
+            self.assertEqual(len(paths), len(set(paths)))
+
 if __name__ == "__main__":
     unittest.main()
