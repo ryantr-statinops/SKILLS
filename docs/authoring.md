@@ -65,7 +65,8 @@ portable and must not contain runtime-specific plugin or slash-command rules.
 2. Link every supporting resource from the relevant instruction.
 3. Run `python3 scripts/validate_skills.py`.
 4. Test one representative task and one nearby boundary task.
-
+5. Keep every agent handoff value, including the confirmation boundary,
+   nonempty; the validator checks the field content, not only its label.
 Do not make activation claims that only repeat the generic handoff template.
 State the concrete outcome that selects this skill and the nearby outcome that
 belongs to a different route.

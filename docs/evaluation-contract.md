@@ -20,7 +20,9 @@ The file must contain these sections for both cases:
 - `Expected:`
 - `Failure condition:`
 - `Validation:`
-
+Each field must have a nonempty value; a label alone or whitespace-only text
+does not satisfy the contract. Values may continue on immediately following
+lines and end at a blank line or the next field label.
 The representative task should activate the skill and exercise its intended
 outcome. The boundary task should be close enough to test routing, but outside
 the skill's scope or safety boundary.
