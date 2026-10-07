@@ -151,6 +151,11 @@ python3 scripts/export_runtime_adapter.py \
   /path/to/project/.agent/skills /path/to/project/.agents/skills
 ```
 
+Runtime-specific install, verify, and recovery details live in the per-runtime
+guides: [Codex CLI](runtime-codex.md), [OpenCode](runtime-opencode.md), and
+[oh-my-pi (`omp`)](runtime-omp.md). Each guide records what its local
+discovery command proves and where static evidence stops.
+
 ### Adapter lifetime and ownership
 
 Adapter entries are symlinks, not copies or snapshots. Edits under the portable

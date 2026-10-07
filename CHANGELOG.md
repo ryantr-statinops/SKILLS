@@ -12,6 +12,9 @@ remain in each skill's frontmatter.
   provenance manifests, installed catalogs, and native runtime adapters.
 - Deterministic representative and boundary evaluations for all four workflow
   bundles plus optional Codex Action smoke and nightly jobs.
+- Self-contained install/verify/recovery guides for Codex CLI, OpenCode, and
+  oh-my-pi (`omp`), each with local discovery smoke evidence and an explicit
+  static-evidence boundary.
 
 ### Changed
 

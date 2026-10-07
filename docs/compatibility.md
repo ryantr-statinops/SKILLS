@@ -78,8 +78,9 @@ assumptions explicit instead of presenting them as a universal standard.
 
 | Runtime | Layout | Verification | Scope of guarantee |
 | --- | --- | --- | --- |
-| Codex | `.agents/skills/<path-id>/SKILL.md` | adapter unit test; Codex Action smoke/nightly when `OPENAI_API_KEY` is configured | static discovery always; model behavior only when the CI job runs |
-| OpenCode 1.18.31 | `.agents/skills/<path-id>/SKILL.md` | `opencode debug skill --pure` fixture test | discovery and frontmatter loading; no model quality claim |
+| Codex CLI 0.160.0 ([guide](runtime-codex.md)) | `.agents/skills/<path-id>/SKILL.md` | `codex debug prompt-input` fixture run: all 6 `feature-delivery` skills visible under project root `r5` | local prompt construction only; no model selection or behavior claim |
+| OpenCode 1.18.35 ([guide](runtime-opencode.md)) | `.agents/skills/<path-id>/SKILL.md` | `opencode debug skill --pure` fixture run: all 6 `feature-delivery` skills with project `location` | discovery and frontmatter loading; no model quality claim |
+| oh-my-pi `omp` 18.6.3 ([guide](runtime-omp.md)) | `.agents/skills/<path-id>/SKILL.md` | `omp skill list` fixture run: all 6 `feature-delivery` skills with project `filePath` | local discovery only; repeated display names namespace, no behavior claim |
 
 ## Ecosystem research
 
