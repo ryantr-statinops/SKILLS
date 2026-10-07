@@ -12,7 +12,7 @@ sys.path.insert(0, str(SCRIPTS))
 from discover_skills import normalize_registry  # noqa: E402
 from generate_skill_index import REGISTRY_SCHEMA_VERSION, collect, render_json  # noqa: E402
 from migrate_invocation_metadata import expected_invocation, migrate_text  # noqa: E402
-from validate_skills import activation_contract_errors  # noqa: E402
+from validate_skills import HANDOFF_FIELDS, activation_contract_errors, handoff_contract_errors  # noqa: E402
 
 
 class InvocationContractTests(unittest.TestCase):
@@ -88,6 +88,17 @@ class InvocationContractTests(unittest.TestCase):
     def test_non_model_invocation_does_not_require_model_contract(self) -> None:
         self.assertEqual(activation_contract_errors("", "both"), [])
 
+
+    def test_handoff_contract_rejects_empty_values(self) -> None:
+        empty = "## Agent handoff\n" + "\n".join(HANDOFF_FIELDS)
+        errors = handoff_contract_errors(empty)
+        self.assertEqual(len(errors), len(HANDOFF_FIELDS))
+        self.assertTrue(all(message.startswith("empty agent handoff field:") for message in errors))
+
+        valid = "## Agent handoff\n" + "\n".join(
+            f"{field} a concrete contract value" for field in HANDOFF_FIELDS
+        )
+        self.assertEqual(handoff_contract_errors(valid), [])
 
 if __name__ == "__main__":
     unittest.main()

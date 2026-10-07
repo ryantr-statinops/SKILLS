@@ -49,6 +49,42 @@ def activation_contract_errors(text: str, invocation: str) -> list[str]:
     ]
 
 
+def handoff_contract_errors(text: str) -> list[str]:
+    marker = "## Agent handoff\n"
+    if marker not in text:
+        return ["missing agent handoff section"]
+    body = text.split(marker, 1)[1]
+    next_heading = body.find("\n## ")
+    if next_heading != -1:
+        body = body[:next_heading]
+    lines = body.splitlines()
+    errors = []
+    for field in HANDOFF_FIELDS:
+        value = None
+        for index, line in enumerate(lines):
+            candidate = line.strip()
+            if candidate.startswith("- "):
+                candidate = candidate[2:].strip()
+            if not candidate.startswith(field):
+                continue
+            value = candidate[len(field):].strip()
+            if not value:
+                for continuation in lines[index + 1:]:
+                    continuation = continuation.strip()
+                    if continuation.startswith("- "):
+                        continuation = continuation[2:].strip()
+                    if not continuation or any(continuation.startswith(name) for name in HANDOFF_FIELDS):
+                        break
+                    value = continuation
+                    break
+            break
+        if value is None:
+            errors.append(f"missing agent handoff field: {field}")
+        elif not value:
+            errors.append(f"empty agent handoff field: {field}")
+    return errors
+
+
 def error(message: str) -> None:
     print(f"ERROR: {message}")
 
@@ -102,14 +138,9 @@ def validate_skill(path: Path) -> int:
             error(f"unfinished placeholder in {skill_file.relative_to(ROOT)}: {placeholder}")
             failures += 1
 
-    if "## Agent handoff" not in text:
-        error(f"missing agent handoff section: {skill_file.relative_to(ROOT)}")
+    for message in handoff_contract_errors(text):
+        error(f"{message} in {skill_file.relative_to(ROOT)}")
         failures += 1
-    else:
-        for field in HANDOFF_FIELDS:
-            if field not in text:
-                error(f"missing agent handoff field in {skill_file.relative_to(ROOT)}: {field}")
-                failures += 1
 
     for directory in path.iterdir():
         if directory.is_dir() and not any(directory.iterdir()):

@@ -38,6 +38,7 @@ remain in each skill's frontmatter.
 - Installed catalogs snapshot bundle membership for source-independent filtering.
 - Consumer bundle filtering uses installed snapshots without source-tree access.
 - Skill evaluation cases with empty required fields no longer pass structural checks.
+- The skill validator rejects empty handoff contract values.
 
 ## [0.1.0] - 2026-09-18
 
