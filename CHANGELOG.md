@@ -49,6 +49,7 @@ remain in each skill's frontmatter.
 - Skill validation now shares the Markdown-aware link parser.
 - Sync resource discovery uses the shared Markdown-aware destination parser.
 - Skill discovery v2 supports universal consumer routing with explicit workflow boundaries.
+- Skill authoring v2 narrows activation to authoring work and explicit skill outputs.
 
 ## [0.1.0] - 2026-09-18
 
