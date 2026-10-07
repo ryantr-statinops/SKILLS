@@ -185,3 +185,32 @@ python3 scripts/check_markdown_links.py
 In the target project, verify that the runtime discovers the selected directory,
 relative resources resolve, project instructions do not weaken skill boundaries,
 and a representative task plus nearby non-activation task behave as expected.
+
+## Recovering an installation mismatch
+
+Use the portable tree as the content source and the native adapter only as a
+discovery view. Diagnose the layer that diverged before reinstalling anything:
+
+1. If selected skills or `.skill-catalog.json` are missing or stale, review the
+   complete original selection with `sync_skills.py --check --update`, using the
+   same destination and all selected IDs (or the original bundle) recorded in
+   `.skill-sync.json`; apply the same command only after reviewing its changes.
+   A normal install cannot repair a destination already owned by a sync manifest.
+2. If the portable `.agent/skills/` tree is correct but `.agents/skills/` entries
+   are missing, run `export_runtime_adapter.py --check` against those roots,
+   review the reported additions, then run it without `--check`. The exporter
+   refuses a conflicting destination; do not delete or replace that path to
+   force an export.
+3. If adapter entries exist, inspect their symlink targets and verify the
+   relative resource paths resolve from the native view. Re-run the adapter
+   check; an empty report means no links need creating, not that the runtime
+   loaded them.
+4. Ask the target runtime's own skill-list/debug command whether it discovers
+   the exact installed entrypoint. Record the runtime version, reported path, and
+   result. If the path is correct but discovery fails, treat that runtime/layout
+   as unverified rather than changing portable skill content or claiming
+   runtime support.
+
+Never replace the whole `.agents/skills/` directory during recovery: it may
+contain user-managed files outside this adapter. Preserve conflicting content
+for review; only remove a generated link after verifying its target and owner.

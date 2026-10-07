@@ -16,9 +16,11 @@ remain in each skill's frontmatter.
 ### Changed
 
 - Discovery now works from an installed catalog without the source registry.
+- Integration guidance now separates portable sync, native adapter, and runtime discovery recovery.
 - Evaluation reports now cover every meta skill entry, independent of promotion status.
 - Common and personal activation boundaries state concrete outcomes and nearby
   exclusions.
+
 ### Fixed
 
 - OpenCode discovery tests verify behavior without pinning a workstation patch version.
