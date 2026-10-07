@@ -35,15 +35,15 @@ def adapter_entries(source: Path, destination: Path) -> list[tuple[Path, Path]]:
     return entries
 
 
-def check_entries(entries: list[tuple[Path, Path]]) -> list[str]:
-    changes: list[str] = []
+def check_entries(entries: list[tuple[Path, Path]]) -> list[tuple[Path, Path]]:
+    changes: list[tuple[Path, Path]] = []
     for source_dir, target in entries:
         expected = os.path.relpath(source_dir, target.parent)
         if target.is_symlink() and os.readlink(target) == expected:
             continue
         if target.exists() or target.is_symlink():
             raise ValueError(f"adapter target already exists with different content: {target}")
-        changes.append(f"add {target} -> {expected}")
+        changes.append((source_dir, target))
     return changes
 
 
@@ -52,11 +52,12 @@ def main() -> int:
     entries = adapter_entries(args.source.resolve(), args.destination.resolve())
     changes = check_entries(entries)
     if args.check:
-        for change in changes:
-            print(change)
+        for source_dir, target in changes:
+            expected = os.path.relpath(source_dir, target.parent)
+            print(f"add {target} -> {expected}")
         return 0
     args.destination.mkdir(parents=True, exist_ok=True)
-    for source_dir, target in entries:
+    for source_dir, target in changes:
         target.parent.mkdir(parents=True, exist_ok=True)
         os.symlink(os.path.relpath(source_dir, target.parent), target)
         print(f"created {target}")

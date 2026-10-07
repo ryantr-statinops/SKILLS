@@ -30,6 +30,13 @@ class RuntimeAdapterTests(unittest.TestCase):
             self.assertIn("common-engineering-debugging", check.stdout)
             self.assertFalse(destination.exists())
             subprocess.run(["python3", str(SCRIPT), str(source), str(destination)], check=True)
+            rerun = subprocess.run(
+                ["python3", str(SCRIPT), str(source), str(destination)],
+                check=True,
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(rerun.stdout, "")
             first = destination / "common-engineering-debugging"
             second = destination / "personal-debugging"
             self.assertTrue(first.is_symlink())

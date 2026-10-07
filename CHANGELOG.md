@@ -25,6 +25,7 @@ remain in each skill's frontmatter.
 ### Fixed
 
 - OpenCode discovery tests verify behavior without pinning a workstation patch version.
+- Native adapter exports now create only missing links, so repeat runs are safe no-ops.
 - Ordinary sync now rejects managed destinations; use --update with the
   complete selection.
 - Sync copy targets now collapse nested parent/child skills before installation.
