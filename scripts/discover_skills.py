@@ -35,12 +35,14 @@ def parse_args() -> argparse.Namespace:
 
 
 def normalize_registry(data: dict[str, object]) -> list[dict[str, str]]:
+    if not isinstance(data, dict):
+        raise ValueError("registry must be an object")
     schema_version = data.get("schema_version")
     if schema_version not in {1, 2, 3}:
         raise ValueError(f"unsupported registry schema version: {schema_version}")
-    skills = data["skills"]
+    skills = data.get("skills")
     if not isinstance(skills, list):
-        raise TypeError("skills is not a list")
+        raise ValueError("skills must be a list")
     normalized = []
     for record in skills:
         if not isinstance(record, dict):

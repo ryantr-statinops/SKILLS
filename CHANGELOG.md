@@ -30,6 +30,7 @@ remain in each skill's frontmatter.
 - Failed updates now remove newly created managed files.
 - Failed updates restore prior content and manifest/catalog state.
 - Installed catalogs use the current schema and preserve declared dependencies.
+- Discovery rejects non-object registries and invalid skill-list containers.
 
 ## [0.1.0] - 2026-09-18
 

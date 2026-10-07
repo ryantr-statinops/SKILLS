@@ -10,7 +10,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SCRIPTS = ROOT / "scripts"
 sys.path.insert(0, str(SCRIPTS))
 
-from discover_skills import discover  # noqa: E402
+from discover_skills import discover, normalize_registry  # noqa: E402
 from generate_skill_index import collect  # noqa: E402
 
 
@@ -80,6 +80,15 @@ class DiscoveryBoundaryTests(unittest.TestCase):
     def test_model_invocation_is_reserved(self) -> None:
         self.assertNotIn("model", {record["invocation"] for record in collect()})
 
+    def test_registry_container_shape_is_validated(self) -> None:
+        invalid_registries = [
+            [],
+            {"schema_version": 3},
+            {"schema_version": 3, "skills": {}},
+        ]
+        for registry in invalid_registries:
+            with self.subTest(registry=registry), self.assertRaises(ValueError):
+                normalize_registry(registry)
 
 if __name__ == "__main__":
     unittest.main()
