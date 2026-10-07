@@ -22,6 +22,17 @@ BUNDLE_REQUIRED_FIELDS = {
     "skills",
 }
 
+def validate_skill_dependency_references(
+    skill_records: list[dict[str, Any]],
+) -> None:
+    skill_ids = {record["id"] for record in skill_records}
+    for record in skill_records:
+        for required in record.get("requires", []):
+            if required not in skill_ids:
+                raise ValueError(
+                    f"skill dependency is missing from registry: {record['id']}: {required}"
+                )
+
 
 def load_bundle_registry(path: Path | None = None) -> dict[str, Any]:
     registry_path = path or ROOT / "data/bundles.json"

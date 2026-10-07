@@ -33,6 +33,7 @@ remain in each skill's frontmatter.
 - Discovery rejects non-object registries and invalid skill-list containers.
 - Discovery rejects incomplete or wrongly typed skill records before scoring.
 - External catalog failures report the requested path and original parse/read cause.
+- Registry generation and validation reject missing skill dependencies globally.
 
 ## [0.1.0] - 2026-09-18
 

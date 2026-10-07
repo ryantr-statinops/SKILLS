@@ -9,7 +9,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SCRIPTS = ROOT / "scripts"
 sys.path.insert(0, str(SCRIPTS))
 
-from bundles import validate_bundle_registry  # noqa: E402
+from bundles import validate_skill_dependency_references, validate_bundle_registry  # noqa: E402
 from discover_skills import discover  # noqa: E402
 
 
@@ -28,6 +28,12 @@ def record(
 
 
 class BundleRegistryTests(unittest.TestCase):
+    def test_unbundled_skill_cannot_reference_missing_dependency(self) -> None:
+        with self.assertRaisesRegex(ValueError, "skill dependency is missing from registry"):
+            validate_skill_dependency_references(
+                [record("personal/statistics", requires=["common/not-real"])]
+            )
+
     def test_empty_registry_is_valid(self) -> None:
         self.assertEqual(
             validate_bundle_registry({"schema_version": 1, "bundles": []}, []), []

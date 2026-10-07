@@ -8,6 +8,7 @@ import json
 from pathlib import Path
 import re
 import sys
+from bundles import validate_skill_dependency_references
 
 ROOT = Path(__file__).resolve().parents[1]
 CATEGORIES = ("common", "personal", "meta")
@@ -104,6 +105,7 @@ def collect() -> list[dict[str, str]]:
                     "requires": requires,
                 }
             )
+    validate_skill_dependency_references(records)
     return sorted(records, key=lambda item: (item["category"], item["subject"], item["name"]))
 
 
