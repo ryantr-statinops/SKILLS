@@ -113,8 +113,9 @@ and per-file hashes) and `.skill-catalog.json` (the installed skill metadata).
 Once a manifest exists, a normal install into that destination is rejected: it
 would replace ownership metadata while leaving old files unmanaged. Use
 `--update` with the complete desired selection, not only newly added skills.
-Review with `--check --update`; apply with `--update`. The catalog is the
-preferred discovery input in the consumer.
+Review with `--check --update`; apply with `--update`. Update restores managed
+files missing from the consumer and rejects locally edited files for review
+instead of overwriting them. The catalog is the preferred discovery input.
 
 ### Direct copy or development symlink
 
