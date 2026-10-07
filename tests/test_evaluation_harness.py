@@ -29,6 +29,14 @@ class EvaluationHarnessTests(unittest.TestCase):
         report = json.loads(result.stdout)
         self.assertEqual(report["failed"], 0)
         self.assertEqual(report["routing_failed"], 0)
+        expected_meta = {
+            path.parent.relative_to(ROOT).as_posix()
+            for path in (ROOT / "meta").rglob("SKILL.md")
+        }
+        reported_meta = {
+            skill["id"] for skill in report["skills"] if skill["id"].startswith("meta/")
+        }
+        self.assertEqual(reported_meta, expected_meta)
 
     def test_case_requires_both_sections_and_all_fields(self) -> None:
         text = "## Representative task\nTask: one\nExpected: two\n"

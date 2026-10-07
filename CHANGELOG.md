@@ -16,6 +16,7 @@ remain in each skill's frontmatter.
 ### Changed
 
 - Discovery now works from an installed catalog without the source registry.
+- Evaluation reports now cover every meta skill entry, independent of promotion status.
 - Common and personal activation boundaries state concrete outcomes and nearby
   exclusions.
 ### Fixed

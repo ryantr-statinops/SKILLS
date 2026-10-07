@@ -10,7 +10,7 @@ import subprocess
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
-CATEGORIES = ("common", "personal")
+CATEGORIES = ("common", "personal", "meta")
 CASE_SECTIONS = ("## Representative task", "## Boundary task")
 CASE_FIELDS = ("Task:", "Expected:", "Failure condition:", "Validation:")
 CONFIRMATIONS = {"never", "before_mutation", "before_external"}
@@ -111,14 +111,6 @@ def evaluation_skill_files() -> list[Path]:
         for category in CATEGORIES
         for skill_file in (ROOT / category).rglob("SKILL.md")
     }
-    promotion_path = ROOT / "data/promoted.json"
-    try:
-        promoted = json.loads(promotion_path.read_text(encoding="utf-8"))["skills"]
-    except (OSError, KeyError, TypeError, json.JSONDecodeError) as exc:
-        raise ValueError(f"invalid promotion registry: {promotion_path.relative_to(ROOT)}") from exc
-    for identifier in promoted:
-        if isinstance(identifier, str) and identifier.startswith("meta/"):
-            paths.add(ROOT / identifier / "SKILL.md")
     return sorted(paths)
 
 
