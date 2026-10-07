@@ -90,6 +90,9 @@ selected skill directory structure and copies supporting resources with it.
 The agent must inspect existing target paths and report any overwrite before
 syncing.
 
+When selected skill directories overlap, the parent tree is copied once while
+all explicitly selected skill records remain in the installed catalog.
+
 When the project needs a complete workflow, use a named bundle:
 
 ```bash
