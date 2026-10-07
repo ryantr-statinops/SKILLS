@@ -389,12 +389,12 @@
     {
       "id": "meta/skill-discovery",
       "name": "skill-discovery",
-      "description": "Select the smallest relevant skill for a task using descriptions, boundaries, and progressive disclosure.",
+      "description": "Route an uncategorized agent task to the narrowest SKILLS capability using activation boundaries and an installed catalog.",
       "category": "meta",
       "subject": "skill-system",
-      "scope": "repository",
+      "scope": "universal",
       "status": "stable",
-      "version": "1.1.0",
+      "version": "2.0.0",
       "invocation": "both",
       "path": "meta/skill-discovery/SKILL.md",
       "requires": []

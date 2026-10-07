@@ -1,26 +1,27 @@
 ## Representative task
 
-Task: Route a request to add a feature while identifying the narrowest
-workflow, relevant supporting skills, and nearby exclusions.
+Task: In a consumer project with an installed `.skill-catalog.json`, route a
+request to deliver a feature before implementation begins.
 
-Expected: Select the most specific applicable skill, explain the boundary, and
-load only the resources needed for the task.
+Expected: Select `common/workflow/feature-delivery`, name its relevant supporting
+skills and nearby exclusions, and list only resources needed to start.
 
-Failure condition: Load every skill, select a broad skill over a specific one,
-or silently merge conflicting procedures.
+Failure condition: Choose an unrelated skill, load the whole library, omit the
+consumer catalog, or begin implementing the feature during routing.
 
-Validation: Confirm the selected skill, rejected candidates, and required
-resources are reported with a clear routing reason.
+Validation: Confirm every selected ID exists in the installed catalog and explain
+why a nearby domain implementation skill is not the workflow entry point.
 
 ## Boundary task
 
-Task: Implement a backend endpoint using an already selected engineering skill.
+Task: The user has already selected `common/engineering/testing` and asks to add
+a regression test for an existing feature.
 
-Expected: Route to the relevant engineering skill rather than treating skill
-library discovery as the implementation workflow.
+Expected: Exclude repository-level skill discovery and follow the selected
+engineering skill's procedure.
 
-Failure condition: Invoke repository-level skill discovery for unrelated domain
-implementation work.
+Failure condition: Re-run catalog routing as a substitute for implementation or
+activate the skill-library authoring workflow.
 
-Validation: Confirm the discovery skill is excluded and the domain skill owns
-the implementation procedure.
+Validation: Confirm the selected engineering skill owns the work and discovery
+does not emit an alternative implementation procedure.
