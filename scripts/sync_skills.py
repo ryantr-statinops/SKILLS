@@ -285,6 +285,11 @@ def update_destination(
         backups: dict[Path, bytes] = {}
         created: set[Path] = set()
         try:
+            for metadata_path in (manifest_path, destination / CATALOG_NAME):
+                if metadata_path.is_file():
+                    backups[metadata_path] = metadata_path.read_bytes()
+                else:
+                    created.add(metadata_path)
             for relative in removed:
                 target = destination / relative
                 if target.is_file():

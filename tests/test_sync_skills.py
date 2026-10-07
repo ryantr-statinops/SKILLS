@@ -6,6 +6,7 @@ import sys
 import tempfile
 import unittest
 import json
+import shutil
 
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPT = ROOT / "scripts/sync_skills.py"
@@ -236,6 +237,51 @@ runpy.run_path(str(script), run_name="__main__")
             self.assertEqual(catalog_path.read_bytes(), catalog)
             testing = destination / "common/engineering/testing"
             self.assertFalse(list(testing.rglob("SKILL.md")) if testing.exists() else [])
+
+    def test_failed_metadata_write_restores_manifest_and_content(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            temporary = Path(directory)
+            source = temporary / "source"
+            (source / "data").mkdir(parents=True)
+            shutil.copytree(ROOT / "data", source / "data", dirs_exist_ok=True)
+            skill = "common/engineering/debugging"
+            shutil.copytree(ROOT / skill, source / skill)
+            destination = temporary / "consumer/skills"
+            first = self.run_sync("--source", str(source), str(destination), skill)
+            self.assertEqual(first.returncode, 0, first.stderr)
+            manifest_path = destination / ".skill-sync.json"
+            catalog_path = destination / ".skill-catalog.json"
+            target = destination / skill / "SKILL.md"
+            manifest = manifest_path.read_bytes()
+            catalog = catalog_path.read_bytes()
+            content = target.read_bytes()
+            source_entrypoint = source / skill / "SKILL.md"
+            source_entrypoint.write_bytes(source_entrypoint.read_bytes() + b"\nrevision\n")
+            wrapper = """
+import pathlib, runpy, sys
+script = pathlib.Path(sys.argv[1])
+sys.path.insert(0, str(script.parent))
+source, destination = map(pathlib.Path, sys.argv[2:4])
+catalog = destination / ".skill-catalog.json"
+original = pathlib.Path.write_text
+def fail_catalog(self, *args, **kwargs):
+    if self == catalog:
+        raise OSError("injected catalog write failure")
+    return original(self, *args, **kwargs)
+pathlib.Path.write_text = fail_catalog
+sys.argv = [str(script), "--source", str(source), "--update", str(destination),
+            "common/engineering/debugging"]
+runpy.run_path(str(script), run_name="__main__")
+"""
+            failed = subprocess.run(
+                [sys.executable, "-c", wrapper, str(SCRIPT), str(source), str(destination)],
+                cwd=ROOT, capture_output=True, text=True, check=False,
+            )
+            self.assertNotEqual(failed.returncode, 0)
+            self.assertIn("injected catalog write failure", failed.stderr)
+            self.assertEqual(target.read_bytes(), content)
+            self.assertEqual(manifest_path.read_bytes(), manifest)
+            self.assertEqual(catalog_path.read_bytes(), catalog)
 
 if __name__ == "__main__":
     unittest.main()

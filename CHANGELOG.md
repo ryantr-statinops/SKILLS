@@ -28,6 +28,7 @@ remain in each skill's frontmatter.
 - Update preflights ancestor obstructions before copying managed files.
 - Update rejects managed and catalog paths with unexpected file types before writing.
 - Failed updates now remove newly created managed files.
+- Failed updates restore prior content and manifest/catalog state.
 
 ## [0.1.0] - 2026-09-18
 
