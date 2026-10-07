@@ -46,6 +46,7 @@ remain in each skill's frontmatter.
 - Routing evaluation rejects empty or whitespace-only task descriptions.
 - Routing fixtures reject identical expected and boundary skills.
 - Markdown link checks parse titles, reference destinations, parentheses, and code spans.
+- Skill validation now shares the Markdown-aware link parser.
 
 ## [0.1.0] - 2026-09-18
 

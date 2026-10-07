@@ -16,6 +16,7 @@ from generate_skill_index import (
     render_markdown,
 )
 from bundles import load_and_validate_bundles
+from markdown_links import extract_markdown_link_targets
 from promotions import load_and_validate_promotions
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -166,8 +167,8 @@ def validate_skill(path: Path) -> int:
                     error(f"missing evaluation section in {evaluation.relative_to(ROOT)}: {section}")
                     failures += 1
 
-    for match in re.finditer(r"\[[^\]]+\]\(([^)]+)\)", text):
-        target = match.group(1).split("#", 1)[0]
+    for target in extract_markdown_link_targets(text):
+        target = target.split("#", 1)[0]
         if target.startswith(("http://", "https://", "mailto:")):
             continue
         resolved = (skill_file.parent / target).resolve()
