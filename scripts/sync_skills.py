@@ -329,6 +329,9 @@ def main() -> int:
             print(f"error: {exc}", file=sys.stderr)
             return 2
         return 0
+    if not args.update and (destination / MANIFEST_NAME).is_file():
+        print("error: destination is already managed; use --update with the complete selection", file=sys.stderr)
+        return 2
     conflicts = [str(target) for _, target in targets if target.exists()]
     if conflicts:
         print("error: target paths already exist; no files were changed:", file=sys.stderr)

@@ -60,7 +60,9 @@ class SyncSkillsTests(unittest.TestCase):
 
             second = self.run_sync("--bundle", "feature-delivery", str(destination))
             self.assertNotEqual(second.returncode, 0)
-            self.assertIn("already exist", second.stderr)
+            self.assertTrue((destination / "common/workflow/feature-delivery/SKILL.md").is_file())
+            self.assertEqual(manifest.read_text(encoding="utf-8"), json.dumps(payload, indent=2, ensure_ascii=False) + "\n")
+            self.assertIn("destination is already managed", second.stderr)
 
     def test_explicit_workflow_sync_includes_declared_dependencies(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -89,6 +91,19 @@ class SyncSkillsTests(unittest.TestCase):
             self.assertNotEqual(rejected.returncode, 0)
             self.assertIn("modified locally", rejected.stderr)
 
+    def test_rejects_incremental_install_to_managed_destination(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            destination = Path(directory) / "skills"
+            first = self.run_sync(str(destination), "common/engineering/debugging")
+            self.assertEqual(first.returncode, 0, first.stderr)
+            manifest = (destination / ".skill-sync.json").read_text(encoding="utf-8")
+            catalog = (destination / ".skill-catalog.json").read_text(encoding="utf-8")
+            second = self.run_sync(str(destination), "common/engineering/testing")
+            self.assertEqual(second.returncode, 2)
+            self.assertIn("use --update with the complete selection", second.stderr)
+            self.assertTrue((destination / "common/engineering/debugging/SKILL.md").is_file())
+            self.assertEqual((destination / ".skill-sync.json").read_text(encoding="utf-8"), manifest)
+            self.assertEqual((destination / ".skill-catalog.json").read_text(encoding="utf-8"), catalog)
 
 if __name__ == "__main__":
     unittest.main()

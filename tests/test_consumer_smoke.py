@@ -71,7 +71,7 @@ class ConsumerSmokeTests(unittest.TestCase):
                 str(skills_root),
             )
             self.assertNotEqual(conflict.returncode, 0)
-            self.assertIn("already exist", conflict.stderr)
+            self.assertIn("destination is already managed", conflict.stderr)
 
             discovered = self.run_script(
                 DISCOVER,

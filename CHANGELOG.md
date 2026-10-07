@@ -21,7 +21,8 @@ remain in each skill's frontmatter.
 ### Fixed
 
 - OpenCode discovery tests verify behavior without pinning a workstation patch version.
-
+- Ordinary sync now rejects managed destinations; use --update with the
+  complete selection.
 ## [0.1.0] - 2026-09-18
 
 ### Added
