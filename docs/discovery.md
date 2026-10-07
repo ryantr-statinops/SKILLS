@@ -70,6 +70,15 @@ points. Skills marked `both` can be selected by the agent when their
 description and boundaries match the task. Invocation filtering describes
 activation eligibility; it does not define a dependency graph between skills.
 
+## Routing versus execution
+
+Use discovery before implementation when the task has not been assigned to a
+relevant skill. Discovery returns candidates and routing reasons; it does not
+implement the request. After a skill is selected, read its entrypoint and follow
+that workflow rather than repeating discovery as a substitute for execution.
+For skill authoring, evaluation, intake, or maintenance, use the corresponding
+meta workflow.
+
 ## Selection rules
 
 1. Match the desired outcome, not only a technology keyword.
