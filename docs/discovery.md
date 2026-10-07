@@ -50,7 +50,10 @@ python3 scripts/discover_skills.py --format json "debug failing test"
 # Consumer discovery from an installed catalog
 python3 scripts/discover_skills.py --registry /path/to/project/.agent/skills/.skill-catalog.json "debug failing test"
 ```
-
+With an installed catalog, `--bundle <id>` filters using the bundle membership
+snapshot saved at sync time. Older catalogs without that snapshot must be
+re-synced with the named bundle. Consumer discovery does not fall back to the
+source bundle registry.
 For personal engineering work, route through `personal/engineering/SKILL.md`
 and load `engineering/core` when computational or systems reasoning is shared
 across domains. Use `engineering/data`, `engineering/ai`, or
