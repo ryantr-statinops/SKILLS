@@ -415,12 +415,12 @@
     {
       "id": "meta/skill-intake",
       "name": "skill-intake",
-      "description": "Decide whether to adopt, adapt, rebuild, or create a skill from an external repository or a new personal need.",
+      "description": "Decide whether to reference, adopt, adapt, rebuild, or reject an external skill or a demonstrated recurring workflow.",
       "category": "meta",
       "subject": "skill-system",
       "scope": "repository",
       "status": "stable",
-      "version": "1.0.0",
+      "version": "2.0.0",
       "invocation": "user",
       "path": "meta/skill-intake/SKILL.md",
       "requires": []
