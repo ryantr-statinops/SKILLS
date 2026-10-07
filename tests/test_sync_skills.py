@@ -322,5 +322,30 @@ runpy.run_path(str(script), run_name="__main__")
             self.assertIn("common/engineering/testing", members)
             self.assertTrue(members.issubset(installed_ids))
 
+    def test_consumer_bundle_discovery_needs_no_source_skill_tree(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            destination = root / "consumer/skills"
+            synced = self.run_sync("--bundle", "feature-delivery", str(destination))
+            self.assertEqual(synced.returncode, 0, synced.stderr)
+            catalog_path = destination / ".skill-catalog.json"
+            runtime = root / "portable-helper"
+            runtime.mkdir()
+            for name in ("discover_skills.py", "generate_skill_index.py", "bundles.py"):
+                shutil.copy2(ROOT / "scripts" / name, runtime / name)
+            self.assertFalse((runtime / "data").exists())
+            result = subprocess.run(
+                [sys.executable, str(runtime / "discover_skills.py"),
+                 "--registry", str(catalog_path), "--bundle", "feature-delivery",
+                 "--format", "json", "feature", "delivery"],
+                cwd=runtime, capture_output=True, text=True, check=False,
+            )
+            self.assertEqual(result.returncode, 0, result.stderr)
+            skills = json.loads(result.stdout)["skills"]
+            members = set(json.loads(catalog_path.read_text(encoding="utf-8"))["bundles"]["feature-delivery"])
+            self.assertTrue(skills)
+            self.assertTrue({skill["id"] for skill in skills}.issubset(members))
+            self.assertIn("common/workflow/feature-delivery", {skill["id"] for skill in skills})
+
 if __name__ == "__main__":
     unittest.main()

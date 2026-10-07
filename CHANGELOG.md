@@ -36,6 +36,7 @@ remain in each skill's frontmatter.
 - Registry generation and validation reject missing skill dependencies globally.
 - Registry generation and validation reject dependency cycles outside bundles.
 - Installed catalogs snapshot bundle membership for source-independent filtering.
+- Consumer bundle filtering uses installed snapshots without source-tree access.
 
 ## [0.1.0] - 2026-09-18
 

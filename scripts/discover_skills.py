@@ -83,6 +83,25 @@ def load_bundle_map() -> dict[str, set[str]]:
     return {bundle["id"]: set(bundle["skills"]) for bundle in bundles}
 
 
+def load_installed_bundle_members(
+    path: Path, bundle_id: str, records: list[dict[str, str]]
+) -> set[str]:
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise ValueError(f"invalid installed catalog {path}: {exc}") from exc
+    snapshots = data.get("bundles") if isinstance(data, dict) else None
+    if not isinstance(snapshots, dict) or bundle_id not in snapshots:
+        raise ValueError(f"bundle membership is unavailable in installed catalog: {bundle_id}; re-sync the bundle")
+    members = snapshots[bundle_id]
+    if not isinstance(members, list) or any(not isinstance(item, str) for item in members):
+        raise ValueError(f"invalid bundle membership in installed catalog: {bundle_id}")
+    installed_ids = {record["id"] for record in records}
+    if not set(members).issubset(installed_ids):
+        raise ValueError(f"installed bundle snapshot references skills absent from catalog: {bundle_id}")
+    return set(members)
+
+
 def tokens(value: str) -> set[str]:
     return set(TOKEN_RE.findall(value.lower()))
 
@@ -112,14 +131,18 @@ def score(record: dict[str, str], query_tokens: set[str]) -> int:
 
 def discover(args: argparse.Namespace) -> list[dict[str, object]]:
     query_tokens = tokens(" ".join(args.query))
+    registry_path = getattr(args, "registry", None)
+    records = load_registry(registry_path)
     bundle_members = None
     if args.bundle:
-        bundle_members = load_bundle_map().get(args.bundle)
-        if bundle_members is None:
-            raise ValueError(f"unknown bundle: {args.bundle}")
+        if registry_path is not None:
+            bundle_members = load_installed_bundle_members(registry_path, args.bundle, records)
+        else:
+            bundle_members = load_bundle_map().get(args.bundle)
+            if bundle_members is None:
+                raise ValueError(f"unknown bundle: {args.bundle}")
     candidates = []
-    registry_path = getattr(args, "registry", None)
-    for record in load_registry(registry_path):
+    for record in records:
         if bundle_members is not None and record["id"] not in bundle_members:
             continue
         if args.category and record["category"] != args.category:
