@@ -6,6 +6,9 @@ required observable fields, and a skill ID present in the generated registry.
 It does not claim to score an agent's reasoning. The observable workflow cases
 in `tests/fixtures/observable-agent-evaluations.json` additionally verify the
 required terms in all four workflow representative and boundary artifacts.
+The observable checker requires one representative and one boundary case for
+each of the four workflow skills. It rejects duplicate or invalid workflow/case
+pairs and empty required-term lists; its term checks do not grade reasoning.
 Codex Action reports are evidence from a configured run, not a substitute for
 these deterministic checks.
 
