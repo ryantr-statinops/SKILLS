@@ -17,17 +17,29 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
-def evaluate() -> list[dict[str, object]]:
-    cases = json.loads(FIXTURE.read_text(encoding="utf-8"))
+def evaluate_cases(cases: list[dict[str, object]]) -> list[dict[str, object]]:
     results = []
+    seen_pairs: set[tuple[str, str]] = set()
     for case in cases:
-        evaluation = ROOT / case["workflow"] / "examples/evaluation.md"
+        workflow = case["workflow"]
+        case_type = case["case"]
+        pair = (workflow, case_type)
+        duplicate = pair in seen_pairs
+        seen_pairs.add(pair)
+        evaluation = ROOT / workflow / "examples/evaluation.md"
         text = evaluation.read_text(encoding="utf-8")
-        heading = "## Representative task" if case["case"] == "representative" else "## Boundary task"
+        heading = "## Representative task" if case_type == "representative" else "## Boundary task"
         section = text.split(heading, 1)[1].split("\n## ", 1)[0]
         missing = [term for term in case["required_terms"] if term.lower() not in section.lower()]
-        results.append({"name": case["name"], "workflow": case["workflow"], "case": case["case"], "status": "passed" if not missing else "failed", "missing": missing})
+        if duplicate:
+            missing.append("duplicate workflow/case pair")
+        results.append({"name": case["name"], "workflow": workflow, "case": case_type, "status": "passed" if not missing else "failed", "missing": missing})
     return results
+
+
+def evaluate() -> list[dict[str, object]]:
+    cases = json.loads(FIXTURE.read_text(encoding="utf-8"))
+    return evaluate_cases(cases)
 
 
 def main() -> int:

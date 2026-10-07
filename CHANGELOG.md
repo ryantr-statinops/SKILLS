@@ -39,6 +39,7 @@ remain in each skill's frontmatter.
 - Consumer bundle filtering uses installed snapshots without source-tree access.
 - Skill evaluation cases with empty required fields no longer pass structural checks.
 - The skill validator rejects empty handoff contract values.
+- Observable evaluation checks reject duplicate workflow/case pairs.
 
 ## [0.1.0] - 2026-09-18
 
