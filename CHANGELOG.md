@@ -32,6 +32,7 @@ remain in each skill's frontmatter.
 - Installed catalogs use the current schema and preserve declared dependencies.
 - Discovery rejects non-object registries and invalid skill-list containers.
 - Discovery rejects incomplete or wrongly typed skill records before scoring.
+- External catalog failures report the requested path and original parse/read cause.
 
 ## [0.1.0] - 2026-09-18
 

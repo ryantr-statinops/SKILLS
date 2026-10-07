@@ -71,7 +71,11 @@ def load_registry(path: Path | None = None) -> list[dict[str, str]]:
     try:
         return normalize_registry(json.loads(path.read_text(encoding="utf-8")))
     except (OSError, KeyError, TypeError, ValueError, json.JSONDecodeError) as exc:
-        raise ValueError(f"invalid generated registry: {path.relative_to(ROOT)}") from exc
+        try:
+            display_path = path.relative_to(ROOT)
+        except ValueError:
+            display_path = path
+        raise ValueError(f"invalid registry {display_path}: {exc}") from exc
 
 
 def load_bundle_map() -> dict[str, set[str]]:

@@ -4,8 +4,8 @@ import json
 from pathlib import Path
 import subprocess
 import sys
+import tempfile
 import unittest
-
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPTS = ROOT / "scripts"
 sys.path.insert(0, str(SCRIPTS))
@@ -98,6 +98,23 @@ class DiscoveryBoundaryTests(unittest.TestCase):
         for record in (incomplete, wrong_type):
             with self.subTest(record=record), self.assertRaises(ValueError):
                 normalize_registry({"schema_version": 3, "skills": [record]})
+
+    def test_external_registry_errors_include_path_and_cause(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            missing = root / "missing.json"
+            malformed = root / "malformed.json"
+            malformed.write_text("{", encoding="utf-8")
+            for path, cause in ((missing, "No such file"), (malformed, "Expecting property name")):
+                result = subprocess.run(
+                    [sys.executable, str(SCRIPTS / "discover_skills.py"),
+                     "--registry", str(path), "debug"],
+                    cwd=ROOT, capture_output=True, text=True, check=False,
+                )
+                self.assertEqual(result.returncode, 1)
+                self.assertIn(str(path), result.stderr)
+                self.assertIn(cause, result.stderr)
+                self.assertNotIn("not in the subpath", result.stderr)
 
 if __name__ == "__main__":
     unittest.main()
