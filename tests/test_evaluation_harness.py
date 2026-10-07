@@ -107,5 +107,25 @@ class EvaluationHarnessTests(unittest.TestCase):
             self.assertEqual(failures, 1)
             self.assertIn("task must be a nonempty string", results[0]["errors"])
 
+    def test_routing_rejects_same_expected_and_boundary_skill(self) -> None:
+        fixture = {
+            "task": "Choose the test skill",
+            "expected_skill": "common/engineering/testing",
+            "boundary_skill": "common/engineering/testing",
+            "expected_explanation": True,
+            "confirmation": "never",
+            "expected_validation": True,
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            fixture_path = root / "tests/fixtures/agent-routing.json"
+            fixture_path.parent.mkdir(parents=True)
+            fixture_path.write_text(json.dumps([fixture]), encoding="utf-8")
+            records = {"common/engineering/testing": {"status": "experimental"}}
+            with patch("run_evaluations.ROOT", root):
+                results, failures = evaluate_routing(records)
+            self.assertEqual(failures, 1)
+            self.assertIn("boundary skill must differ from expected skill", results[0]["errors"])
+
 if __name__ == "__main__":
     unittest.main()

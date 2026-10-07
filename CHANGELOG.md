@@ -44,6 +44,7 @@ remain in each skill's frontmatter.
 - Observable checks reject empty or invalid required-term lists.
 - The evaluation harness rejects empty routing fixture collections.
 - Routing evaluation rejects empty or whitespace-only task descriptions.
+- Routing fixtures reject identical expected and boundary skills.
 
 ## [0.1.0] - 2026-09-18
 

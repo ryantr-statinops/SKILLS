@@ -155,6 +155,8 @@ def evaluate_routing(records: dict[str, dict[str, str]]) -> tuple[list[dict[str,
             errors.append(f"expected skill is deprecated: {expected}")
         if boundary is not None and boundary not in records:
             errors.append(f"boundary skill is absent from registry: {boundary}")
+        if boundary == expected:
+            errors.append("boundary skill must differ from expected skill")
         if confirmation not in CONFIRMATIONS:
             errors.append(f"invalid confirmation: {confirmation}")
         if fixture.get("expected_explanation") is not True:
