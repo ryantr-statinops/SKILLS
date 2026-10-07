@@ -19,9 +19,10 @@ description: What the skill does and when it applies.
 ```
 
 When one skill requires another, add an optional `requires` list containing
-canonical IDs such as `common/engineering/testing`. The registry records these
-dependencies and bundle validation resolves them transitively, rejects cycles,
-and rejects missing resources.
+canonical skill IDs such as `common/engineering/testing`. Registry validation
+checks every reference and dependency cycle across all skills, including skills
+outside bundles. Bundle validation additionally requires each bundle to include
+the transitive dependencies of its members.
 
 The body should explain activation boundaries, scope, workflow, decision rules,
 constraints, failure modes, and validation. Start from
