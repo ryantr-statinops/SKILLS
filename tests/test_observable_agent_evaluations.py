@@ -54,5 +54,14 @@ class ObservableAgentEvaluationTests(unittest.TestCase):
         self.assertEqual(invalid_results[0]["status"], "failed")
         self.assertIn("invalid case type", invalid_results[0]["missing"])
 
+    def test_empty_or_invalid_required_terms_fail(self) -> None:
+        cases = json.loads((ROOT / "tests/fixtures/observable-agent-evaluations.json").read_text(encoding="utf-8"))
+        for required_terms in ([], [" "] , [None]):
+            with self.subTest(required_terms=required_terms):
+                invalid = [dict(cases[0], required_terms=required_terms), *cases[1:]]
+                result = evaluate_cases(invalid)[0]
+                self.assertEqual(result["status"], "failed")
+                self.assertIn("required_terms must contain nonempty strings", result["missing"])
+
 if __name__ == "__main__":
     unittest.main()

@@ -44,11 +44,20 @@ def evaluate_cases(cases: list[dict[str, object]]) -> list[dict[str, object]]:
         pair = (workflow, case_type)
         duplicate = pair in seen_pairs
         seen_pairs.add(pair)
+        required_terms = case.get("required_terms")
+        if not isinstance(required_terms, list) or not required_terms or any(
+            not isinstance(term, str) or not term.strip() for term in required_terms
+        ):
+            missing = ["required_terms must contain nonempty strings"]
+            if duplicate:
+                missing.append("duplicate workflow/case pair")
+            results.append({"name": name, "workflow": workflow, "case": case_type, "status": "failed", "missing": missing})
+            continue
         evaluation = ROOT / workflow / "examples/evaluation.md"
         text = evaluation.read_text(encoding="utf-8")
         heading = "## Representative task" if case_type == "representative" else "## Boundary task"
         section = text.split(heading, 1)[1].split("\n## ", 1)[0]
-        missing = [term for term in case["required_terms"] if term.lower() not in section.lower()]
+        missing = [term for term in required_terms if term.lower() not in section.lower()]
         if duplicate:
             missing.append("duplicate workflow/case pair")
         results.append({"name": name, "workflow": workflow, "case": case_type, "status": "passed" if not missing else "failed", "missing": missing})
