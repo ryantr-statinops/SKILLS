@@ -258,7 +258,7 @@ def update_destination(
     changed = sorted(
         relative
         for relative in old_paths & new_paths
-        if old_files[relative] != sha256(new_relative[relative][0])
+        if not (destination / relative).exists() or old_files[relative] != sha256(new_relative[relative][0])
     )
     for relative in added:
         print(f"{'would add' if check else 'adding'} {destination / relative}")

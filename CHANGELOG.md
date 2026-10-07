@@ -24,6 +24,8 @@ remain in each skill's frontmatter.
 - Ordinary sync now rejects managed destinations; use --update with the
   complete selection.
 - Sync copy targets now collapse nested parent/child skills before installation.
+- Update now restores managed files deleted from a consumer installation.
+
 ## [0.1.0] - 2026-09-18
 
 ### Added

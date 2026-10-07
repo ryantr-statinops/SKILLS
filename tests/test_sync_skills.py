@@ -123,5 +123,21 @@ class SyncSkillsTests(unittest.TestCase):
             paths = [item["path"] for item in manifest["files"]]
             self.assertEqual(len(paths), len(set(paths)))
 
+    def test_update_restores_missing_managed_file(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            destination = Path(directory) / "skills"
+            selected = "common/engineering/testing"
+            installed = self.run_sync(str(destination), selected)
+            self.assertEqual(installed.returncode, 0, installed.stderr)
+            target = destination / selected / "SKILL.md"
+            target.unlink()
+            checked = self.run_sync("--update", "--check", str(destination), selected)
+            self.assertEqual(checked.returncode, 0, checked.stderr)
+            self.assertIn(f"would update {target}", checked.stdout)
+            self.assertFalse(target.exists())
+            updated = self.run_sync("--update", str(destination), selected)
+            self.assertEqual(updated.returncode, 0, updated.stderr)
+            self.assertEqual(target.read_bytes(), (ROOT / selected / "SKILL.md").read_bytes())
+
 if __name__ == "__main__":
     unittest.main()
