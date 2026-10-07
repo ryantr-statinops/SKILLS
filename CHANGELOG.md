@@ -26,6 +26,7 @@ remain in each skill's frontmatter.
 - Sync copy targets now collapse nested parent/child skills before installation.
 - Update now restores managed files deleted from a consumer installation.
 - Update preflights ancestor obstructions before copying managed files.
+- Update rejects managed and catalog paths with unexpected file types before writing.
 
 ## [0.1.0] - 2026-09-18
 

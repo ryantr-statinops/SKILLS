@@ -159,5 +159,43 @@ class SyncSkillsTests(unittest.TestCase):
             self.assertEqual(debug_skill.read_bytes(), debug_content)
             self.assertEqual(obstruction.read_text(encoding="utf-8"), "unmanaged file")
 
+    def test_update_rejects_directory_at_managed_file_target(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            destination = Path(directory) / "skills"
+            installed = self.run_sync(str(destination), "common/engineering/debugging")
+            self.assertEqual(installed.returncode, 0, installed.stderr)
+            manifest_path = destination / ".skill-sync.json"
+            manifest = manifest_path.read_bytes()
+            target = destination / "common/engineering/debugging/SKILL.md"
+            content = target.read_bytes()
+            target.unlink()
+            target.mkdir()
+            rejected = self.run_sync("--update", str(destination), "common/engineering/debugging")
+            self.assertEqual(rejected.returncode, 2)
+            self.assertIn(str(target), rejected.stderr)
+            self.assertEqual(manifest_path.read_bytes(), manifest)
+            self.assertTrue(target.is_dir())
+            self.assertEqual(content, (ROOT / "common/engineering/debugging/SKILL.md").read_bytes())
+
+    def test_update_rejects_nonfile_catalog_before_copying_content(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            destination = Path(directory) / "skills"
+            installed = self.run_sync(str(destination), "common/engineering/debugging")
+            self.assertEqual(installed.returncode, 0, installed.stderr)
+            manifest_path = destination / ".skill-sync.json"
+            manifest = manifest_path.read_bytes()
+            catalog = destination / ".skill-catalog.json"
+            catalog.unlink()
+            catalog.mkdir()
+            rejected = self.run_sync(
+                "--update", str(destination),
+                "common/engineering/debugging", "common/engineering/testing",
+            )
+            self.assertEqual(rejected.returncode, 2)
+            self.assertIn(str(catalog), rejected.stderr)
+            self.assertEqual(manifest_path.read_bytes(), manifest)
+            self.assertFalse((destination / "common/engineering/testing/SKILL.md").exists())
+            self.assertTrue(catalog.is_dir())
+
 if __name__ == "__main__":
     unittest.main()
