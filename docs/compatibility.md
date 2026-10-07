@@ -61,10 +61,12 @@ that runtime.
 Changes to the library must preserve existing consumer integrations unless a
 breaking change is explicitly documented.
 
-- Additive metadata fields require a migration path or a documented default
-  for readers of older registries.
-- Generated registry schema changes must update the schema version and keep a
-  compatibility reader when an older consumer can be supported safely.
+- The generated skill registry is schema version 3. Discovery reads versions 1–3;
+  old records without `requires` default to `[]`, while present dependency lists
+  are retained and validated. Sync writes the current schema on the next update.
+- Other additive metadata fields require a migration path or documented default.
+- Future registry schema changes must update the schema version and preserve a
+  compatibility reader when older consumers can be supported safely.
 - Sync changes must preserve the selected target layout, report conflicts, and
   provide a check or dry-run path before overwriting files.
 - A runtime adapter must not change the portable meaning of a `SKILL.md`.

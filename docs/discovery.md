@@ -29,7 +29,11 @@ Use `docs/skill-index.md` for human review and `data/skills.json` for tooling
 when working in this source repository. A consumer installation should use its
 `.skill-catalog.json` instead; it contains only the skills that were installed
 there and remains usable when the source registry is unavailable.
-Regenerate both after changing skill metadata:
+Installed catalogs use the generated registry schema (currently version 3),
+and discovery accepts schema versions 1–3. For older catalogs without `requires`,
+discovery defaults dependencies to an empty list; an existing `requires` list is
+preserved and validated. Re-sync to write the current catalog schema.
+Regenerate both after changing skill metadata.
 
 ```bash
 python3 scripts/generate_skill_index.py
