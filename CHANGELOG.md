@@ -17,6 +17,7 @@ remain in each skill's frontmatter.
 
 - Discovery now works from an installed catalog without the source registry.
 - Integration guidance now separates portable sync, native adapter, and runtime discovery recovery.
+- Native cutover guidance preserves existing skills and requires reviewed backup, smoke check, and owner-approved cleanup.
 - Evaluation reports now cover every meta skill entry, independent of promotion status.
 - Common and personal activation boundaries state concrete outcomes and nearby
   exclusions.

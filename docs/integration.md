@@ -151,6 +151,32 @@ python3 scripts/export_runtime_adapter.py \
   /path/to/project/.agent/skills /path/to/project/.agents/skills
 ```
 
+### Cut over an existing native skill root
+
+Keep `.agent/skills/` as the content source and build or update it first with
+the selected sync command. Do not point the exporter at an existing native tree
+until its contents are reviewed: the exporter refuses any conflicting
+destination and does not merge or overwrite files.
+
+1. Inventory `.agents/skills/` and classify each entry as user-managed, direct
+   copy, or previously generated adapter. Preserve user-managed and locally
+   edited content; do not infer ownership from directory names.
+2. Run the exporter with `--check` and inspect every proposed link. If any
+   destination already exists with different content, stop. Obtain approval for
+   a cutover, then move the reviewed old native root to a unique backup path
+   outside `.agents/skills/`. Never remove the backup during installation.
+3. Run the exporter without `--check` only after `.agents/skills/` has no
+   conflicting entries. Verify each generated link resolves to the intended
+   portable source and its resources.
+4. Use the runtime's native skill-list/debug command to verify the entrypoint
+   path and version, then exercise a representative task and a boundary task.
+5. If verification fails, preserve the new adapter and old backup for review.
+   Restore the previous root only after a reviewed rollback plan; do not merge
+   or overwrite either tree automatically. Remove the backup only after the new
+   runtime layout is accepted and the owner explicitly approves cleanup.
+
+The exporter is an additive link creator, not a migration or cleanup tool.
+
 ## Bringing in an existing skill
 
 When a user provides a skill from another repository or an existing local
