@@ -29,6 +29,7 @@ remain in each skill's frontmatter.
 - Update rejects managed and catalog paths with unexpected file types before writing.
 - Failed updates now remove newly created managed files.
 - Failed updates restore prior content and manifest/catalog state.
+- Installed catalogs use the current schema and preserve declared dependencies.
 
 ## [0.1.0] - 2026-09-18
 

@@ -13,6 +13,7 @@ import re
 import tempfile
 
 from bundles import load_bundle_registry, validate_bundle_registry
+from generate_skill_index import REGISTRY_SCHEMA_VERSION
 
 MARKDOWN_LINK_RE = re.compile(r"\[[^\]]+\]\(([^)]+)\)")
 MANIFEST_NAME = ".skill-sync.json"
@@ -196,7 +197,7 @@ def manifest_for(
 def catalog_for(source: Path, selected: list[str]) -> dict[str, object]:
     records = {str(record["id"]): record for record in load_source_skill_records(source)}
     return {
-        "schema_version": 2,
+        "schema_version": REGISTRY_SCHEMA_VERSION,
         "skills": [records[identifier] for identifier in selected],
     }
 

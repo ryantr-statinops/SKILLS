@@ -283,5 +283,32 @@ runpy.run_path(str(script), run_name="__main__")
             self.assertEqual(manifest_path.read_bytes(), manifest)
             self.assertEqual(catalog_path.read_bytes(), catalog)
 
+    def test_installed_catalog_preserves_workflow_dependencies(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            destination = Path(directory) / "skills"
+            synced = self.run_sync("--bundle", "feature-delivery", str(destination))
+            self.assertEqual(synced.returncode, 0, synced.stderr)
+            catalog_path = destination / ".skill-catalog.json"
+            catalog = json.loads(catalog_path.read_text(encoding="utf-8"))
+            self.assertEqual(catalog["schema_version"], 3)
+            query = subprocess.run(
+                [sys.executable, str(ROOT / "scripts/discover_skills.py"),
+                 "--registry", str(catalog_path), "--format", "json", "feature", "delivery"],
+                cwd=ROOT, capture_output=True, text=True, check=False,
+            )
+            self.assertEqual(query.returncode, 0, query.stderr)
+            candidates = json.loads(query.stdout)["skills"]
+            workflow = next(item for item in candidates if item["id"] == "common/workflow/feature-delivery")
+            self.assertEqual(
+                workflow["requires"],
+                [
+                    "common/foundation/requirements-analysis",
+                    "common/foundation/task-planning",
+                    "common/engineering/testing",
+                    "common/engineering/code-review",
+                    "common/delivery/change-review",
+                ],
+            )
+
 if __name__ == "__main__":
     unittest.main()

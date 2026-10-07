@@ -50,9 +50,9 @@ def normalize_registry(data: dict[str, object]) -> list[dict[str, str]]:
             item["invocation"] = "both"
         elif item.get("invocation") not in VALID_INVOCATIONS:
             raise ValueError("invalid invocation in registry")
-        if schema_version < 3:
+        if "requires" not in item:
             item["requires"] = []
-        elif not isinstance(item.get("requires"), list) or any(
+        if not isinstance(item["requires"], list) or any(
             not isinstance(value, str) for value in item["requires"]
         ):
             raise ValueError("invalid requires in registry")
