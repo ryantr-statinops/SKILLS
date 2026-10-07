@@ -347,5 +347,49 @@ runpy.run_path(str(script), run_name="__main__")
             self.assertTrue({skill["id"] for skill in skills}.issubset(members))
             self.assertIn("common/workflow/feature-delivery", {skill["id"] for skill in skills})
 
+    def test_sync_copies_reference_linked_resources(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            source = root / "source"
+            shutil.copytree(ROOT / "data", source / "data")
+            skill_id = "meta/markdown-link-demo"
+            skill = source / skill_id
+            skill.mkdir(parents=True)
+            (skill / "SKILL.md").write_text(
+                "---\nname: markdown-link-demo\ndescription: Test linked resource sync\n"
+                "category: meta\nsubject: testing\nscope: repository\nstatus: experimental\n"
+                "version: 1.0.0\ninvocation: user\nrequires: []\n---\n"
+                "[Guide][guide]\n\n[guide]: ../../shared/guide.md\n",
+                encoding="utf-8",
+            )
+            registry_path = source / "data/skills.json"
+            registry = json.loads(registry_path.read_text(encoding="utf-8"))
+            registry["skills"].append({
+                "id": skill_id,
+                "name": "markdown-link-demo",
+                "description": "Test linked resource sync",
+                "category": "meta",
+                "subject": "testing",
+                "scope": "repository",
+                "status": "experimental",
+                "version": "1.0.0",
+                "invocation": "user",
+                "path": f"{skill_id}/SKILL.md",
+                "requires": [],
+            })
+            registry_path.write_text(json.dumps(registry), encoding="utf-8")
+            guide = source / "shared/guide.md"
+            guide.parent.mkdir()
+            guide.write_text("shared guide content", encoding="utf-8")
+            destination = root / "consumer/skills"
+            checked = self.run_sync("--source", str(source), "--check", str(destination), skill_id)
+            self.assertEqual(checked.returncode, 0, checked.stderr)
+            self.assertIn("would sync shared/guide.md", checked.stdout)
+            synced = self.run_sync("--source", str(source), str(destination), skill_id)
+            self.assertEqual(synced.returncode, 0, synced.stderr)
+            self.assertEqual((destination / "shared/guide.md").read_text(encoding="utf-8"), "shared guide content")
+            manifest = json.loads((destination / ".skill-sync.json").read_text(encoding="utf-8"))
+            self.assertIn("shared/guide.md", {item["path"] for item in manifest["files"]})
+
 if __name__ == "__main__":
     unittest.main()

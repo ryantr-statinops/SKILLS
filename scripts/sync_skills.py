@@ -9,15 +9,15 @@ import json
 from pathlib import Path
 import shutil
 import sys
-import re
 import tempfile
 
 from bundles import load_bundle_registry, validate_bundle_registry
 from generate_skill_index import REGISTRY_SCHEMA_VERSION
+from markdown_links import extract_markdown_link_targets
 
-MARKDOWN_LINK_RE = re.compile(r"\[[^\]]+\]\(([^)]+)\)")
 MANIFEST_NAME = ".skill-sync.json"
 CATALOG_NAME = ".skill-catalog.json"
+
 
 
 def parse_args() -> argparse.Namespace:
@@ -125,8 +125,8 @@ def linked_resources(source: Path, skill: Path) -> list[Path]:
     """Return existing repository files referenced by a skill entrypoint."""
     entrypoint = skill / "SKILL.md"
     resources: list[Path] = []
-    for raw_target in MARKDOWN_LINK_RE.findall(entrypoint.read_text(encoding="utf-8")):
-        target = raw_target.split("#", 1)[0].strip().strip("<>")
+    for raw_target in extract_markdown_link_targets(entrypoint.read_text(encoding="utf-8")):
+        target = raw_target.split("#", 1)[0].strip()
         if not target or target.startswith(("http://", "https://", "mailto:")):
             continue
         resolved = (entrypoint.parent / target).resolve()
