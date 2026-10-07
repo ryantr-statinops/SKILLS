@@ -5,13 +5,15 @@ import json
 from pathlib import Path
 import subprocess
 import sys
+import tempfile
+from unittest.mock import patch
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPTS = ROOT / "scripts"
 sys.path.insert(0, str(SCRIPTS))
 
-from run_evaluations import CASE_FIELDS, CASE_SECTIONS, check_case  # noqa: E402
+from run_evaluations import CASE_FIELDS, CASE_SECTIONS, check_case, evaluate_routing  # noqa: E402
 
 
 class EvaluationHarnessTests(unittest.TestCase):
@@ -73,6 +75,17 @@ class EvaluationHarnessTests(unittest.TestCase):
         self.assertIn("missing Expected: in ## Boundary task", errors)
         self.assertIn("missing Failure condition: in ## Boundary task", errors)
         self.assertIn("missing Validation: in ## Boundary task", errors)
+
+    def test_empty_routing_fixture_is_rejected(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            fixture = root / "tests/fixtures/agent-routing.json"
+            fixture.parent.mkdir(parents=True)
+            fixture.write_text("[]\n", encoding="utf-8")
+            with patch("run_evaluations.ROOT", root), self.assertRaisesRegex(
+                ValueError, "routing fixture must not be empty"
+            ):
+                evaluate_routing({})
 
 if __name__ == "__main__":
     unittest.main()

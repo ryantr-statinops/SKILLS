@@ -130,7 +130,8 @@ def evaluate_routing(records: dict[str, dict[str, str]]) -> tuple[list[dict[str,
             raise TypeError("fixture is not a list")
     except (OSError, TypeError, json.JSONDecodeError) as exc:
         raise ValueError(f"invalid routing fixture: {fixture_path.relative_to(ROOT)}") from exc
-
+    if not fixtures:
+        raise ValueError(f"routing fixture must not be empty: {fixture_path.relative_to(ROOT)}")
     results = []
     failures = 0
     for index, fixture in enumerate(fixtures):

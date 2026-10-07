@@ -42,6 +42,7 @@ remain in each skill's frontmatter.
 - Observable evaluation checks reject duplicate workflow/case pairs.
 - Observable evaluation checks require both cases for all four workflows.
 - Observable checks reject empty or invalid required-term lists.
+- The evaluation harness rejects empty routing fixture collections.
 
 ## [0.1.0] - 2026-09-18
 
