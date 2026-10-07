@@ -60,5 +60,19 @@ class EvaluationHarnessTests(unittest.TestCase):
         )
         self.assertEqual(check_case(multiline, CASE_SECTIONS[0]), [])
 
+    def test_fields_in_representative_case_do_not_satisfy_boundary_case(self) -> None:
+        text = (
+            "## Representative task\n"
+            "Task: a representative request\n"
+            "Expected: observable result\n"
+            "Failure condition: unsafe result\n"
+            "Validation: inspect the artifact\n\n"
+            "## Boundary task\nTask: nearby excluded request\n"
+        )
+        errors = check_case(text, CASE_SECTIONS[1])
+        self.assertIn("missing Expected: in ## Boundary task", errors)
+        self.assertIn("missing Failure condition: in ## Boundary task", errors)
+        self.assertIn("missing Validation: in ## Boundary task", errors)
+
 if __name__ == "__main__":
     unittest.main()
