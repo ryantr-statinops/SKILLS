@@ -428,12 +428,12 @@
     {
       "id": "meta/skill-maintenance",
       "name": "skill-maintenance",
-      "description": "Maintain, refactor, version, and retire skills without causing routing drift or duplicated guidance.",
+      "description": "Maintain an existing SKILLS library entry through focused changes, migrations, compatibility checks, or retirement.",
       "category": "meta",
       "subject": "skill-system",
       "scope": "repository",
       "status": "stable",
-      "version": "1.0.0",
+      "version": "2.0.0",
       "invocation": "user",
       "path": "meta/skill-maintenance/SKILL.md",
       "requires": []
