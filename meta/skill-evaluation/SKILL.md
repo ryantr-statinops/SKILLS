@@ -1,11 +1,11 @@
 ---
 name: skill-evaluation
-description: Evaluate whether an Agent Skill produces useful, bounded, and repeatable behavior on realistic tasks.
+description: Assess a new or changed SKILLS entry for routing, procedure, safety boundaries, observable outcomes, and regression evidence.
 category: meta
 subject: skill-system
 scope: repository
 status: stable
-version: 1.0.0
+version: 2.0.0
 invocation: both
 ---
 
@@ -13,40 +13,63 @@ invocation: both
 
 ## When to use
 
-Use when reviewing a new or changed skill, diagnosing weak behavior, or deciding
-whether a skill is ready to publish.
+Use to assess a new or changed skill, diagnose weak behavior, or decide whether
+evidence supports promoting a skill. Evaluate the skill's stated representative
+and boundary tasks rather than relying on its prose alone.
+
+## When not to use
+
+Do not use this workflow to author or restructure the skill; use
+`meta/skill-authoring`. For duplicated, stale, or lifecycle issues use
+`meta/skill-maintenance`. For routing a domain task to an installed skill use
+`meta/skill-discovery`. This workflow does not implement domain tasks or publish
+a release.
 
 ## Workflow
 
-1. Choose one representative task and one boundary task.
-2. Record the expected behavior, required artifacts, and validation signals.
-3. Run the task with the skill available and inspect the actual output.
-4. Check routing, procedure, decisions, failure handling, and context usage.
-5. Record failures as a narrow change request; do not add broad rules without evidence.
-6. Re-run the representative and boundary tasks after changes.
+1. Read the skill entrypoint, its evaluation cases, and only the linked context
+   needed to judge them.
+2. Confirm each case has a representative or boundary task, observable expected
+   output, failure condition, and validation signal.
+3. Run the task with the skill available; inspect the artifact, decisions,
+   failure handling, resource use, and safety boundary.
+4. Separate static contract checks from observed runtime behavior. Record the
+   runtime/version and limits of the evidence; do not infer reasoning quality
+   from structural validation.
+5. Record a narrow change request for each concrete failure.
+6. After changes, rerun the representative and boundary tasks and compare the
+   observable outcomes.
 
 ## Quality checklist
 
-- The description activates for the intended task and excludes nearby tasks.
-- The procedure is actionable without duplicating general model knowledge.
-- References are loaded only when relevant.
-- Scripts, if present, are deterministic and tested.
-- The expected result and validation are observable.
-- Failure modes lead to safe, useful behavior.
+- The description activates for the intended outcome and excludes nearby work.
+- The procedure is actionable, bounded, and does not duplicate generic facts.
+- References are loaded only when they affect the evaluated task.
+- Scripts, if present, are deterministic and their failures are observable.
+- Expected artifacts, failure behavior, and validation are externally checkable.
+- Safety boundaries lead to safe behavior in both representative and boundary
+  cases.
 
 ## Evaluation levels
 
-- **Static:** structure, metadata, links, naming, and validator checks.
-- **Manual:** realistic task and boundary-task review.
-- **Regression:** repeat prior cases after a change.
+- **Static:** structure, metadata, resources, and validator results.
+- **Behavioral:** observed output from representative and boundary tasks in a
+  named runtime.
+- **Regression:** repeat prior cases after a skill change and compare artifacts.
 
-Agent-based evaluation is optional; use it when the skill is complex enough that
-independent behavioral review materially improves confidence.
+Agent-based evaluation is optional. Use it only when independent behavior
+evidence materially improves confidence and the runtime/API action is authorized.
+
+## Expected output and validation
+
+Report each case, observed artifact, pass/fail reason, checks run, runtime/version
+when applicable, and remaining uncertainty. Static results must not be described
+as behavioral proof.
 
 ## Agent handoff
 
-- Selected when: The task changes authoring, discovery, evaluation, intake, or maintenance of this skill library.
-- Do not activate when: The task is domain implementation unrelated to the skill system.
-- Expected output: Produce a bounded skill-system decision, artifact, or validation result.
-- User-facing report: Summarize the rule applied, files or registry affected, checks, and risks.
-- Confirmation boundary: Ask before destructive repository changes, external writes, or irreversible lifecycle actions.
+- Selected when: A new or changed SKILLS entry needs evidence-based review or a promotion-readiness decision.
+- Do not activate when: The task is authoring, routine skill selection, domain implementation, or release publication.
+- Expected output: Representative/boundary findings with observed artifacts, failures, validation, and evidence limits.
+- User-facing report: State what was exercised, what passed or failed, concrete follow-up, and unresolved uncertainty.
+- Confirmation boundary: Ask before external model/API evaluation, publishing, or irreversible lifecycle changes.

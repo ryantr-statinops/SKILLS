@@ -50,6 +50,7 @@ remain in each skill's frontmatter.
 - Sync resource discovery uses the shared Markdown-aware destination parser.
 - Skill discovery v2 supports universal consumer routing with explicit workflow boundaries.
 - Skill authoring v2 narrows activation to authoring work and explicit skill outputs.
+- Skill evaluation v2 separates static contracts from observed behavior and scope.
 
 ## [0.1.0] - 2026-09-18
 

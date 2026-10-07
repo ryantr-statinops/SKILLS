@@ -402,12 +402,12 @@
     {
       "id": "meta/skill-evaluation",
       "name": "skill-evaluation",
-      "description": "Evaluate whether an Agent Skill produces useful, bounded, and repeatable behavior on realistic tasks.",
+      "description": "Assess a new or changed SKILLS entry for routing, procedure, safety boundaries, observable outcomes, and regression evidence.",
       "category": "meta",
       "subject": "skill-system",
       "scope": "repository",
       "status": "stable",
-      "version": "1.0.0",
+      "version": "2.0.0",
       "invocation": "both",
       "path": "meta/skill-evaluation/SKILL.md",
       "requires": []
