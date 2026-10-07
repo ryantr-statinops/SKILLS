@@ -41,6 +41,15 @@ explain why unrelated children were not loaded. Leaf skills should make it
 identify the expected workflow output. Draft scaffolds should explicitly state
 when they must decline activation or defer to another skill.
 
+## Routing fixture contract
+
+`tests/fixtures/agent-routing.json` must contain at least one case. Every
+`task` must be nonempty. `expected_skill` must exist in the registry; an optional
+`boundary_skill` must also exist and, when present, differ from the expected skill.
+`expected_explanation` and `expected_validation` must be `true`, and `confirmation`
+must use an allowed value. These fixtures validate structural routing claims; they
+do not establish that an agent actually made the choice.
+
 ## Harness boundary
 
 The repository harness validates the contract and registry references. It does
