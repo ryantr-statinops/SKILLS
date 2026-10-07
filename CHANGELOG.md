@@ -52,6 +52,7 @@ remain in each skill's frontmatter.
 - Skill authoring v2 narrows activation to authoring work and explicit skill outputs.
 - Skill evaluation v2 separates static contracts from observed behavior and scope.
 - Skill intake v2 records evidence, disposition, license duties, and authoring/evaluation handoff.
+- Skill maintenance v2 covers caller migration, compatibility, and lifecycle scope.
 
 ### Added
 
