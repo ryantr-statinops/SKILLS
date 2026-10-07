@@ -35,6 +35,7 @@ remain in each skill's frontmatter.
 - External catalog failures report the requested path and original parse/read cause.
 - Registry generation and validation reject missing skill dependencies globally.
 - Registry generation and validation reject dependency cycles outside bundles.
+- Installed catalogs snapshot bundle membership for source-independent filtering.
 
 ## [0.1.0] - 2026-09-18
 

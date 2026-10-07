@@ -194,12 +194,17 @@ def manifest_for(
     }
 
 
-def catalog_for(source: Path, selected: list[str]) -> dict[str, object]:
+def catalog_for(
+    source: Path, selected: list[str], bundle: str | None = None
+) -> dict[str, object]:
     records = {str(record["id"]): record for record in load_source_skill_records(source)}
-    return {
+    catalog: dict[str, object] = {
         "schema_version": REGISTRY_SCHEMA_VERSION,
         "skills": [records[identifier] for identifier in selected],
     }
+    if bundle is not None:
+        catalog["bundles"] = {bundle: selected}
+    return catalog
 
 
 def flattened_files(targets: list[tuple[Path, Path]]) -> dict[str, tuple[Path, Path]]:
@@ -309,7 +314,7 @@ def update_destination(
                 encoding="utf-8",
             )
             (destination / CATALOG_NAME).write_text(
-                json.dumps(catalog_for(source, selected), indent=2, ensure_ascii=False) + "\n",
+                json.dumps(catalog_for(source, selected, bundle), indent=2, ensure_ascii=False) + "\n",
                 encoding="utf-8",
             )
         except Exception:
@@ -389,7 +394,7 @@ def main() -> int:
             encoding="utf-8",
         )
         (destination / CATALOG_NAME).write_text(
-            json.dumps(catalog_for(source, selected), indent=2, ensure_ascii=False) + "\n",
+            json.dumps(catalog_for(source, selected, args.bundle), indent=2, ensure_ascii=False) + "\n",
             encoding="utf-8",
         )
 

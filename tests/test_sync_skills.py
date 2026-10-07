@@ -310,5 +310,17 @@ runpy.run_path(str(script), run_name="__main__")
                 ],
             )
 
+    def test_installed_catalog_snapshots_bundle_membership(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            destination = Path(directory) / "skills"
+            synced = self.run_sync("--bundle", "feature-delivery", str(destination))
+            self.assertEqual(synced.returncode, 0, synced.stderr)
+            catalog = json.loads((destination / ".skill-catalog.json").read_text(encoding="utf-8"))
+            installed_ids = {skill["id"] for skill in catalog["skills"]}
+            members = set(catalog["bundles"]["feature-delivery"])
+            self.assertIn("common/workflow/feature-delivery", members)
+            self.assertIn("common/engineering/testing", members)
+            self.assertTrue(members.issubset(installed_ids))
+
 if __name__ == "__main__":
     unittest.main()
