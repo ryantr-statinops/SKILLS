@@ -30,7 +30,6 @@
         "common/engineering/testing",
         "common/engineering/refactoring",
         "common/engineering/code-review",
-        "common/engineering/dependency-management",
         "common/engineering/documentation",
         "common/agent/failure-recovery"
       ]

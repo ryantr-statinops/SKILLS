@@ -33,7 +33,6 @@ preferences in `personal/` and skill-system procedures in `meta/`.
 - [testing](engineering/testing/SKILL.md)
 - [refactoring](engineering/refactoring/SKILL.md)
 - [code-review](engineering/code-review/SKILL.md)
-- [dependency-management](engineering/dependency-management/SKILL.md)
 - [documentation](engineering/documentation/SKILL.md)
 
 ### Research

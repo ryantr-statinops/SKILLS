@@ -74,7 +74,7 @@
   {
     "task": "Choose a technology for a new personal project before implementation.",
     "expected_skill": "personal/decision/technology-selection",
-    "boundary_skill": "common/engineering/dependency-management",
+    "boundary_skill": "common/research/research",
     "expected_explanation": true,
     "confirmation": "never",
     "expected_validation": true

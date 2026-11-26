@@ -106,19 +106,6 @@
       "requires": []
     },
     {
-      "id": "common/engineering/dependency-management",
-      "name": "dependency-management",
-      "description": "Safely inspect, add, update, or remove software dependencies while considering compatibility, security, and reproducibility.",
-      "category": "common",
-      "subject": "engineering",
-      "scope": "universal",
-      "status": "experimental",
-      "version": "1.0.0",
-      "invocation": "both",
-      "path": "common/engineering/dependency-management/SKILL.md",
-      "requires": []
-    },
-    {
       "id": "common/engineering/documentation",
       "name": "documentation",
       "description": "Create or update technical documentation so users can understand, use, and verify a system or change.",
