@@ -314,19 +314,6 @@
       "requires": []
     },
     {
-      "id": "personal/decision/scope-control",
-      "name": "scope-control",
-      "description": "Protect a personal project from uncontrolled expansion by separating current commitments, experiments, and future ideas.",
-      "category": "personal",
-      "subject": "decision",
-      "scope": "personal",
-      "status": "experimental",
-      "version": "1.0.0",
-      "invocation": "both",
-      "path": "personal/decision/scope-control/SKILL.md",
-      "requires": []
-    },
-    {
       "id": "personal/decision/technology-selection",
       "name": "technology-selection",
       "description": "Select a technology for a personal project using explicit requirements, trade-offs, complexity, and maintainability criteria.",
@@ -470,22 +457,9 @@
       "requires": []
     },
     {
-      "id": "personal/product/mvp-design",
-      "name": "mvp-design",
-      "description": "Shape a small personal product MVP that tests its highest-risk assumption with a coherent user outcome.",
-      "category": "personal",
-      "subject": "product",
-      "scope": "personal",
-      "status": "experimental",
-      "version": "1.0.0",
-      "invocation": "both",
-      "path": "personal/product/mvp-design/SKILL.md",
-      "requires": []
-    },
-    {
       "id": "personal/product/project-scoping",
       "name": "project-scoping",
-      "description": "Define the outcome, users, constraints, boundaries, and success criteria of a personal software project before implementation.",
+      "description": "Define the outcome, MVP, constraints, scope boundaries, and success criteria of a personal project while protecting against uncontrolled expansion.",
       "category": "personal",
       "subject": "product",
       "scope": "personal",
