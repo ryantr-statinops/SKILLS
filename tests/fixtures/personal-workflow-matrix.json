@@ -10,8 +10,8 @@
   },
   {
     "name": "backend-api",
-    "representative_query": "backend API contracts validation errors client behavior",
-    "expected_skill": "personal/engineering/backend/api-design",
+    "representative_query": "backend services boundaries contracts persistence security failure testing",
+    "expected_skill": "personal/engineering/backend/core",
     "boundary_query": "Explain regression statistics uncertainty",
     "boundary_skill": "personal/statistics",
     "artifact_or_validation": "API contract, validation, and error behavior",
@@ -21,8 +21,8 @@
     "name": "data-engineering",
     "representative_query": "personal data engineering foundations contracts lineage quality storage",
     "expected_skill": "personal/engineering/data/core",
-    "boundary_query": "Design API contracts validation errors",
-    "boundary_skill": "personal/engineering/backend/api-design",
+    "boundary_query": "Design backend service boundaries contracts persistence",
+    "boundary_skill": "personal/engineering/backend/core",
     "artifact_or_validation": "pipeline inputs, transformations, quality checks, and lineage",
     "reason": "An API contract task belongs to backend design."
   },

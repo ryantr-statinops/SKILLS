@@ -262,19 +262,6 @@
       "requires": []
     },
     {
-      "id": "personal/engineering/backend/api-design",
-      "name": "api-design",
-      "description": "Design personal service APIs with explicit contracts, validation, errors, compatibility, and usable client behavior.",
-      "category": "personal",
-      "subject": "backend",
-      "scope": "personal",
-      "status": "experimental",
-      "version": "1.0.0",
-      "invocation": "both",
-      "path": "personal/engineering/backend/api-design/SKILL.md",
-      "requires": []
-    },
-    {
       "id": "personal/engineering/backend/core",
       "name": "core",
       "description": "Design personal backend services around boundaries, contracts, persistence, security, failure behavior, testing, and operations.",
@@ -298,19 +285,6 @@
       "version": "1.0.0",
       "invocation": "both",
       "path": "personal/engineering/backend/nodejs/SKILL.md",
-      "requires": []
-    },
-    {
-      "id": "personal/engineering/backend/service-architecture",
-      "name": "service-architecture",
-      "description": "Shape personal backend service architecture around ownership, boundaries, data flow, operability, and change cost.",
-      "category": "personal",
-      "subject": "backend",
-      "scope": "personal",
-      "status": "experimental",
-      "version": "1.0.0",
-      "invocation": "both",
-      "path": "personal/engineering/backend/service-architecture/SKILL.md",
       "requires": []
     },
     {

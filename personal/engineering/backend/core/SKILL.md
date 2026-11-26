@@ -15,10 +15,8 @@ Use this skill before choosing a backend language, framework, service boundary, 
 
 ## When to use
 
-Use when a task involves service ownership, APIs, domain logic, persistence, authentication, asynchronous work, or backend operations. Route to narrower skills after the foundation is clear:
+Use when a task involves service ownership, APIs, domain logic, persistence, authentication, asynchronous work, or backend operations. See [the API & service architecture reference](references/api-and-architecture.md) for detailed contract and boundary checklists. Route to narrower skills after the foundation is clear:
 
-- `api-design` for a concrete HTTP, RPC, event, or internal contract.
-- `service-architecture` for service ownership, boundaries, and data flow.
 - `go`, `python`, or `nodejs` for runtime-specific implementation.
 - `personal/engineering/core` for lower-level algorithm, systems, or performance trade-offs.
 
