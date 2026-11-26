@@ -67,19 +67,6 @@
       "requires": []
     },
     {
-      "id": "common/delivery/release",
-      "name": "release",
-      "description": "Prepare a software release by checking versioning, tests, artifacts, changes, migrations, and release readiness.",
-      "category": "common",
-      "subject": "delivery",
-      "scope": "universal",
-      "status": "experimental",
-      "version": "1.0.0",
-      "invocation": "user",
-      "path": "common/delivery/release/SKILL.md",
-      "requires": []
-    },
-    {
       "id": "common/engineering/code-review",
       "name": "code-review",
       "description": "Review a code change for correctness, maintainability, security risk, regression risk, and test adequacy.",
