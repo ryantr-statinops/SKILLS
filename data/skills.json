@@ -106,19 +106,6 @@
       "requires": []
     },
     {
-      "id": "common/engineering/documentation",
-      "name": "documentation",
-      "description": "Create or update technical documentation so users can understand, use, and verify a system or change.",
-      "category": "common",
-      "subject": "engineering",
-      "scope": "universal",
-      "status": "experimental",
-      "version": "1.0.0",
-      "invocation": "both",
-      "path": "common/engineering/documentation/SKILL.md",
-      "requires": []
-    },
-    {
       "id": "common/engineering/git-workflow",
       "name": "git-workflow",
       "description": "Inspect and safely modify Git repositories, including status, branches, diffs, commits, and synchronization.",
