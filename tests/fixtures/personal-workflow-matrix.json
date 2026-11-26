@@ -48,8 +48,8 @@
     "name": "debugging-routing",
     "representative_query": "debugging software failures reproducing isolating hypothesizing root cause",
     "expected_skill": "common/engineering/debugging",
-    "boundary_query": "Choose a technology for a personal project",
-    "boundary_skill": "personal/decision/technology-selection",
+    "boundary_query": "Evaluate architecture trade-offs and select technologies for personal systems",
+    "boundary_skill": "personal/decision/architecture-tradeoff",
     "artifact_or_validation": "reproduction evidence, root cause, fix, and verification",
     "reason": "Technology selection is a decision task, not debugging."
   },

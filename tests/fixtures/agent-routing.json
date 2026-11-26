@@ -73,7 +73,7 @@
   },
   {
     "task": "Choose a technology for a new personal project before implementation.",
-    "expected_skill": "personal/decision/technology-selection",
+    "expected_skill": "personal/decision/architecture-tradeoff",
     "boundary_skill": "common/research/research",
     "expected_explanation": true,
     "confirmation": "never",

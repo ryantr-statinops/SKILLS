@@ -1,6 +1,6 @@
 ---
 name: architecture-tradeoff
-description: Make explicit architecture trade-offs for personal systems across simplicity, performance, reliability, cost, and changeability.
+description: Select technologies, review architecture fit, and evaluate trade-offs for personal systems across simplicity, performance, reliability, cost, and changeability.
 category: personal
 subject: decision
 scope: personal
@@ -12,22 +12,22 @@ invocation: both
 # Architecture trade-offs
 
 ## When to use
-Use when two or more architecture options are viable and the choice has future cost.
+Use when choosing a language, framework, database, or architecture option, or reviewing an existing architecture for fit, simplicity, and future change cost.
 
 ## Personal principles
-Prefer reversible decisions and visible operational complexity.
+Prefer understandable, inspectable, reversible decisions and visible operational complexity maintainable by one person.
 
 ## Workflow
-1. State the decision and constraints.
-2. Model options, data flow, failure modes, and ownership.
-3. Compare short-term and long-term costs.
-4. Choose, record rationale, and define a revisit trigger.
+1. State the decision, workload, constraints, and weighted criteria.
+2. Map components, data flow, failure modes, ownership, lock-in, and learning cost.
+3. Compare viable candidates and short-term vs long-term maintenance costs.
+4. Choose a default, record rationale, and define a revisit trigger.
 
 ## Decision rules
-Do not optimize for hypothetical scale at the cost of current learning.
+Do not choose popularity as a substitute for fit; do not introduce distributed infrastructure or optimize for hypothetical scale over current learning.
 
 ## Constraints
-Include maintenance and debugging cost, not only performance.
+Include maintenance, operations, and debugging cost, not only performance; separate current requirements from speculative scale.
 
 ## Failure modes
 If trade-offs cannot be measured, propose a bounded experiment.

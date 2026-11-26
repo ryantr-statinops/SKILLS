@@ -303,7 +303,7 @@
     {
       "id": "personal/decision/architecture-tradeoff",
       "name": "architecture-tradeoff",
-      "description": "Make explicit architecture trade-offs for personal systems across simplicity, performance, reliability, cost, and changeability.",
+      "description": "Select technologies, review architecture fit, and evaluate trade-offs for personal systems across simplicity, performance, reliability, cost, and changeability.",
       "category": "personal",
       "subject": "decision",
       "scope": "personal",
@@ -311,19 +311,6 @@
       "version": "1.0.0",
       "invocation": "both",
       "path": "personal/decision/architecture-tradeoff/SKILL.md",
-      "requires": []
-    },
-    {
-      "id": "personal/decision/technology-selection",
-      "name": "technology-selection",
-      "description": "Select a technology for a personal project using explicit requirements, trade-offs, complexity, and maintainability criteria.",
-      "category": "personal",
-      "subject": "decision",
-      "scope": "personal",
-      "status": "experimental",
-      "version": "1.0.0",
-      "invocation": "both",
-      "path": "personal/decision/technology-selection/SKILL.md",
       "requires": []
     },
     {
@@ -441,19 +428,6 @@
       "version": "1.0.0",
       "invocation": "both",
       "path": "personal/engineering/backend/python/SKILL.md",
-      "requires": []
-    },
-    {
-      "id": "personal/product/architecture-review",
-      "name": "architecture-review",
-      "description": "Review a personal project architecture for fit, simplicity, boundaries, operability, and future change cost.",
-      "category": "personal",
-      "subject": "product",
-      "scope": "personal",
-      "status": "experimental",
-      "version": "1.0.0",
-      "invocation": "both",
-      "path": "personal/product/architecture-review/SKILL.md",
       "requires": []
     },
     {
