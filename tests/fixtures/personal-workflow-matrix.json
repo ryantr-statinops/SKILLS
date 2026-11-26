@@ -45,9 +45,9 @@
     "reason": "Document authoring is outside quantitative research."
   },
   {
-    "name": "personal-debugging",
-    "representative_query": "personal debugging reproduce isolate fix verify",
-    "expected_skill": "personal/workflow/personal-debugging",
+    "name": "debugging-routing",
+    "representative_query": "debugging software failures reproducing isolating hypothesizing root cause",
+    "expected_skill": "common/engineering/debugging",
     "boundary_query": "Choose a technology for a personal project",
     "boundary_skill": "personal/decision/technology-selection",
     "artifact_or_validation": "reproduction evidence, root cause, fix, and verification",

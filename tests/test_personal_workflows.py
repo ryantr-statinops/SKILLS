@@ -28,15 +28,6 @@ def args_for(query: str):
 
 
 class PersonalWorkflowMatrixTests(unittest.TestCase):
-    def test_personal_routers_name_exclusions_and_child_boundaries(self) -> None:
-        expectations = {
-            "personal/workflow/personal-debugging": ("reproducible root-cause investigation", "selecting a technology"),
-        }
-        for identifier, terms in expectations.items():
-            text = (ROOT / identifier / "SKILL.md").read_text(encoding="utf-8")
-            for term in terms:
-                self.assertIn(term, text, identifier)
-
     def test_representative_and_boundary_queries_route_as_expected(self) -> None:
         matrix = json.loads(
             (ROOT / "tests/fixtures/personal-workflow-matrix.json").read_text(

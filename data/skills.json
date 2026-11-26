@@ -626,19 +626,6 @@
       "requires": []
     },
     {
-      "id": "personal/workflow/personal-debugging",
-      "name": "personal-debugging",
-      "description": "Apply Ryan's evidence-first debugging workflow to reproduce, isolate, fix, and verify a personal project failure.",
-      "category": "personal",
-      "subject": "workflow",
-      "scope": "personal",
-      "status": "experimental",
-      "version": "1.0.0",
-      "invocation": "both",
-      "path": "personal/workflow/personal-debugging/SKILL.md",
-      "requires": []
-    },
-    {
       "id": "personal/workflow/personal-research",
       "name": "personal-research",
       "description": "Conduct focused personal technical research that turns evidence into an engineering or product decision.",
