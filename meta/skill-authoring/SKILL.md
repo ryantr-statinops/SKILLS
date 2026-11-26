@@ -42,6 +42,7 @@ implementation guidance.
   work.
 - Make descriptions distinguish nearby skills and match the body boundaries.
 - Keep runtime-specific behavior in adapters, not portable skill metadata.
+- When merging, splitting, or retiring an existing skill, migrate all callers, `requires`, bundles, and tests before removing the retired path.
 
 ## Constraints
 

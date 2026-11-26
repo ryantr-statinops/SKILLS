@@ -249,19 +249,6 @@
       "requires": []
     },
     {
-      "id": "meta/skill-maintenance",
-      "name": "skill-maintenance",
-      "description": "Maintain an existing SKILLS library entry through focused changes, migrations, compatibility checks, or retirement.",
-      "category": "meta",
-      "subject": "skill-system",
-      "scope": "repository",
-      "status": "stable",
-      "version": "2.0.0",
-      "invocation": "user",
-      "path": "meta/skill-maintenance/SKILL.md",
-      "requires": []
-    },
-    {
       "id": "personal/engineering/ai",
       "name": "ai",
       "description": "Route personal AI engineering work through a shared foundation for ML, LLM, agent, evaluation, and production system decisions.",
