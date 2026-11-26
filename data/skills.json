@@ -15,58 +15,6 @@
       "requires": []
     },
     {
-      "id": "common/data/data-cleaning",
-      "name": "data-cleaning",
-      "description": "Clean invalid, duplicate, missing, or inconsistent records while preserving traceability and stated assumptions.",
-      "category": "common",
-      "subject": "data",
-      "scope": "universal",
-      "status": "experimental",
-      "version": "1.0.0",
-      "invocation": "both",
-      "path": "common/data/data-cleaning/SKILL.md",
-      "requires": []
-    },
-    {
-      "id": "common/data/data-inspection",
-      "name": "data-inspection",
-      "description": "Profile a dataset's shape, schema, quality, and distributions before transforming or analyzing it.",
-      "category": "common",
-      "subject": "data",
-      "scope": "universal",
-      "status": "experimental",
-      "version": "1.0.0",
-      "invocation": "both",
-      "path": "common/data/data-inspection/SKILL.md",
-      "requires": []
-    },
-    {
-      "id": "common/data/reproducible-analysis",
-      "name": "reproducible-analysis",
-      "description": "Structure data analysis so inputs, transformations, outputs, assumptions, and execution steps can be repeated and audited.",
-      "category": "common",
-      "subject": "data",
-      "scope": "universal",
-      "status": "experimental",
-      "version": "1.0.0",
-      "invocation": "both",
-      "path": "common/data/reproducible-analysis/SKILL.md",
-      "requires": []
-    },
-    {
-      "id": "common/data/schema-validation",
-      "name": "schema-validation",
-      "description": "Validate data structure, types, constraints, and compatibility before analysis, transfer, or loading.",
-      "category": "common",
-      "subject": "data",
-      "scope": "universal",
-      "status": "experimental",
-      "version": "1.0.0",
-      "invocation": "both",
-      "path": "common/data/schema-validation/SKILL.md",
-      "requires": []
-    },
-    {
       "id": "common/engineering/code-review",
       "name": "code-review",
       "description": "Review a code change for correctness, maintainability, security risk, regression risk, and test adequacy.",
@@ -239,12 +187,7 @@
       "version": "1.1.0",
       "invocation": "user",
       "path": "common/workflow/data-analysis/SKILL.md",
-      "requires": [
-        "common/data/data-inspection",
-        "common/data/data-cleaning",
-        "common/data/schema-validation",
-        "common/data/reproducible-analysis"
-      ]
+      "requires": []
     },
     {
       "id": "common/workflow/feature-delivery",

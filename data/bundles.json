@@ -80,11 +80,7 @@
       "runtime_target": "portable",
       "allow_deprecated": false,
       "skills": [
-        "common/workflow/data-analysis",
-        "common/data/data-inspection",
-        "common/data/data-cleaning",
-        "common/data/schema-validation",
-        "common/data/reproducible-analysis"
+        "common/workflow/data-analysis"
       ]
     },
     {

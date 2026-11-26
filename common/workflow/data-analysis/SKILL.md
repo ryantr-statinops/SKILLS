@@ -7,7 +7,6 @@ scope: universal
 status: stable
 version: 1.1.0
 invocation: user
-requires: [common/data/data-inspection, common/data/data-cleaning, common/data/schema-validation, common/data/reproducible-analysis]
 ---
 
 # Data analysis
@@ -52,6 +51,7 @@ and interpretation.
 
 ## Supporting resources
 
+- [`data-checklist.md`](references/data-checklist.md) — detailed inspection, schema validation, cleaning, and reproducibility checklists.
 - [`CONTEXT.md` template](../../../templates/CONTEXT.md) — copy into a consumer project when shared context is missing.
 - [`data-analysis-report.md`](../../../templates/data-analysis-report.md) — use for analysis output.
 - [`handoff.md`](../../../templates/handoff.md) — use for final handoff output.

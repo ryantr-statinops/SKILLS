@@ -37,13 +37,6 @@ preferences in `personal/` and skill-system procedures in `meta/`.
 
 - [research](research/research/SKILL.md)
 
-### Data
-
-- [data-inspection](data/data-inspection/SKILL.md)
-- [data-cleaning](data/data-cleaning/SKILL.md)
-- [schema-validation](data/schema-validation/SKILL.md)
-- [reproducible-analysis](data/reproducible-analysis/SKILL.md)
-
 ### Security
 
 - [security-review](security/security-review/SKILL.md)
