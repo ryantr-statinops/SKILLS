@@ -17,7 +17,7 @@
   },
   {
     "task": "Ingest source files, validate records, and schedule a data workflow.",
-    "expected_skill": "personal/engineering/data/pipelines",
+    "expected_skill": "personal/engineering/data/core",
     "boundary_skill": "personal/engineering/backend/nodejs",
     "expected_explanation": true,
     "confirmation": "before_mutation",
@@ -50,7 +50,7 @@
   {
     "task": "Explain a regression result with descriptive summaries, assumptions, uncertainty, residual diagnostics, and a time-aware validation split.",
     "expected_skill": "personal/statistics",
-    "boundary_skill": "personal/engineering/data/pipelines",
+    "boundary_skill": "personal/engineering/data/core",
     "expected_explanation": true,
     "confirmation": "never",
     "expected_validation": true

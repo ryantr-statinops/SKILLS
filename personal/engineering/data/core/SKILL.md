@@ -15,12 +15,7 @@ Use this skill to design the data lifecycle before selecting a pipeline framewor
 
 ## When to use
 
-Use when a task involves the meaning, ownership, movement, quality, storage, or operational recovery of data. Route to a narrower child skill after the foundation is clear:
-
-- `databases` for storage and query design.
-- `pipelines` for concrete transformations and data flows.
-- `orchestration` for scheduling, retries, dependencies, and operations.
-- `personal/statistics` for deeper probability, inference, regression, or time-series reasoning.
+Use when a task involves the meaning, ownership, movement, quality, storage, or operational recovery of data. See [the storage, pipelines & orchestration reference](references/databases-pipelines-orchestration.md) for detailed checklists. Route to `personal/statistics` for deeper probability, inference, regression, or time-series reasoning.
 
 ## Personal principles
 

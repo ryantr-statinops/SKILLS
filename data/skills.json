@@ -379,19 +379,6 @@
       "requires": []
     },
     {
-      "id": "personal/engineering/data/databases",
-      "name": "databases",
-      "description": "Choose and design personal data storage and query patterns based on workload, consistency, scale, and operational simplicity.",
-      "category": "personal",
-      "subject": "engineering",
-      "scope": "personal",
-      "status": "experimental",
-      "version": "1.0.0",
-      "invocation": "both",
-      "path": "personal/engineering/data/databases/SKILL.md",
-      "requires": []
-    },
-    {
       "id": "personal/engineering/infrastructure/docker",
       "name": "docker",
       "description": "Design and troubleshoot personal Docker images and compose environments with reproducibility and minimal operational complexity.",
@@ -454,32 +441,6 @@
       "version": "1.0.0",
       "invocation": "both",
       "path": "personal/engineering/infrastructure/networking/SKILL.md",
-      "requires": []
-    },
-    {
-      "id": "personal/engineering/data/orchestration",
-      "name": "orchestration",
-      "description": "Plan and operate personal data workflow scheduling with dependencies, retries, observability, and ownership.",
-      "category": "personal",
-      "subject": "engineering",
-      "scope": "personal",
-      "status": "experimental",
-      "version": "1.0.0",
-      "invocation": "both",
-      "path": "personal/engineering/data/orchestration/SKILL.md",
-      "requires": []
-    },
-    {
-      "id": "personal/engineering/data/pipelines",
-      "name": "pipelines",
-      "description": "Design personal data pipelines with explicit inputs, transformations, outputs, quality checks, and reproducible execution.",
-      "category": "personal",
-      "subject": "engineering",
-      "scope": "personal",
-      "status": "experimental",
-      "version": "1.0.0",
-      "invocation": "both",
-      "path": "personal/engineering/data/pipelines/SKILL.md",
       "requires": []
     },
     {
