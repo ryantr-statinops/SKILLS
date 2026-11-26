@@ -5,7 +5,7 @@
     "common/workflow/bug-fixing",
     "common/workflow/research-decision",
     "common/workflow/data-analysis",
-    "common/agent/context-loading",
+    "common/foundation/context-management",
     "common/agent/failure-recovery",
     "common/foundation/repository-onboarding",
     "common/foundation/requirements-analysis",

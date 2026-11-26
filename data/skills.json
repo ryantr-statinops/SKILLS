@@ -2,19 +2,6 @@
   "schema_version": 3,
   "skills": [
     {
-      "id": "common/agent/context-loading",
-      "name": "context-loading",
-      "description": "Select and load only the context needed for an agent task while preserving evidence for correct decisions.",
-      "category": "common",
-      "subject": "agent",
-      "scope": "universal",
-      "status": "stable",
-      "version": "1.0.0",
-      "invocation": "both",
-      "path": "common/agent/context-loading/SKILL.md",
-      "requires": []
-    },
-    {
       "id": "common/agent/failure-recovery",
       "name": "failure-recovery",
       "description": "Recover safely from failed commands, tools, scripts, partial changes, and uncertain agent execution state.",
@@ -203,7 +190,7 @@
       "category": "common",
       "subject": "foundation",
       "scope": "universal",
-      "status": "experimental",
+      "status": "stable",
       "version": "1.0.0",
       "invocation": "both",
       "path": "common/foundation/context-management/SKILL.md",

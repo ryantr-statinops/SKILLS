@@ -68,7 +68,6 @@ preferences in `personal/` and skill-system procedures in `meta/`.
 
 ### Agent
 
-- [context-loading](agent/context-loading/SKILL.md)
 - [failure-recovery](agent/failure-recovery/SKILL.md)
 
 ## Runtime notes
