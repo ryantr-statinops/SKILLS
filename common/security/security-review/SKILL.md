@@ -12,17 +12,18 @@ invocation: both
 # Security review
 
 ## When to use
-Use when explicitly requested or when a change materially expands a security boundary.
+Use when designing or changing code that handles input, secrets, identity, files, network calls, or sensitive data, or when reviewing a change or system for security risk.
 
 ## Workflow
-1. Map assets, actors, trust boundaries, and attack surface.
-2. Inspect authentication, authorization, input handling, output handling, secrets, and dependencies.
-3. Evaluate abuse cases and failure behavior.
-4. Rank findings by impact and likelihood, with evidence and remediation.
+1. Map assets, actors, trust boundaries, and sensitive values.
+2. Validate inputs, constrain outputs, minimize permissions, and keep secrets out of source, logs, and artifacts.
+3. Inspect authentication, authorization, injection, dependencies, abuse cases, and failure behavior.
+4. Rank findings by impact and likelihood, with evidence, security-focused tests, and remediation.
 
 ## Decision rules
+- Fail closed when validation or authorization is uncertain; never disable a security control as a shortcut.
 - Prioritize exploitable, concrete findings over generic best-practice lists.
-- Do not claim a system is secure; state review scope and residual risk.
+- Do not claim a system is secure; state review scope, protections, and residual risk.
 
 ## Failure modes
 If source, deployment, or threat context is missing, limit conclusions explicitly.

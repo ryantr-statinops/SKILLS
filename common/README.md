@@ -51,7 +51,6 @@ preferences in `personal/` and skill-system procedures in `meta/`.
 
 ### Security
 
-- [secure-development](security/secure-development/SKILL.md)
 - [security-review](security/security-review/SKILL.md)
 
 ### Delivery

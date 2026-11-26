@@ -249,19 +249,6 @@
       "requires": []
     },
     {
-      "id": "common/security/secure-development",
-      "name": "secure-development",
-      "description": "Apply baseline secure-development practices for secrets, inputs, outputs, logging, dependencies, and access boundaries.",
-      "category": "common",
-      "subject": "security",
-      "scope": "universal",
-      "status": "experimental",
-      "version": "1.0.0",
-      "invocation": "both",
-      "path": "common/security/secure-development/SKILL.md",
-      "requires": []
-    },
-    {
       "id": "common/security/security-review",
       "name": "security-review",
       "description": "Review a change or system for concrete threats involving authentication, authorization, data, injection, dependencies, and access.",
