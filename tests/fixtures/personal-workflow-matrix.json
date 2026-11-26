@@ -57,8 +57,8 @@
     "name": "project-initialization",
     "representative_query": "initialize personal software project structure conventions validation",
     "expected_skill": "personal/workflow/project-init",
-    "boundary_query": "personal technical research engineering product decision",
-    "boundary_skill": "personal/workflow/personal-research",
+    "boundary_query": "evidence backed decision comparing alternatives uncertainty",
+    "boundary_skill": "common/workflow/research-decision",
     "artifact_or_validation": "project structure, conventions, validation path, and documentation",
     "reason": "A research decision should not initialize a project by default."
   },

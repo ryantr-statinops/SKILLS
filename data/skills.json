@@ -626,19 +626,6 @@
       "requires": []
     },
     {
-      "id": "personal/workflow/personal-research",
-      "name": "personal-research",
-      "description": "Conduct focused personal technical research that turns evidence into an engineering or product decision.",
-      "category": "personal",
-      "subject": "workflow",
-      "scope": "personal",
-      "status": "experimental",
-      "version": "1.0.0",
-      "invocation": "both",
-      "path": "personal/workflow/personal-research/SKILL.md",
-      "requires": []
-    },
-    {
       "id": "personal/workflow/project-init",
       "name": "project-init",
       "description": "Initialize a personal software project with a minimal structure, conventions, validation path, and documentation baseline.",
