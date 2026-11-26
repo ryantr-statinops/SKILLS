@@ -30,10 +30,6 @@ def args_for(query: str):
 class PersonalWorkflowMatrixTests(unittest.TestCase):
     def test_personal_routers_name_exclusions_and_child_boundaries(self) -> None:
         expectations = {
-            "personal/engineering": ("narrowest domain", "generic engineering question"),
-            "personal/engineering/backend": ("one API, architecture, or runtime-specific route", "data pipelines"),
-            "personal/engineering/data": ("primary artifact is a data pipeline", "statistical interpretation"),
-            "personal/engineering/ai": ("user-facing outcome", "ordinary software"),
             "personal/workflow/personal-debugging": ("reproducible root-cause investigation", "selecting a technology"),
         }
         for identifier, terms in expectations.items():

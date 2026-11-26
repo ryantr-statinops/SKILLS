@@ -19,8 +19,8 @@
   },
   {
     "name": "data-engineering",
-    "representative_query": "personal data engineering",
-    "expected_skill": "personal/engineering/data",
+    "representative_query": "personal data engineering foundations contracts lineage quality storage",
+    "expected_skill": "personal/engineering/data/core",
     "boundary_query": "Design API contracts validation errors",
     "boundary_skill": "personal/engineering/backend/api-design",
     "artifact_or_validation": "pipeline inputs, transformations, quality checks, and lineage",
@@ -29,7 +29,7 @@
   {
     "name": "ai-engineering",
     "representative_query": "AI engineering LLM application tools evaluation monitoring",
-    "expected_skill": "personal/engineering/ai",
+    "expected_skill": "personal/engineering/ai/core",
     "boundary_query": "Go backend services testing operations",
     "boundary_skill": "personal/engineering/backend/go",
     "artifact_or_validation": "tool boundary, evaluation plan, monitoring, and fallback behavior",

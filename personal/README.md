@@ -12,23 +12,22 @@ project-specific instructions or a textbook collection.
 | Supervise Orca workers or coordinate an Orca task DAG | [orca-orchestration](workflow/orca-orchestration/SKILL.md) |
 | Brainstorm or initialize work | [workflow](workflow/brainstorming/SKILL.md) |
 | Choose technology or architecture | [decision](decision/technology-selection/SKILL.md) |
-| Engineering foundations, data, AI, or backend | [engineering](engineering/SKILL.md) |
+| Engineering foundations, data, AI, or backend | [engineering core](engineering/core/SKILL.md) |
 | Statistics foundations | [statistics](statistics/SKILL.md) |
-| Education, R, or LaTeX workflow | [education](education/SKILL.md) |
-| Quant research or production workflow | [quant](quant/SKILL.md) |
+| Education, R, or LaTeX workflow | [r](education/r/SKILL.md) / [latex](education/latex/SKILL.md) |
+| Quant research or production workflow | [quant research](quant/research/SKILL.md) |
 
 ## Categories
 
-- [Education](education/SKILL.md)
+- [Education](education/r/SKILL.md)
 - [Statistics](statistics/SKILL.md)
-- [Engineering](engineering/SKILL.md)
-- [AI engineering](engineering/ai/SKILL.md)
-- [Quant](quant/SKILL.md)
+- [Engineering](engineering/core/SKILL.md)
+- [AI engineering](engineering/ai/core/SKILL.md)
+- [Quant](quant/research/SKILL.md)
 - [Product](product/)
 - [Workflow](workflow/)
 - [Decision](decision/)
 
-Use a category router first, then load only the leaf skill relevant to the
-task. See the [global skill index](../docs/skill-index.md) for metadata and
+Load only the leaf or core skill relevant to the task. See the [global skill index](../docs/skill-index.md) for metadata and
 paths. Do not add credentials, private datasets, proprietary implementation
 details, or project secrets to this public repository.

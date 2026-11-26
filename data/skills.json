@@ -249,19 +249,6 @@
       "requires": []
     },
     {
-      "id": "personal/engineering/ai",
-      "name": "ai",
-      "description": "Route personal AI engineering work through a shared foundation for ML, LLM, agent, evaluation, and production system decisions.",
-      "category": "personal",
-      "subject": "ai-engineering",
-      "scope": "personal",
-      "status": "experimental",
-      "version": "1.0.0",
-      "invocation": "user",
-      "path": "personal/engineering/ai/SKILL.md",
-      "requires": []
-    },
-    {
       "id": "personal/engineering/ai/core",
       "name": "core",
       "description": "Design personal AI systems across problem framing, ML/LLM foundations, agents, tools, evaluation, and production constraints.",
@@ -379,19 +366,6 @@
       "requires": []
     },
     {
-      "id": "personal/education",
-      "name": "education",
-      "description": "Route personal learning and teaching tasks to statistics, R, or LaTeX workflows.",
-      "category": "personal",
-      "subject": "education",
-      "scope": "personal",
-      "status": "experimental",
-      "version": "1.1.0",
-      "invocation": "user",
-      "path": "personal/education/SKILL.md",
-      "requires": []
-    },
-    {
       "id": "personal/education/latex",
       "name": "latex",
       "description": "Create maintainable LaTeX documents for mathematical, technical, and educational writing.",
@@ -418,19 +392,6 @@
       "requires": []
     },
     {
-      "id": "personal/engineering/backend",
-      "name": "backend",
-      "description": "Route personal backend work through service foundations to API, architecture, runtime, and operations workflows.",
-      "category": "personal",
-      "subject": "engineering",
-      "scope": "personal",
-      "status": "experimental",
-      "version": "1.0.0",
-      "invocation": "user",
-      "path": "personal/engineering/backend/SKILL.md",
-      "requires": []
-    },
-    {
       "id": "personal/engineering/core",
       "name": "core",
       "description": "Analyze and improve software systems using computational thinking, complexity, measurement, and explicit engineering trade-offs before choosing an implementation.",
@@ -441,19 +402,6 @@
       "version": "1.0.0",
       "invocation": "both",
       "path": "personal/engineering/core/SKILL.md",
-      "requires": []
-    },
-    {
-      "id": "personal/engineering/data",
-      "name": "data",
-      "description": "Route personal data engineering work to core, pipeline, database, or orchestration workflows.",
-      "category": "personal",
-      "subject": "engineering",
-      "scope": "personal",
-      "status": "experimental",
-      "version": "1.0.0",
-      "invocation": "user",
-      "path": "personal/engineering/data/SKILL.md",
       "requires": []
     },
     {
@@ -483,32 +431,6 @@
       "requires": []
     },
     {
-      "id": "personal/engineering",
-      "name": "engineering",
-      "description": "Route personal engineering work through shared foundations to data, AI, backend, infrastructure, or lightweight frontend workflows.",
-      "category": "personal",
-      "subject": "engineering",
-      "scope": "personal",
-      "status": "experimental",
-      "version": "1.0.0",
-      "invocation": "user",
-      "path": "personal/engineering/SKILL.md",
-      "requires": []
-    },
-    {
-      "id": "personal/engineering/frontend",
-      "name": "frontend",
-      "description": "Route personal frontend work to lightweight web interface workflows.",
-      "category": "personal",
-      "subject": "engineering",
-      "scope": "personal",
-      "status": "experimental",
-      "version": "1.0.0",
-      "invocation": "user",
-      "path": "personal/engineering/frontend/SKILL.md",
-      "requires": []
-    },
-    {
       "id": "personal/engineering/backend/go",
       "name": "go",
       "description": "Apply Ryan's preferred workflow for designing, implementing, testing, and operating Go backend services.",
@@ -519,19 +441,6 @@
       "version": "1.0.0",
       "invocation": "both",
       "path": "personal/engineering/backend/go/SKILL.md",
-      "requires": []
-    },
-    {
-      "id": "personal/engineering/infrastructure",
-      "name": "infrastructure",
-      "description": "Route personal infrastructure work to Linux, Docker, or networking workflows.",
-      "category": "personal",
-      "subject": "engineering",
-      "scope": "personal",
-      "status": "experimental",
-      "version": "1.0.0",
-      "invocation": "user",
-      "path": "personal/engineering/infrastructure/SKILL.md",
       "requires": []
     },
     {
@@ -662,19 +571,6 @@
       "version": "1.0.0",
       "invocation": "both",
       "path": "personal/quant/production-workflow/SKILL.md",
-      "requires": []
-    },
-    {
-      "id": "personal/quant",
-      "name": "quant",
-      "description": "Route personal quantitative work to research or production-engineering workflows without authorizing financial execution.",
-      "category": "personal",
-      "subject": "quant",
-      "scope": "personal",
-      "status": "experimental",
-      "version": "1.0.0",
-      "invocation": "user",
-      "path": "personal/quant/SKILL.md",
       "requires": []
     },
     {
