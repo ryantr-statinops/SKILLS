@@ -12,21 +12,22 @@ invocation: both
 # Code review
 
 ## When to use
-Use after an implementation exists and the requested outcome is an evidence-based review of its diff, patch, or pull request.
+Use after an implementation exists and the requested outcome is an evidence-based review of its diff, patch, pull request, or final readiness before merging or handing off.
 
 ## When not to use
 Do not use as the implementation workflow, and do not substitute it for a test plan when no change is ready to inspect.
 
 ## Workflow
-1. Read the requested behavior and relevant surrounding code.
-2. Inspect the diff for correctness, edge cases, errors, and unintended scope.
-3. Check tests, contracts, security boundaries, and maintainability.
-4. Report findings by severity with file and line evidence.
+1. Read the requested behavior and inspect the complete diff and surrounding code.
+2. Check correctness, edge cases, compatibility, tests, security boundaries, documentation, and maintainability.
+3. Identify breaking changes, residual risk, and handoff readiness.
+4. Report actionable findings by severity with file/line evidence and a clear handoff recommendation.
 
 ## Decision rules
-- Prioritize concrete defects over style preferences.
+- Prioritize concrete defects and security/compatibility blockers over style preferences.
+- Verify changed behavior instead of trusting a green unrelated test suite.
 - Report no issue when the evidence supports correctness; do not invent concerns.
-- Choose this skill when findings, severity, and file-level evidence are the requested output.
+- Choose this skill when findings, severity, file-level evidence, or a handoff decision are the requested output.
 
 ## Failure modes
 If context or tests are missing, state the review limitation explicitly.

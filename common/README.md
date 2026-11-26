@@ -56,7 +56,6 @@ preferences in `personal/` and skill-system procedures in `meta/`.
 
 ### Delivery
 
-- [change-review](delivery/change-review/SKILL.md)
 - [release](delivery/release/SKILL.md)
 
 ### Workflows

@@ -306,7 +306,6 @@ runpy.run_path(str(script), run_name="__main__")
                     "common/foundation/task-planning",
                     "common/engineering/testing",
                     "common/engineering/code-review",
-                    "common/delivery/change-review",
                 ],
             )
 

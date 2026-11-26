@@ -67,19 +67,6 @@
       "requires": []
     },
     {
-      "id": "common/delivery/change-review",
-      "name": "change-review",
-      "description": "Review a proposed change for correctness, scope, regression risk, tests, and readiness to hand off.",
-      "category": "common",
-      "subject": "delivery",
-      "scope": "universal",
-      "status": "experimental",
-      "version": "1.0.0",
-      "invocation": "both",
-      "path": "common/delivery/change-review/SKILL.md",
-      "requires": []
-    },
-    {
       "id": "common/delivery/release",
       "name": "release",
       "description": "Prepare a software release by checking versioning, tests, artifacts, changes, migrations, and release readiness.",
@@ -303,7 +290,6 @@
         "common/engineering/testing",
         "common/engineering/refactoring",
         "common/engineering/code-review",
-        "common/delivery/change-review",
         "common/agent/failure-recovery"
       ]
     },
@@ -340,8 +326,7 @@
         "common/foundation/requirements-analysis",
         "common/foundation/task-planning",
         "common/engineering/testing",
-        "common/engineering/code-review",
-        "common/delivery/change-review"
+        "common/engineering/code-review"
       ]
     },
     {

@@ -32,7 +32,6 @@
         "common/engineering/code-review",
         "common/engineering/dependency-management",
         "common/engineering/documentation",
-        "common/delivery/change-review",
         "common/agent/failure-recovery"
       ]
     },
@@ -47,8 +46,7 @@
         "common/foundation/requirements-analysis",
         "common/foundation/task-planning",
         "common/engineering/testing",
-        "common/engineering/code-review",
-        "common/delivery/change-review"
+        "common/engineering/code-review"
       ]
     },
     {
@@ -63,7 +61,6 @@
         "common/engineering/testing",
         "common/engineering/refactoring",
         "common/engineering/code-review",
-        "common/delivery/change-review",
         "common/agent/failure-recovery"
       ]
     },

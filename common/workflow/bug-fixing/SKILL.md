@@ -7,7 +7,7 @@ scope: universal
 status: stable
 version: 1.1.0
 invocation: user
-requires: [common/engineering/debugging, common/engineering/testing, common/engineering/refactoring, common/engineering/code-review, common/delivery/change-review, common/agent/failure-recovery]
+requires: [common/engineering/debugging, common/engineering/testing, common/engineering/refactoring, common/engineering/code-review, common/agent/failure-recovery]
 ---
 
 # Bug fixing
