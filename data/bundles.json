@@ -11,8 +11,7 @@
         "common/foundation/context-management",
         "common/agent/failure-recovery",
         "common/foundation/repository-onboarding",
-        "common/foundation/requirements-analysis",
-        "meta/skill-discovery"
+        "common/foundation/requirements-analysis"
       ]
     },
     {

@@ -18,8 +18,7 @@ scope, procedure, activation boundary, supporting resources, or output contract.
 
 ## When not to use
 
-Do not use this workflow just to choose a skill for a domain task; use
-`meta/skill-discovery`. For an external source that may be adopted, adapted, or
+Do not use this workflow just to choose a skill for a domain task. For an external source that may be adopted, adapted, or
 rejected, use `meta/skill-intake` before authoring. To assess behavior without
 editing the skill, use `meta/skill-evaluation` or `meta/skill-maintenance` for
 the applicable review outcome. Do not substitute this workflow for domain
