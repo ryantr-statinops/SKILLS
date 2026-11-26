@@ -7,7 +7,7 @@ scope: universal
 status: stable
 version: 1.1.0
 invocation: user
-requires: [common/research/research, common/research/comparison]
+requires: [common/research/research]
 ---
 
 # Research decision
@@ -39,6 +39,7 @@ questions, or personal preference decisions that need no external evidence.
 - Prefer primary and authoritative sources for technical or high-stakes claims.
 - Match research depth to the decision cost and uncertainty.
 - Reject alternatives that fail a stated hard constraint before scoring soft preferences.
+- Do not declare a universal winner without a defined context; penalize operational complexity, lock-in, and unverified assumptions.
 - A user-invoked workflow may read `both` skills but must not silently start another user workflow.
 
 ## Failure modes

@@ -72,8 +72,7 @@
       "allow_deprecated": false,
       "skills": [
         "common/workflow/research-decision",
-        "common/research/research",
-        "common/research/comparison"
+        "common/research/research"
       ]
     },
     {

@@ -14,7 +14,6 @@ preferences in `personal/` and skill-system procedures in `meta/`.
 | Investigate a failure | [debugging](engineering/debugging/SKILL.md) |
 | Design or run tests | [testing](engineering/testing/SKILL.md) |
 | Research a technical question | [research](research/research/SKILL.md) |
-| Compare technical options | [comparison](research/comparison/SKILL.md) |
 | Review security risk | [security-review](security/security-review/SKILL.md) |
 | Prepare a release | [release](delivery/release/SKILL.md) |
 
@@ -40,7 +39,6 @@ preferences in `personal/` and skill-system procedures in `meta/`.
 ### Research
 
 - [research](research/research/SKILL.md)
-- [comparison](research/comparison/SKILL.md)
 
 ### Data
 

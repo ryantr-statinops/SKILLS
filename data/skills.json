@@ -223,19 +223,6 @@
       "requires": []
     },
     {
-      "id": "common/research/comparison",
-      "name": "comparison",
-      "description": "Compare technical options against explicit criteria, trade-offs, constraints, and evidence.",
-      "category": "common",
-      "subject": "research",
-      "scope": "universal",
-      "status": "experimental",
-      "version": "1.0.0",
-      "invocation": "both",
-      "path": "common/research/comparison/SKILL.md",
-      "requires": []
-    },
-    {
       "id": "common/research/research",
       "name": "research",
       "description": "Investigate a technical or factual question using relevant sources, explicit evidence, and stated uncertainty.",
@@ -328,8 +315,7 @@
       "invocation": "user",
       "path": "common/workflow/research-decision/SKILL.md",
       "requires": [
-        "common/research/research",
-        "common/research/comparison"
+        "common/research/research"
       ]
     },
     {
