@@ -19,9 +19,7 @@ scope, procedure, activation boundary, supporting resources, or output contract.
 ## When not to use
 
 Do not use this workflow just to choose a skill for a domain task. For an external source that may be adopted, adapted, or
-rejected, use `meta/skill-intake` before authoring. To assess behavior without
-editing the skill, use `meta/skill-evaluation` or `meta/skill-maintenance` for
-the applicable review outcome. Do not substitute this workflow for domain
+rejected, use `meta/skill-intake` before authoring. Do not substitute this workflow for domain
 implementation guidance.
 
 ## Workflow
@@ -62,6 +60,8 @@ directories or copy external documentation wholesale.
 
 Run `python3 scripts/validate_skills.py`, the relevant evaluation cases, and
 `python3 scripts/generate_skill_index.py --check` from the repository root.
+Use [the evaluation checklist](references/evaluation-checklist.md) when assessing
+representative and boundary behavior.
 
 ## Agent handoff
 
