@@ -1,34 +1,25 @@
 # Consumer smoke test
 
-The consumer smoke test verifies that a small Codex-compatible project can
-discover and install selected portable skills without copying the whole
-repository.
+Verify small Codex-compatible project can discover + install selected portable skills without copying whole repo.
 
 ## Fixture contract
 
-A fixture project contains:
+- `AGENTS.md` project instructions.
+- `.agents/skills/` portable installed skill root; not `.agent/skills`.
+- `CONTEXT.md` project boundaries + artifact paths.
+- minimal source + test seam.
+- `docs/agent/` workflow artifacts.
 
-- `AGENTS.md` for project instructions;
-- `.agents/skills/` as the portable skill root;
-- `CONTEXT.md` with project boundaries and artifact paths;
-- a minimal source and test seam;
-- `docs/agent/` for workflow artifacts.
+Fixture creates temp copy, inspects runtime layout, runs bundle check mode, selected safe sync, verifies relative resources. Must prove existing target reported before overwrite; safe sync stops. Check mode no write.
 
-The test creates a temporary copy, inspects the runtime layout, runs bundle
-check mode, performs selected sync, and verifies relative resources. It must
-also prove that an existing target path is reported before overwrite.
+## Manual Codex smoke
 
-## Manual Codex smoke run
+After automated fixture passes, run representative + nearby boundary task in real Codex-compatible consumer when model use authorized:
 
-After the automated fixture passes, run one representative task and one nearby
-boundary task in a real Codex-compatible consumer project:
+1. install `portable-agent-baseline` or smallest workflow bundle;
+2. ask representative feature/bug/research/data task;
+3. confirm workflow + artifact path;
+4. ask nearby out-of-scope task;
+5. confirm unrelated workflow not activated.
 
-1. install `portable-agent-baseline` or the smallest relevant workflow bundle;
-2. ask for a representative feature, bug, research, or data task;
-3. confirm the expected workflow and artifact path;
-4. ask a nearby out-of-scope task;
-5. confirm that the unrelated workflow is not activated.
-
-Record the source commit, bundle ID, runtime layout, checks, and unresolved
-risks in the consumer project's integration notes. Do not copy project-only
-instructions back into this repository.
+Record source commit, bundle ID, runtime layout, checks, unresolved risks in consumer integration notes. Don't copy project-only instructions back. Local discovery not model quality. No model-backed run unless authorized.

@@ -1,59 +1,35 @@
 # OpenCode integration
 
-OpenCode discovers project skills from the `.agents/skills/` layout (or user-level `~/.agents/skills/`).
+OpenCode discovers `.agents/skills/`; user-level `~/.agents/skills`. Canonical `.agents/skills`, not `.agent/skills`. `scripts/install_skills.py`.
 
-## Install selected skills
-
-Run these commands from the SKILLS checkout. Replace the project path with the
-consumer repository:
+## Install selected
 
 ```bash
 # Preview
 python3 scripts/install_skills.py --bundle feature-delivery --project /path/to/project --check
 
-# Install directly into <project>/.agents/skills
+# Copy into <project>/.agents/skills
 python3 scripts/install_skills.py --bundle feature-delivery --project /path/to/project
-```
 
-Or install globally as symlinks into `~/.agents/skills/`:
-
-```bash
+# Global symlinks
 python3 scripts/install_skills.py --bundle feature-delivery --global
 ```
 
-## Verify local discovery
+`feature-delivery` **5 skills**, not 6. Conflict-safe sync. Installed adapter hyphenated ID.
 
-In the project, record the CLI version and list discovered skills without
-starting a model turn:
+## Verify local discovery
 
 ```bash
 opencode --version
 opencode debug skill --pure
 ```
 
-Confirm each installed skill appears with a `location` under the project's
-`.agents/skills/` directory. This proves local discovery and frontmatter
-loading; it makes no claim about model selection, reasoning quality, or whether
-the skill was followed. The output also includes built-in and user-level
-skills, so filter by the project path when checking.
+Confirm each installed skill `location` under `.agents/skills`. Local discovery + frontmatter loading; no model selection/reasoning/followed claim. Output includes built-in + user-level; filter project path. Observed OpenCode 1.18.35 with `feature-delivery`, e.g. `.agents/skills/common-workflow-feature-delivery/SKILL.md`, local only.
 
-Observed locally: OpenCode 1.18.35 discovered all six `feature-delivery`
-bundle skills through the adapter (for example
-`.agents/skills/common-workflow-feature-delivery/SKILL.md`).
+## Updating + recovery
 
-## Updating and recovery
-
-Edit or update skills in `.agents/skills/`; existing native symlinks expose
-those changes. Re-run the exporter after adding skills. It is additive:
-removed source skills leave links behind, and existing conflicts are not
-overwritten. Preserve user-managed files in `.agents/skills/`; see
-[integration recovery](integration.md#recovering-an-installation-mismatch)
-and [adapter lifecycle](integration.md#adapter-lifetime-and-ownership).
+Don't edit installed copy as source. Re-sync after source changes + confirmation; verify symlink source for `--global`. Safe sync no overwrite; conflicting target stops. Removed source not automatically cleaned. Preserve user-managed `.agents/skills`. See [integration recovery](integration.md#recovering-an-installation-mismatch) + [adapter lifecycle](integration.md#adapter-lifetime-and-ownership). `.agent/skills` not canonical. Re-run `scripts/install_skills.py`, not nonexistent exporter. `scripts/sync_skills.py` doesn't exist. `.skill-catalog.json` only if provided + verified.
 
 ## Evidence boundary
 
-Record the OpenCode version, project root, the `location` paths reported by
-`debug skill --pure`, and whether any model-backed task was run. A discovery
-listing is static evidence only. To assess behavior, run a representative task
-and a nearby boundary task through normal OpenCode use only when model use is
-authorized, then inspect the resulting artifacts.
+Record OpenCode version, project root, `location`, model-backed task? Static listing static evidence. Behavior needs representative + boundary through normal OpenCode when authorized; inspect artifacts.

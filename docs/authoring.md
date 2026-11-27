@@ -1,72 +1,65 @@
 # Skill authoring
 
-Use this guide when creating or revising a skill in `SKILLS`.
+Create/revise skills in `SKILLS`.
 
-## Start with the outcome
+## Outcome
 
-Describe the concrete task the agent should perform and the observable result.
-Avoid creating a skill that is only a topic label such as `python` or `AI`.
+Concrete task + observable result. Avoid topic-label-only skills like `python` or `AI`. Keep narrowly scoped. Reusable parts separate from personal preferences.
 
 ## Required entrypoint
 
-Every skill has a `SKILL.md` with YAML frontmatter containing at least:
+Every skill has `SKILL.md` with YAML frontmatter. Required schema in [metadata](metadata.md):
 
 ```yaml
 ---
 name: skill-name
 description: What the skill does and when it applies.
+category: common
+subject: foundation
+scope: universal
+status: experimental
+version: 1.0.0
+invocation: both
 ---
 ```
 
-When one skill requires another, add an optional `requires` list containing
-canonical skill IDs such as `common/engineering/testing`. Registry validation
-checks every reference and dependency cycle across all skills, including skills
-outside bundles. Bundle validation additionally requires each bundle to include
-the transitive dependencies of its members.
+`name` lowercase local name matching final directory. Canonical ID path-derived; don't duplicate in frontmatter. Optional `requires` canonical skill IDs. Registry validation checks references and cycles. Bundle validation checks transitive dependencies.
 
-The body should explain activation boundaries, scope, workflow, decision rules,
-constraints, failure modes, and validation. Start from
-`meta/SKILL_TEMPLATE.md` and remove sections that do not add value.
+Body: activation boundaries, scope, workflow, decisions, constraints, failure modes, validation. Start `meta/SKILL_TEMPLATE.md`; remove empty sections. Concrete activation + nearby exclusion; not generic handoff filler.
 
 ## Supporting resources
 
-- `references/`: detailed knowledge needed only for particular modes.
-- `scripts/`: deterministic operations that materially improve reliability.
-- `examples/`: demonstrations, fixtures, or evaluation cases.
-- `assets/`: reusable templates and output artifacts.
+- `references/`: detailed knowledge for particular modes.
+- `scripts/`: deterministic operations materially improving reliability.
+- `examples/`: demonstrations, fixtures, evaluation cases.
+- `assets/`: reusable templates/output artifacts.
 
-Do not create empty directories, copy generic manuals, or duplicate the same
-knowledge across the entrypoint and references.
+No empty dirs, no copying generic manuals, no duplicate knowledge. Link every resource from relevant instruction.
 
 ## Classification
 
-- Put broadly reusable procedures in `common/`.
-- Put Ryan-specific preferences and workflows in `personal/`.
-- Put skill-system procedures in `meta/`.
-
-If a skill has both reusable and personal parts, keep the reusable procedure
-separate from the preference-specific extension.
+- `common/`: broadly reusable.
+- `personal/`: Ryan-specific.
+- `meta/`: skill-system.
 
 ## Invocation
 
-Every skill declares an `invocation` metadata value:
+- `user`: explicit workflow entry point / side-effectful orchestration.
+- `both`: user-selectable + agent-discoverable.
+- `model`: intentional agent-selected only.
+- User-invoked workflow may read `both`; must not silently trigger another user-invoked workflow.
 
-- `user` for explicit workflow entry points and side-effectful orchestration;
-- `both` for skills that users may select or agents may discover automatically;
-- `model` only when automatic agent selection is intentional and explicit.
-
-A user-invoked skill may direct the agent to read a `both` skill, but should not
-silently delegate to another user-invoked workflow. Invocation metadata is
-portable and must not contain runtime-specific plugin or slash-command rules.
+Portable; no runtime plugin/slash-command rules.
 
 ## Before committing
 
-1. Check the activation and exclusion boundaries.
-2. Link every supporting resource from the relevant instruction.
-3. Run `python3 scripts/validate_skills.py`.
-4. Test one representative task and one nearby boundary task.
-5. Keep every agent handoff value, including the confirmation boundary,
-   nonempty; the validator checks the field content, not only its label.
-Do not make activation claims that only repeat the generic handoff template.
-State the concrete outcome that selects this skill and the nearby outcome that
-belongs to a different route.
+1. Check activation/exclusion boundaries.
+2. Link supporting resources.
+3. `python3 scripts/validate_skills.py`.
+4. `python3 scripts/generate_skill_index.py`.
+5. `python3 scripts/generate_skill_index.py --check`.
+6. `python3 scripts/check_markdown_links.py`.
+7. `python3 scripts/run_evaluations.py`.
+8. One representative + one nearby boundary task.
+9. Keep every agent handoff value nonempty; confirmation boundary explicit.
+10. `git diff --check`.

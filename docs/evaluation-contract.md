@@ -1,61 +1,24 @@
 # Evaluation case contract
 
-Every skill evaluation is a small, reviewable behavior contract. It should
-show when the skill activates, when it does not, what a useful result looks
-like, and how the result can be checked.
+Small reviewable behavior contract: when activates, when not, useful result, how checked. Path `<skill>/examples/evaluation.md`.
 
 ## Required structure
 
-Each skill with an evaluation case keeps it at:
+For both `## Representative task` + `## Boundary task`:
 
-```text
-<skill>/examples/evaluation.md
-```
-
-The file must contain these sections for both cases:
-
-- `## Representative task`
-- `## Boundary task`
 - `Task:`
 - `Expected:`
 - `Failure condition:`
 - `Validation:`
-Each field must have a nonempty value; a label alone or whitespace-only text
-does not satisfy the contract. Values may continue on immediately following
-lines and end at a blank line or the next field label.
-The representative task should activate the skill and exercise its intended
-outcome. The boundary task should be close enough to test routing, but outside
-the skill's scope or safety boundary.
 
-## Case semantics
+Nonempty values; label alone/whitespace invalid. Values continue immediately following lines until blank/next field. Representative activates intended outcome; boundary close but outside scope/safety. `Task:` user request/test setup. `Expected:` observable behavior not internal thought. `Failure condition:` fails/unsafe. `Validation:` review/command/artifact/assertion.
 
-- `Task:` describes the user request or test setup.
-- `Expected:` describes observable behavior, not an ideal internal thought
-  process.
-- `Failure condition:` describes behavior that makes the case fail or unsafe.
-- `Validation:` names the review, command, artifact, or assertion used to
-  verify the result.
+Router `Expected:` selected child + unrelated not loaded. Leaf expected workflow output. Draft explicitly defer/decline. Concrete activation/exclusion not generic template.
 
-Router skills should make `Expected:` identify the selected child skill and
-explain why unrelated children were not loaded. Leaf skills should make it
-identify the expected workflow output. Draft scaffolds should explicitly state
-when they must decline activation or defer to another skill.
+## Routing fixture
 
-## Routing fixture contract
-
-`tests/fixtures/agent-routing.json` must contain at least one case. Every
-`task` must be nonempty. `expected_skill` must exist in the registry; an optional
-`boundary_skill` must also exist and, when present, differ from the expected skill.
-`expected_explanation` and `expected_validation` must be `true`, and `confirmation`
-must use an allowed value. These fixtures validate structural routing claims; they
-do not establish that an agent actually made the choice.
+`tests/fixtures/agent-routing.json` at least one case. `task` nonempty. `expected_skill` exists; optional `boundary_skill` exists + differs. `expected_explanation` + `expected_validation` true; `confirmation` allowed. Structural routing claims only; not actual agent choice.
 
 ## Harness boundary
 
-The repository harness validates the contract and registry references. It does
-not pretend to evaluate an agent's reasoning and does not execute arbitrary
-commands from Markdown. Any future executable check must use an explicit
-allowlist and a reviewed runtime adapter.
-
-Future extensions may add runtime execution, human scoring, regression
-baselines, and flaky-case handling without changing this basic contract.
+Harness validates contract + registry references. Doesn't simulate agent selection/evaluate reasoning/execute arbitrary Markdown. Future executable checks explicit allowlist + reviewed runtime adapter. Runtime reports only actual tasks/runtime/version/outputs; not broader claims. `check_observable_evaluations.py` checks literal terms, not semantic correctness/safety. Future runtime execution, human scoring, stable rubric, regression baselines, flaky handling, runtime matrix, timeout/network/filesystem/mutation bounds explicit; no self-grading shortcut. Validation commands allowlisted; `--run-commands` explicit.

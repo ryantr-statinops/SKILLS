@@ -1,37 +1,29 @@
 # Promotion and distribution lifecycle
 
-`status` describes a skill's lifecycle: `draft`, `experimental`, `stable`, or
-`deprecated`. Promotion is a separate distribution decision and is recorded in
-`data/promoted.json` rather than duplicated in every `SKILL.md`.
+`status`: `draft`, `experimental`, `stable`, `deprecated`. Promotion separate `data/promoted.json`, not duplicated frontmatter. `docs/skill-index` generated from metadata; promoted not separate status. Stable doesn't mean promoted. `local.md` not source.
 
-## Promoted skill contract
+## Promoted contract
 
-A promoted skill must be:
+Promoted skill:
 
-- stable in its frontmatter;
-- documented in the public repository guides;
-- covered by the required evaluation contract;
-- included in at least one supported bundle;
-- valid under the repository metadata, link, and invocation checks.
+- stable frontmatter;
+- documented public guides;
+- required evaluation contract;
+- at least one supported bundle;
+- valid metadata/links/invocation;
+- reviewed activation boundary, evals, supporting links, bundle membership, consumer behavior.
 
-Promotion does not move or copy skill content. It makes an existing skill an
-explicitly supported entry point for consumer projects.
+Promotion doesn't move/copy content. Explicit supported consumer entry. Promoted set small reviewed, not automatic entire library. `deprecated` excluded new bundles/workflows unless reviewed `allow_deprecated: true`. Universal bundles reject deprecated unless explicit; promoted stable in supported bundle.
 
-## Lifecycle meanings
+## Lifecycle
 
-- `experimental`: usable, but still seeking evidence and feedback from real
-  workflows;
-- `stable`: the skill contract is mature and changes follow the versioning
-  policy;
-- `deprecated`: excluded from new bundles and workflows unless a reviewed
-  compatibility exception explicitly allows it.
+- `draft`: incomplete not ready.
+- `experimental`: usable seeking evidence/feedback.
+- `stable`: contract mature; versioning policy.
+- `deprecated`: excluded new workflows/bundles unless reviewed exception.
+- Stable repository-only or not promoted allowed.
+- Workflows `invocation: user`; don't silently trigger user workflows.
 
-A skill may remain `stable` without being promoted when it is repository-only
-or has not yet been selected for supported consumer distribution.
+## Review
 
-## Promotion review
-
-Before adding a skill to `data/promoted.json`, review its activation boundary,
-evaluation cases, supporting links, bundle membership, and consumer behavior.
-Promotion should be a small reviewed set rather than an automatic conversion
-of the entire library.
+Before adding `data/promoted.json`, review boundaries, evals, links, bundle membership, consumer. Removing/changing promoted distribution record. See [versioning](versioning.md).

@@ -1,113 +1,61 @@
 # Skill discovery
 
-Skill discovery is the process of selecting the smallest relevant skill for a
-user task without loading the whole library into context.
+Select smallest relevant skill without loading whole library.
 
-## Routing sequence
+## Routing
 
 ```text
 task
   → docs/skill-index.md or data/skills.json
-  → candidate descriptions and metadata
+  → candidate descriptions + metadata
   → activation boundaries
   → selected SKILL.md
   → conditional references/scripts/assets
-  → execution and validation
+  → execution + validation
 ```
 
-For common skills, begin with [`common/README.md`](../common/README.md) for
-quick routing. Codex should also read [`common/CODEX.md`](../common/CODEX.md);
-other runtimes should use only the portable skill entrypoint.
+For common skills start `common/README.md`. Codex also `common/CODEX.md`; other runtimes portable entrypoint only. Generated index routing aid, not replacement; read selected `SKILL.md` before instructions/resources.
 
-The generated index is a routing aid, not a replacement for the skill
-entrypoint. After selecting a candidate, read its `SKILL.md` before following
-instructions or loading supporting resources.
+## Query
 
-## Querying the index
-
-Use `docs/skill-index.md` for human review and `data/skills.json` for tooling
-when working in this source repository. A consumer installation should use its
-`.skill-catalog.json` instead; it contains only the skills that were installed
-there and remains usable when the source registry is unavailable.
-Installed catalogs use the generated registry schema (currently version 3),
-and discovery accepts schema versions 1–3. For older catalogs without `requires`,
-discovery defaults dependencies to an empty list; an existing `requires` list is
-preserved and validated. Re-sync to write the current catalog schema.
-Regenerate both after changing skill metadata.
+Source repo: `docs/skill-index.md` human; `data/skills.json` tooling. Regenerate both after metadata changes.
 
 ```bash
 python3 scripts/generate_skill_index.py
 python3 scripts/generate_skill_index.py --check
-```
-
-Agents can search the generated registry without loading skill bodies:
-
-```bash
 python3 scripts/discover_skills.py "build a Node.js API"
 python3 scripts/discover_skills.py --category personal "data pipeline"
 python3 scripts/discover_skills.py --format json "debug failing test"
-
-# Consumer discovery from an installed catalog
-python3 scripts/discover_skills.py --registry /path/to/project/.agents/skills/.skill-catalog.json "debug failing test"
+python3 scripts/discover_skills.py --invocation user ...
+python3 scripts/discover_skills.py --invocation both ...
+python3 scripts/discover_skills.py --invocation model ...
 ```
-With an installed catalog, `--bundle <id>` filters using the bundle membership
-snapshot saved at sync time. Older catalogs without that snapshot must be
-re-synced with the named bundle. Consumer discovery does not fall back to the
-source bundle registry.
-For personal engineering work, route through `personal/engineering/SKILL.md`
-and load `engineering/core` when computational or systems reasoning is shared
-across domains. Use `engineering/data`, `engineering/ai`, or
-`engineering/backend` for the relevant domain. Use `personal/statistics` for
-statistical reasoning and `personal/quant/research` or
-`personal/quant/production-workflow` for quantitative engineering work.
 
-The command returns deterministic candidates only. The agent must read the
-selected `SKILL.md` before activating any procedure.
+## Consumer installed catalog
 
-Use `--invocation user`, `--invocation both`, or `--invocation model` when the
-activation boundary matters. User-invoked skills are explicit workflow entry
-points. Skills marked `both` can be selected by the agent when their
-description and boundaries match the task. Invocation filtering describes
-activation eligibility; it does not define a dependency graph between skills.
+Consumer installation uses `.agents/skills/`, not `.agent/skills`. If `.skill-catalog.json` is provided, use `.agents/skills/.skill-catalog.json` for discovery. It contains installed skills + bundle membership snapshot. Schema version **3**; discovery accepts **1–3**; old records without `requires` default `[]`. Don't assume `scripts/install_skills.py` writes `.skill-catalog.json` unless verified. With `--bundle`, installed catalog needs snapshot; don't fall back to source bundle registry.
 
-## Routing versus execution
-
-Use discovery before implementation when the task has not been assigned to a
-relevant skill. Discovery returns candidates and routing reasons; it does not
-implement the request. After a skill is selected, read its entrypoint and follow
-that workflow rather than repeating discovery as a substitute for execution.
-For skill authoring, evaluation, intake, or maintenance, use the corresponding
-meta workflow.
+```bash
+python3 scripts/discover_skills.py --registry /path/to/project/.agents/skills/.skill-catalog.json "debug failing test"
+python3 scripts/discover_skills.py --registry /path/to/project/.agents/skills/.skill-catalog.json --bundle feature-delivery "..."
+```
 
 ## Selection rules
 
-1. Match the desired outcome, not only a technology keyword.
-2. Prefer the most specific skill whose description covers the task.
-3. Reject skills whose `when not to use` boundary applies.
-4. Combine skills only when their responsibilities are distinct.
-5. If no skill clearly applies, continue without forcing an unrelated skill.
+1. Match outcome not only technology keyword.
+2. Prefer most specific skill covering task.
+3. Reject `when not to use` boundary.
+4. Combine only distinct responsibilities.
+5. If no skill clearly applies, continue without forcing unrelated skill.
 
-## Writing discoverable descriptions
+## Discoverable descriptions
 
-A description should say what the skill does and when it applies. Metadata also
-provides category, subject, scope, lifecycle status, and version. The
-description should be specific enough to distinguish nearby skills and should
-include an exclusion when misrouting is likely.
+Specific what + when; exclusion when misrouting likely. Prefer `Debug Python package installation...; not for general Python...`, avoid `Python development helper.` Category/subject/scope/status/version metadata aids routing but description still specific.
 
-Prefer:
+## Routing vs execution
 
-```yaml
-description: Debug Python package installation and metadata problems; not for general Python application development.
-```
+Discovery returns candidates + reasons, not implement request. After selection read entrypoint + follow workflow, not repeat discovery instead of execution. Skill authoring/evaluation/intake/maintenance uses meta workflows.
 
-Avoid:
+## Overlap + conflicts
 
-```yaml
-description: Python development helper.
-```
-
-## Overlap and conflicts
-
-Resolve overlap through narrower scope, explicit exclusions, and clear expected
-outputs. If two skills give conflicting procedures, stop and surface the
-conflict rather than silently merging them.
+Resolve overlap via narrower scope, explicit exclusions, clear outputs. If two skills conflict procedures, stop + surface conflict; don't silently merge. User-invoked skills not silently trigger other user-invoked workflows.

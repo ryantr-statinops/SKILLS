@@ -1,31 +1,23 @@
 # Workflow skills
 
-Workflow skills orchestrate narrow primitive skills around one user outcome.
-They are user-invoked entry points with `scope: universal` and
-`invocation: user`.
+Orchestrate narrow primitive skills around one user outcome. Workflow skills are user-invoked `invocation: user`, `scope: universal`. Not replacement for domain skills. Don't silently trigger another user-invoked workflow.
 
 ## Required contract
 
-Every workflow skill defines:
+Every workflow defines:
 
-- activation and exclusion conditions;
-- the primitive skills it reads or recommends;
-- decision points and optional branches;
+- activation + exclusion;
+- primitive skills read/recommended;
+- decision points + optional branches;
 - expected artifacts;
-- confirmation boundaries before side effects;
-- failure and recovery behavior;
+- confirmation before side effects;
+- failure/recovery;
 - terminal validation;
-- an agent handoff section.
+- agent handoff.
 
-Workflow skills may direct the agent to read a `both` skill. They must not
-silently delegate to another user-invoked workflow. A workflow is an
-orchestration layer, not a replacement for the domain skills it composes.
+## Context + artifacts
 
-## Context and artifacts
-
-Before starting, a workflow reads `CONTEXT.md` when the consumer project has
-one. Artifact paths come from its work-artifact section. When paths are absent,
-the workflow uses this default root:
+Before starting read consumer `CONTEXT.md` when present. Artifact paths from its work-artifact section. Default consumer root:
 
 ```text
 docs/agent/
@@ -36,19 +28,13 @@ docs/agent/
 └── handoffs/
 ```
 
-The workflow should present the intended artifact path before writing a new
-document when the project has not already authorized that output.
+Present intended artifact path before writing new document unless project already authorized output.
 
 ## Supported workflows
 
-- `feature-delivery`: align, plan, implement in vertical slices, test, review,
-  and hand off a feature.
-- `bug-fixing`: reproduce, minimize, hypothesize, fix, regression-test, review,
-  and hand off a bug fix.
-- `research-decision`: define a decision, gather high-trust evidence, compare
-  alternatives, and record uncertainty.
-- `data-analysis`: inspect, contract, clean, validate, analyze reproducibly,
-  and report limitations.
+- `common/workflow/feature-delivery`: align, plan, implement vertical slices, test, review, handoff.
+- `common/workflow/bug-fixing`: reproduce, minimize, hypothesize, fix, regression-test, review, handoff.
+- `common/workflow/research-decision`: define decision, gather evidence, compare alternatives, record uncertainty.
+- `common/workflow/data-analysis`: inspect, contract, clean, validate, analyze reproducibly, report limitations.
 
-Each workflow keeps its entrypoint concise and links to shared artifact
-templates instead of duplicating long formats.
+Keep workflow entrypoint concise; link shared artifact templates. No duplicate long formats.

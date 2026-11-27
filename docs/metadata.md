@@ -1,7 +1,6 @@
 # Skill metadata
 
-Every `SKILL.md` uses YAML frontmatter so humans and tools can discover the
-skill without reading its full body.
+Every `SKILL.md` uses YAML frontmatter so humans/tools discover skill without reading full body.
 
 ## Required schema
 
@@ -20,35 +19,25 @@ invocation: both
 
 ### Fields
 
-- `name`: lowercase local skill name; it must match the final directory name. Names may repeat in different scopes; canonical path IDs must not.
-- `description`: concise capability and activation boundary.
-- `category`: `common`, `personal`, or `meta`; it must match the root directory.
-- `subject`: lowercase topic grouping used for index sorting and discovery.
-- `scope`: `universal`, `personal`, or `repository`.
-- `status`: `draft`, `experimental`, `stable`, or `deprecated`.
-- `version`: semantic version in `MAJOR.MINOR.PATCH` form.
-- `invocation`: `user`, `model`, or `both`; describes whether the skill is
-  explicitly selected by a user, automatically selected by an agent, or both.
+- `name`: lowercase local skill name; match final directory; repeats across scopes allowed; canonical path IDs unique.
+- `description`: concise capability + activation boundary.
+- `category`: `common`, `personal`, `meta`; match root directory.
+- `subject`: lowercase topic grouping.
+- `scope`: `universal`, `personal`, `repository`.
+- `status`: `draft`, `experimental`, `stable`, `deprecated`.
+- `version`: SemVer `MAJOR.MINOR.PATCH`.
+- `invocation`: `user`, `model`, `both`.
+- `requires`: optional list canonical skill IDs.
 
-- `requires`: optional list of canonical skill IDs required by this skill;
-  dependency resolution is handled by the registry and sync tools.
-
-`invocation` is portable metadata. It does not encode Claude, Codex, plugin, or
-other runtime-specific commands. A `user` skill is an explicit workflow entry
-point; a `both` skill may also be selected from its description and metadata.
-The `model` value is reserved for skills that are intentionally agent-selected
-without requiring an explicit user invocation.
-
-The canonical skill ID is derived from the path, for example
-`meta/skill-authoring`. Do not duplicate it in frontmatter.
+`invocation` portable; no Claude/Codex/plugin runtime commands. `user` explicit workflow; `both` user + agent; `model` intentional agent-selected. Canonical ID path-derived, e.g. `meta/skill-authoring`; don't duplicate in frontmatter.
 
 ## Generated registry
 
-The metadata is the source of truth for `docs/skill-index.md` and
-`data/skills.json`. Generate both with:
+Source truth frontmatter. `docs/skill-index.md` human-readable; `data/skills.json` machine-readable.
 
 ```bash
 python3 scripts/generate_skill_index.py
+python3 scripts/generate_skill_index.py --check
 ```
 
-Use `--check` in validation or CI to detect stale generated files.
+Registry schema version **3**. Discovery accepts **1–3**; old records without `requires` default `[]`; present lists retained + validated. Re-sync writes current schema. Generated registry schema changes update version + compatibility reader when safe. Regenerate after metadata changes; don't manual edit `docs/skill-index.md`.
