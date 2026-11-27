@@ -496,6 +496,19 @@
       "requires": []
     },
     {
+      "id": "personal/workflow/commit-workflow",
+      "name": "commit-workflow",
+      "description": "Apply the user's small-commit workflow when planning or executing repository changes. Structure reviewable work, confirm branch, phase destination, and test boundaries, then verify commits and remote CI. Do not invent commits for advice-only requests.",
+      "category": "personal",
+      "subject": "workflow",
+      "scope": "personal",
+      "status": "experimental",
+      "version": "1.0.0",
+      "invocation": "user",
+      "path": "personal/workflow/commit-workflow/SKILL.md",
+      "requires": []
+    },
+    {
       "id": "personal/workflow/orca-orchestration",
       "name": "orca-orchestration",
       "description": "Coordinate supervised Orca workers when a user asks to dispatch, monitor, wait for, or manage a task DAG; requires the Orca runtime and its version-matched orchestration guide.",
