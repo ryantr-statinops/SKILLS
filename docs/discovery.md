@@ -48,7 +48,7 @@ python3 scripts/discover_skills.py --category personal "data pipeline"
 python3 scripts/discover_skills.py --format json "debug failing test"
 
 # Consumer discovery from an installed catalog
-python3 scripts/discover_skills.py --registry /path/to/project/.agent/skills/.skill-catalog.json "debug failing test"
+python3 scripts/discover_skills.py --registry /path/to/project/.agents/skills/.skill-catalog.json "debug failing test"
 ```
 With an installed catalog, `--bundle <id>` filters using the bundle membership
 snapshot saved at sync time. Older catalogs without that snapshot must be

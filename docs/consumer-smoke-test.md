@@ -9,7 +9,7 @@ repository.
 A fixture project contains:
 
 - `AGENTS.md` for project instructions;
-- `.agent/skills/` as the portable skill root;
+- `.agents/skills/` as the portable skill root;
 - `CONTEXT.md` with project boundaries and artifact paths;
 - a minimal source and test seam;
 - `docs/agent/` for workflow artifacts.

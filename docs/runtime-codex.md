@@ -45,7 +45,7 @@ and may contact a configured provider.
 
 ## Updating and recovery
 
-Edit or update skills in `.agent/skills/`; existing native symlinks expose those
+Edit or update skills in `.agents/skills/`; existing native symlinks expose those
 changes. Re-run the exporter after adding skills. It is additive: removed source
 skills leave links behind, and existing conflicts are not overwritten. Preserve
 user-managed files in `.agents/skills/`; see [integration recovery](integration.md#recovering-an-installation-mismatch)

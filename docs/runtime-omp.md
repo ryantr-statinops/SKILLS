@@ -49,7 +49,7 @@ which `filePath` holds each bare name and which entries were namespaced.
 
 ## Updating and recovery
 
-Edit or update skills in `.agent/skills/`; existing native symlinks expose
+Edit or update skills in `.agents/skills/`; existing native symlinks expose
 those changes (`omp` follows the adapter links). Re-run the exporter after
 adding skills. It is additive: removed source skills leave links behind, and
 existing conflicts are not overwritten. Preserve user-managed files in
