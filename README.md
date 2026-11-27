@@ -1,145 +1,77 @@
 # SKILLS
 
-`SKILLS` is a portable Agent Skill Library for engineering, data, AI,
-quantitative research, and personal workflows.
-
-**Current release: `v0.1.0`**
+`SKILLS` is a portable Agent Skill Library for engineering, data, AI, quantitative research, and personal workflows.
 
 ## What SKILLS provides
 
-Skills encode operational knowledge: when to act, how to act, which decisions
-matter, and how to validate the result. Workflows provide outcome-oriented
-entry points, while bundles provide reviewed capability sets for consumer
-projects.
+Skills encode operational knowledge: when to act, how to act, which decisions matter, and how to validate the result.
 
-Portable Markdown is the source of truth. The `.agent/skills/` directory is the
-runtime-independent baseline for Codex-compatible agents and other runtimes
-with thin adapters.
+Modern coding agents (Codex, OpenCode, `omp`, Claude Code, Antigravity) discover skills in `.agents/skills/<skill-name>/SKILL.md` or user-level `~/.agents/skills/`.
 
-## Start here
+## Quick Start
 
-From a checkout of this repository, preview the portable baseline before
-installing it into a consumer project:
+### 1. Global Installation (Recommended)
+
+Symlink skills into `~/.agents/skills/` so all local projects can access them without checking skills into version control:
 
 ```bash
-python3 scripts/sync_skills.py \
-  --bundle portable-agent-baseline \
-  --check \
-  /path/to/project/.agent/skills
+# Preview
+python3 scripts/install_skills.py --bundle engineering-core --global --check
 
-python3 scripts/sync_skills.py \
-  --bundle portable-agent-baseline \
-  /path/to/project/.agent/skills
+# Install
+python3 scripts/install_skills.py --bundle engineering-core --global
 ```
 
-Check mode does not write files. A normal sync preserves the repository-relative
-skill layout and stops before overwriting an existing target path.
+### 2. Project-Local Installation
 
-Copy [`templates/CONTEXT.md`](templates/CONTEXT.md) into the consumer project
-when the agent needs shared vocabulary, architecture boundaries, test seams, or
-artifact paths. Record the source tag `v0.1.0` or a reviewed commit in the
-consumer project's integration notes.
+Copy skills directly into `<project>/.agents/skills/` when a repository needs to be self-contained:
 
-## Choose by outcome
+```bash
+python3 scripts/install_skills.py --bundle feature-delivery --project /path/to/project
+```
+
+List all available bundles with:
+
+```bash
+python3 scripts/install_skills.py --list-bundles
+```
+
+## Bundles
 
 | Outcome | Bundle | Purpose |
 | --- | --- | --- |
-| Agent context and recovery | `portable-agent-baseline` | Establish portable context, onboarding, requirements, recovery, and discovery. |
-| General engineering | `engineering-core` | Support repository work, implementation, testing, review, and handoff. |
-| Build a feature | `feature-delivery` | Coordinate requirements, planning, vertical slices, testing, review, and handoff. |
-| Fix a defect | `bug-fixing` | Reproduce, isolate, fix, regression-test, review, and hand off a defect. |
-| Make a research decision | `research-decision` | Compare alternatives with evidence, trade-offs, and uncertainty. |
-| Analyze data | `data-analysis` | Inspect, clean, validate, analyze, and report data reproducibly. |
-| Python backend workflow | `personal-python` | Apply Ryan's Python backend, API, testing, debugging, and review practices. |
+| Agent context & recovery | `portable-agent-baseline` | Establish context, onboarding, requirements, and recovery. |
+| General engineering | `engineering-core` | Implementation, testing, debugging, review, and git. |
+| Build a feature | `feature-delivery` | Coordinate requirements, planning, testing, review, and handoff. |
+| Fix a defect | `bug-fixing` | Reproduce, isolate, fix, regression-test, and review. |
+| Research decision | `research-decision` | Compare alternatives with evidence, trade-offs, and uncertainty. |
+| Data analysis | `data-analysis` | Inspect, clean, validate, analyze, and report reproducibly. |
+| Python backend | `personal-python` | Ryan's Python backend, API, testing, and debugging practices. |
 
-List available bundles with:
-
-```bash
-python3 scripts/sync_skills.py --list-bundles
-```
-
-See [bundle documentation](docs/bundles.md) for the registry contract and
-distribution behavior.
-
-## Supported status
-
-- **Promoted/stable** — the supported set recorded in
-  [`data/promoted.json`](data/promoted.json); each skill is documented,
-  evaluated, and included in a supported bundle.
-- **Experimental** — usable skills that are still collecting evidence and
-  feedback from real workflows.
-- **Personal** — Ryan-specific preferences, conventions, and domain workflows.
-- **Deprecated** — excluded from new bundles and workflows unless explicitly
-  requested through a reviewed compatibility path.
-
-The promoted set is intentionally smaller than the full library. See the
-[promotion policy](docs/promotion.md) for lifecycle and distribution rules.
-
-## How an agent uses SKILLS
+## Repository Structure
 
 ```text
-user outcome
-  → discover a bundle or skill
-  → inspect project context
-  → load SKILL.md
-  → execute the workflow
-  → validate and hand off
+common/     reusable engineering, foundation, research, and workflow skills
+personal/   Ryan's personal engineering, AI, data, and domain judgment
+meta/       skill authoring and intake procedures
+data/       generated skills registry and bundle definitions
+scripts/    validator, index generator, and installer tooling
+docs/       architecture, authoring, and integration guides
+templates/  project CONTEXT.md and artifact templates
+tests/      test suite
 ```
 
-For integration, update provenance, installed catalogs, and runtime layout, read the [integration guide](docs/integration.md).
-For routing, read the [discovery guide](docs/discovery.md). For coordinated
-outcomes, read the [workflow guide](docs/workflows.md). For consumer validation,
-read the [consumer smoke test](docs/consumer-smoke-test.md).
+## Validation & Quality
 
-## Repository map
-
-```text
-common/     reusable skills
-personal/   Ryan-specific workflows and domain practices
-meta/       skill-system authoring, discovery, and maintenance
-data/       generated skill, bundle, and promotion registries
-scripts/    discovery, sync, validation, and evaluation tools
-docs/       integration, workflow, lifecycle, and quality guides
-templates/  consumer context and workflow artifact templates
-tests/      regression, evaluation, routing, and consumer fixtures
-.github/    CI workflow and repository automation
-
-AGENTS.md   repository instructions for coding agents
-CHANGELOG.md release history
-LICENSE     project license
-README.md   public project overview
-```
-
-## Documentation and contribution
-
-Start with the [documentation index](docs/README.md). Contributors should
-review the [authoring guide](docs/authoring.md), [evaluation contract](docs/evaluation-contract.md),
-[promotion policy](docs/promotion.md), and [versioning policy](docs/versioning.md).
-
-A contribution should keep each skill narrow, define explicit activation and
-exclusion boundaries, include representative and boundary evaluation cases,
-and pass repository validation before commit.
-
-Run the repository checks locally with:
+Run checks before committing:
 
 ```bash
 pytest -q
-python3 -m unittest discover -s tests -p 'test_*.py'
 python3 scripts/validate_skills.py
 python3 scripts/generate_skill_index.py --check
-python3 scripts/run_evaluations.py --format json
 python3 scripts/check_markdown_links.py
 git diff --check
 ```
-
-Pytest runs the repository test suite only. The consumer project under
-`tests/fixtures/` is exercised by the consumer smoke test in
-`tests/test_consumer_smoke.py` and is intentionally excluded from root pytest
-collection.
-
-The [test suite](tests/) contains regression and consumer fixtures,
-[AGENTS.md](AGENTS.md) defines repository operating rules, and
-[CHANGELOG.md](CHANGELOG.md) records release history.
 
 ## License
 
