@@ -1,12 +1,7 @@
 # oh-my-pi (omp) integration
 
-`omp`, the oh-my-pi coding agent, discovers project skills from both
-`.agent/skills` and `.agents/skills`, walking up from the working directory to
-the repository root, plus user-level `~/.agent[s]/skills`. Each skills root is
-scanned exactly one level deep: only `<root>/<entry>/SKILL.md` entries load.
-The nested portable tree (`common/workflow/...`) is therefore invisible to
-`omp` directly; generate the flat `.agents/skills/` adapter, whose entries are
-single-level directories the scanner reads.
+`omp`, the oh-my-pi coding agent, discovers project skills from `.agents/skills`,
+walking up from the working directory to the repository root, plus user-level `~/.agents/skills`.
 
 ## Install selected skills
 
@@ -14,16 +9,18 @@ Run these commands from the SKILLS checkout. Replace the project path with the
 consumer repository:
 
 ```bash
-python3 scripts/sync_skills.py --bundle feature-delivery --check /path/to/project/.agent/skills
-python3 scripts/sync_skills.py --bundle feature-delivery /path/to/project/.agent/skills
-python3 scripts/export_runtime_adapter.py --check /path/to/project/.agent/skills /path/to/project/.agents/skills
-python3 scripts/export_runtime_adapter.py /path/to/project/.agent/skills /path/to/project/.agents/skills
+# Preview
+python3 scripts/install_skills.py --bundle feature-delivery --project /path/to/project --check
+
+# Install directly into <project>/.agents/skills
+python3 scripts/install_skills.py --bundle feature-delivery --project /path/to/project
 ```
 
-Review each `--check` result before applying. If `.agent/skills/` already has a
-sync manifest, use `--update` with the complete intended selection; a normal
-install is rejected to protect manifest ownership. If a native destination
-conflicts, stop and follow [the reviewed cutover procedure](integration.md#cut-over-an-existing-native-skill-root).
+Or install globally as symlinks into `~/.agents/skills/`:
+
+```bash
+python3 scripts/install_skills.py --bundle feature-delivery --global
+```
 
 ## Verify local discovery
 

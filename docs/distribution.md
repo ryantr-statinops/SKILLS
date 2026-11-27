@@ -31,16 +31,16 @@ Do not silently update a production project to a moving branch.
   and pull a new reviewed snapshot instead.
 - Keep secrets, private data, and project-only procedures outside the public
   library.
-- Use `scripts/sync_skills.py` when a project needs a selected export instead
+- Use `scripts/install_skills.py` when a project needs a selected export instead
   of the complete library.
 
-For a reviewed capability set, sync a named bundle instead of listing skill
+For a reviewed capability set, install a named bundle instead of listing skill
 paths manually:
 
 ```bash
-python3 scripts/sync_skills.py --list-bundles
-python3 scripts/sync_skills.py --bundle bug-fixing --check /path/to/project/.agent/skills
-python3 scripts/sync_skills.py --bundle bug-fixing /path/to/project/.agent/skills
+python3 scripts/install_skills.py --list-bundles
+python3 scripts/install_skills.py --bundle bug-fixing --project /path/to/project --check
+python3 scripts/install_skills.py --bundle bug-fixing --project /path/to/project
 ```
 
 Bundle sync is conflict-safe: check mode never writes, and a normal sync stops

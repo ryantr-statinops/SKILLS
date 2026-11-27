@@ -14,8 +14,7 @@ SKILLS/
 │   ├── index          docs/skill-index.md and data/skills.json
 │   ├── metadata       frontmatter and docs/metadata.md
 │   ├── router         category and subject SKILL.md entrypoints
-│   ├── subtree        docs/distribution.md and docs/integration.md
-│   └── sync           scripts/sync_skills.py
+│   └── installer      scripts/install_skills.py
 │
 └── Quality & lifecycle
     ├── validation     scripts/validate_skills.py

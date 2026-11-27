@@ -24,18 +24,11 @@ When integrating into another runtime, verify:
 4. Whether scripts need a particular interpreter or dependency.
 5. How project instructions and skill instructions are prioritized.
 
-Use `python3 scripts/inspect_integration.py /path/to/project` to produce a
-read-only report of detected runtime directories, instruction files, skill
-roots, conflicts, and recommended integration methods.
-
-## Directory adapters
-
-Use `.agent/` as the portable baseline. Codex and OpenCode can consume the
-generated `.agents/skills/` adapter. Generate it with:
+Use `.agents/skills/` as the standard discovery layout for modern runtimes.
+Generate or link skills directly with:
 
 ```bash
-python3 scripts/export_runtime_adapter.py \
-  /path/to/project/.agent/skills /path/to/project/.agents/skills
+python3 scripts/install_skills.py --bundle feature-delivery --project /path/to/project
 ```
 
 The adapter uses symlinked skill directories so portable relative resources

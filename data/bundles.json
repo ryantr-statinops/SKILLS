@@ -92,6 +92,7 @@
         "personal/engineering/backend/python",
         "personal/engineering/backend/core",
         "personal/engineering/core",
+        "personal/workflow/commit-workflow",
         "common/engineering/testing",
         "common/engineering/debugging",
         "common/engineering/code-review"
