@@ -39,11 +39,3 @@ Provide the hypothesis, data contract, timing rules, baseline, evaluation design
 ## Validation
 
 Results are reproducible, include a baseline and correctly separated out-of-sample evaluation, expose cost and leakage assumptions, and do not authorize live execution.
-
-## Agent handoff
-
-- Selected when: A quantitative hypothesis, signal, or historical strategy needs disciplined research and evaluation.
-- Do not activate when: Do not use for live execution, broker/account operations, or a generic time-series/statistics task without a quant research question.
-- Expected output: Produce the research design, evidence, limitations, and next experiment described above.
-- User-facing report: Summarize the hypothesis, data/timing assumptions, evaluation, costs, robustness, limitations, and no-execution boundary.
-- Confirmation boundary: Ask before destructive, external, or irreversible actions.

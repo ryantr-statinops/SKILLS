@@ -37,11 +37,3 @@ Produce options, trade-offs, selected direction, and next experiment.
 
 ## Validation
 The next step is small, observable, and reversible.
-
-## Agent handoff
-
-- Selected when: Use when the requested outcome matches this skill description and workflow.
-- Do not activate when: Do not activate when the task matches the stated exclusion or a narrower skill.
-- Expected output: Produce the observable artifact, decision, or result described by the workflow.
-- User-facing report: Summarize scope, result, checks, and unresolved risks.
-- Confirmation boundary: Ask before destructive, external, or irreversible actions.

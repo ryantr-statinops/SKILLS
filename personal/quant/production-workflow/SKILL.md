@@ -71,11 +71,3 @@ Provide the research handoff, data and feature contract, versioning plan, batch/
 ## Validation
 
 The workflow is reproducible, data freshness and quality are observable, failures are recoverable or fail closed, deployment and rollback are explicit, and no external execution occurs without separate human authorization.
-
-## Agent handoff
-
-- Selected when: Use when a quantitative research artifact must be shaped into a production engineering workflow.
-- Do not activate when: Do not use for initial signal hypothesis research, generic statistics, or live trade/account execution.
-- Expected output: Produce the production design, operational checks, recovery path, and approval boundary described above.
-- User-facing report: Summarize readiness evidence, interfaces, monitoring, failure behavior, risks, and what remains human-controlled.
-- Confirmation boundary: Ask before destructive, external, or irreversible actions.

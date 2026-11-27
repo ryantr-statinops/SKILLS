@@ -97,11 +97,3 @@ Provide the user outcome, non-AI baseline, system boundary, data/model/context/t
 ## Validation
 
 The design has a measurable outcome, representative and boundary evaluations, isolated failure boundaries, explicit permissions, and a plan to observe and reproduce production behavior.
-
-## Agent handoff
-
-- Selected when: Use only for initial AI/agent engineering framing described by this draft scaffold.
-- Do not activate when: Do not activate for production AI implementation until a reviewed leaf skill exists.
-- Expected output: State the foundation scope, missing capability, and safe next step.
-- User-facing report: Explain the scaffold limitation, assumptions, and any common skill used instead.
-- Confirmation boundary: Ask before destructive, external, or irreversible actions.

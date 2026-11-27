@@ -116,11 +116,3 @@ Provide the question, data-generating context, estimand or target, assumptions, 
 ## Validation
 
 The method matches the data structure, assumptions are stated and checked where possible, baselines or special cases are used, uncertainty is reported, and conclusions do not exceed the evidence.
-
-## Agent handoff
-
-- Selected when: Use when statistical reasoning is central to the requested outcome.
-- Do not activate when: Do not use as the primary skill for production data movement, backend services, model serving, or code optimization.
-- Expected output: Produce the statistical analysis, derivation, method comparison, or uncertainty-aware interpretation described by the workflow.
-- User-facing report: Summarize the question, assumptions, method, result, uncertainty, diagnostics, and limitations.
-- Confirmation boundary: Ask before destructive, external, or irreversible actions.

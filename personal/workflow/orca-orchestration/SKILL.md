@@ -63,11 +63,3 @@ Complete only when every expected Dispatch has a settled, validated outcome, eac
 ## Source attribution
 
 Adapted from the Orca orchestration skill by Lovecast Inc. See [the upstream skill](https://github.com/stablyai/orca/blob/main/skills/orchestration/SKILL.md) and the included [MIT license notice](references/orca-license.md). The current Orca binary serves the authoritative, version-matched operational guide.
-
-## Agent handoff
-
-- Selected when: The user explicitly asks to supervise Orca workers, wait for results, monitor progress, or coordinate an Orca task DAG.
-- Do not activate when: The user asks for ordinary coding, generic subagent use, terminal/worktree work, or a handoff without Orca supervision.
-- Expected output: Settled Orca task outcomes with evidence and explicit unresolved blockers.
-- User-facing report: Summarize per-task outcomes, evidence, worker state, and any unknowns.
-- Confirmation boundary: Obtain approval before permission escalation or external/destructive lifecycle actions not already authorized by the user.

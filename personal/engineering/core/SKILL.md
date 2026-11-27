@@ -76,11 +76,3 @@ Provide a problem model, workload and constraints, candidate solutions, complexi
 ## Validation
 
 The selected approach has a stated correctness check, a baseline or measurable rationale, and a verification path appropriate to the risk.
-
-## Agent handoff
-
-- Selected when: Use when a personal engineering decision involves computation, system behavior, optimization, or a cross-domain foundation.
-- Do not activate when: Do not use as a substitute for a narrower data, AI, backend, infrastructure, frontend, or statistics workflow.
-- Expected output: Produce the engineering comparison, design rationale, or validation plan described by the workflow.
-- User-facing report: Summarize the problem model, chosen approach, evidence, trade-offs, and unresolved risks.
-- Confirmation boundary: Ask before destructive, external, or irreversible actions.
