@@ -17,7 +17,6 @@ class WorkflowBehaviorTests(unittest.TestCase):
             workflow_path = ROOT / case["workflow"] / "SKILL.md"
             workflow = workflow_path.read_text(encoding="utf-8")
             self.assertIn(case["artifact_root"], context, case["name"])
-            self.assertIn("Confirmation boundary:", workflow, case["name"])
             for term in case["required_terms"]:
                 self.assertIn(term, workflow, case["name"])
 

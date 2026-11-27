@@ -33,11 +33,3 @@ Return findings, evidence, caveats, and a clearly labeled conclusion.
 
 ## Validation
 Every material claim is traceable to evidence or explicitly labeled inference.
-
-## Agent handoff
-
-- Selected when: Use the activation boundary and outcome described in this skill.
-- Do not activate when: The task matches the stated exclusion or a narrower skill.
-- Expected output: Produce the observable result and validation described by the workflow.
-- User-facing report: Summarize scope, result, checks, and unresolved risks.
-- Confirmation boundary: Ask before destructive, external, or irreversible actions.

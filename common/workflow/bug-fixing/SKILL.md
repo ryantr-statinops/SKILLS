@@ -60,11 +60,3 @@ a software defect to reproduce.
 
 Provide the symptom, reproduction status, evidence, root cause, fix, regression
 test, verification result, review result, unresolved risks, and next action.
-
-## Agent handoff
-
-- Selected when: The user requests diagnosis and repair of a software failure, regression, or unexpected behavior.
-- Do not activate when: The task is a new feature, research decision, or data analysis without a software defect.
-- Expected output: Verified fix, regression evidence, review result, and optional diagnosis/handoff artifacts.
-- User-facing report: Summarize symptom, cause, fix, tests, checks, risks, and remaining uncertainty.
-- Confirmation boundary: Confirm before destructive recovery, external actions, material scope expansion, or writing optional artifacts outside the agreed project layout.

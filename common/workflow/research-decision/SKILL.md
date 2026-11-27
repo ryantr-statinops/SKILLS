@@ -60,11 +60,3 @@ questions, or personal preference decisions that need no external evidence.
 Provide the question, decision, criteria, sources, comparison, recommendation,
 trade-offs, fact/inference distinctions, uncertainty, and follow-up. Validate
 source links, dates, claim scope, and inference labels.
-
-## Agent handoff
-
-- Selected when: The user needs research that will inform a technical or operational choice among alternatives.
-- Do not activate when: There is no open decision, the task is implementation-only, or the question is a simple factual lookup.
-- Expected output: Cited decision artifact with comparison, recommendation, uncertainty, and follow-up.
-- User-facing report: Summarize scope, evidence, recommendation, trade-offs, confidence, and unresolved questions.
-- Confirmation boundary: Confirm before external submissions, paid research, or writing optional artifacts outside the agreed project layout.

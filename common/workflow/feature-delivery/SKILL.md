@@ -59,11 +59,3 @@ edit whose scope and verification are already obvious.
 Provide the confirmed outcome, plan, changed files, tests and checks, review
 result, unresolved risks, and next action. Validate the agreed seams, focused
 tests, full required checks, and final diff scope.
-
-## Agent handoff
-
-- Selected when: The user requests a feature or material behavior change that needs coordinated planning and delivery.
-- Do not activate when: The task is only bug diagnosis, research, data analysis, or an already-contained edit.
-- Expected output: Implemented feature, verification evidence, review result, and optional feature/handoff artifacts.
-- User-facing report: Summarize outcome, scope, changed files, checks, risks, and follow-up work.
-- Confirmation boundary: Confirm before material scope expansion, external actions, destructive changes, or writing optional artifacts outside the agreed project layout.

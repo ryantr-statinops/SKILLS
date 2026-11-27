@@ -61,11 +61,3 @@ and interpretation.
 Provide the question, input contract, transformations, reproduction path,
 results, validation status, assumptions, uncertainty, limitations, and next
 action. Validate schema, quality checks, reproducibility, and output provenance.
-
-## Agent handoff
-
-- Selected when: The user requests an inspectable data analysis with explicit inputs, transformations, results, and limitations.
-- Do not activate when: The task is a simple lookup, an application bug, or chart formatting without an analysis question.
-- Expected output: Reproducible analysis report with data contract, validation, results, and limitations.
-- User-facing report: Summarize inputs, transformations, findings, checks, assumptions, uncertainty, and follow-up.
-- Confirmation boundary: Confirm before external data access, destructive transformations, or writing optional artifacts outside the agreed project layout.

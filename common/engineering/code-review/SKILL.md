@@ -37,11 +37,3 @@ Return actionable findings first, followed by residual risks and summary.
 
 ## Validation
 Every finding has evidence, impact, and a clear remediation direction.
-
-## Agent handoff
-
-- Selected when: Use the activation boundary and outcome described in this skill.
-- Do not activate when: The task matches the stated exclusion or a narrower skill.
-- Expected output: Produce the observable result and validation described by the workflow.
-- User-facing report: Summarize scope, result, checks, and unresolved risks.
-- Confirmation boundary: Ask before destructive, external, or irreversible actions.

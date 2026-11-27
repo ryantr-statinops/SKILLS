@@ -4,7 +4,7 @@
     "workflow": "common/workflow/feature-delivery",
     "artifact_root": "docs/agent/specs/",
     "confirmation": "before_mutation",
-    "required_terms": ["CONTEXT.md", "feature-spec.md", "Confirmation boundary:"]
+    "required_terms": ["CONTEXT.md", "feature-spec.md"]
   },
   {
     "name": "data-without-contract",
@@ -18,6 +18,6 @@
     "workflow": "common/workflow/research-decision",
     "artifact_root": "docs/agent/decisions/",
     "confirmation": "before_external",
-    "required_terms": ["high-trust primary sources", "cited decision artifact", "Confirmation boundary:"]
+    "required_terms": ["high-trust primary sources", "cited decision artifact"]
   }
 ]
