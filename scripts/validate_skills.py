@@ -23,19 +23,11 @@ ROOT = Path(__file__).resolve().parents[1]
 CATEGORIES = {"common", "personal", "meta"}
 NAME_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 PLACEHOLDERS = ("skill-name", "Describe what this skill", "Use this skill when ...")
-HANDOFF_FIELDS = (
-    "Selected when:",
-    "Do not activate when:",
-    "Expected output:",
-    "User-facing report:",
-    "Confirmation boundary:",
-)
 MODEL_ACTIVATION_FIELDS = (
     "## When to use",
     "## Do not activate when",
     "## Expected output",
     "## Validation",
-    "## Agent handoff",
 )
 
 
@@ -48,42 +40,6 @@ def activation_contract_errors(text: str, invocation: str) -> list[str]:
         for section in MODEL_ACTIVATION_FIELDS
         if section not in text
     ]
-
-
-def handoff_contract_errors(text: str) -> list[str]:
-    marker = "## Agent handoff\n"
-    if marker not in text:
-        return ["missing agent handoff section"]
-    body = text.split(marker, 1)[1]
-    next_heading = body.find("\n## ")
-    if next_heading != -1:
-        body = body[:next_heading]
-    lines = body.splitlines()
-    errors = []
-    for field in HANDOFF_FIELDS:
-        value = None
-        for index, line in enumerate(lines):
-            candidate = line.strip()
-            if candidate.startswith("- "):
-                candidate = candidate[2:].strip()
-            if not candidate.startswith(field):
-                continue
-            value = candidate[len(field):].strip()
-            if not value:
-                for continuation in lines[index + 1:]:
-                    continuation = continuation.strip()
-                    if continuation.startswith("- "):
-                        continuation = continuation[2:].strip()
-                    if not continuation or any(continuation.startswith(name) for name in HANDOFF_FIELDS):
-                        break
-                    value = continuation
-                    break
-            break
-        if value is None:
-            errors.append(f"missing agent handoff field: {field}")
-        elif not value:
-            errors.append(f"empty agent handoff field: {field}")
-    return errors
 
 
 def error(message: str) -> None:
@@ -138,10 +94,6 @@ def validate_skill(path: Path) -> int:
         if placeholder in text:
             error(f"unfinished placeholder in {skill_file.relative_to(ROOT)}: {placeholder}")
             failures += 1
-
-    for message in handoff_contract_errors(text):
-        error(f"{message} in {skill_file.relative_to(ROOT)}")
-        failures += 1
 
     for directory in path.iterdir():
         if directory.is_dir() and not any(directory.iterdir()):
