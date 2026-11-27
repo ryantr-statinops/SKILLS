@@ -21,6 +21,10 @@ ROOT = Path(__file__).resolve().parents[1]
 BUNDLES_PATH = ROOT / "data/bundles.json"
 
 
+class InstallConflict(ValueError):
+    """Raised when installation would overwrite an existing target."""
+
+
 def load_bundles() -> dict[str, list[str]]:
     if not BUNDLES_PATH.is_file():
         return {}
@@ -70,12 +74,15 @@ def install_global(
             current_target = os.readlink(dest_link)
             if current_target == rel_target:
                 continue
-            actions.append(f"relink {dest_link} -> {rel_target}")
-            if not check:
-                dest_link.unlink()
-                dest_link.symlink_to(rel_target)
+            if check:
+                actions.append(f"conflict existing target: {dest_link}; not overwriting")
+                continue
+            raise InstallConflict(f"target already exists: {dest_link}; not overwriting")
         elif dest_link.exists():
-            actions.append(f"skip existing non-symlink: {dest_link}")
+            if check:
+                actions.append(f"conflict existing target: {dest_link}; not overwriting")
+                continue
+            raise InstallConflict(f"target already exists: {dest_link}; not overwriting")
         else:
             actions.append(f"link {dest_link} -> {rel_target}")
             if not check:
@@ -91,10 +98,10 @@ def install_project(
     for adapter_name, source_dir in skills:
         dest_dir = target_dir / adapter_name
         if dest_dir.exists():
-            actions.append(f"update {dest_dir}")
-            if not check:
-                shutil.rmtree(dest_dir)
-                shutil.copytree(source_dir, dest_dir)
+            if check:
+                actions.append(f"conflict existing target: {dest_dir}; not overwriting")
+                continue
+            raise InstallConflict(f"target already exists: {dest_dir}; not overwriting")
         else:
             actions.append(f"copy {source_dir} -> {dest_dir}")
             if not check:
@@ -167,10 +174,14 @@ def main(argv: list[str] | None = None) -> int:
         print("error: specify --global, --project <dir>, or --target <dir>", file=sys.stderr)
         return 2
 
-    if args.is_global:
-        actions = install_global(resolved, dest, check=args.check)
-    else:
-        actions = install_project(resolved, dest, check=args.check)
+    try:
+        if args.is_global:
+            actions = install_global(resolved, dest, check=args.check)
+        else:
+            actions = install_project(resolved, dest, check=args.check)
+    except InstallConflict as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 2
 
     prefix = "[check] " if args.check else ""
     for action in actions:

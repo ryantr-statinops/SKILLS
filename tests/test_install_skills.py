@@ -50,6 +50,41 @@ class InstallSkillsTests(unittest.TestCase):
             self.assertTrue((dest / "common-workflow-research-decision/SKILL.md").is_file())
             self.assertTrue((dest / "common-research-research/SKILL.md").is_file())
 
+    def test_install_project_mode_refuses_to_overwrite_existing_target(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            project_dir = Path(temp) / "my_project"
+            dest = project_dir / ".agents/skills/common-workflow-research-decision"
+            dest.mkdir(parents=True)
+            marker = dest / "SKILL.md"
+            marker.write_text("keep me", encoding="utf-8")
+            result = subprocess.run(
+                [sys.executable, str(SCRIPT), "--bundle", "research-decision", "--project", str(project_dir)],
+                cwd=ROOT,
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("not overwriting", result.stderr)
+            self.assertEqual(marker.read_text(encoding="utf-8"), "keep me")
+
+    def test_check_project_mode_reports_existing_target_without_writing(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            project_dir = Path(temp) / "my_project"
+            dest = project_dir / ".agents/skills/common-workflow-research-decision"
+            dest.mkdir(parents=True)
+            marker = dest / "SKILL.md"
+            marker.write_text("keep me", encoding="utf-8")
+            result = subprocess.run(
+                [sys.executable, str(SCRIPT), "--bundle", "research-decision", "--project", str(project_dir), "--check"],
+                cwd=ROOT,
+                capture_output=True,
+                text=True,
+                check=True,
+            )
+            self.assertIn("conflict existing target", result.stdout)
+            self.assertEqual(marker.read_text(encoding="utf-8"), "keep me")
+
     def test_install_global_mode_creates_symlinks(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
             target_dir = Path(temp) / "global_skills"
