@@ -1,7 +1,6 @@
 # SKILLS architecture
 
-`SKILLS` is a portable Agent Skill Library. Its architecture separates
-capability content from discovery, integration, and quality lifecycle tooling.
+Portable Agent Skill Library separating capability content from discovery, integration, quality lifecycle.
 
 ```text
 SKILLS/
@@ -13,89 +12,54 @@ SKILLS/
 ├── Discovery & integration
 │   ├── index          docs/skill-index.md and data/skills.json
 │   ├── metadata       frontmatter and docs/metadata.md
-│   ├── router         category and subject SKILL.md entrypoints
+│   ├── router         category/subject SKILL.md entrypoints
 │   └── installer      scripts/install_skills.py
 │
 └── Quality & lifecycle
     ├── validation     scripts/validate_skills.py
-    ├── evaluation     scripts/run_evaluations.py and evaluation docs
+    ├── evaluation     scripts/run_evaluations.py + evaluation docs
     ├── regression     tests/ and evaluation fixtures
     ├── CI             .github/workflows/validate.yml
     ├── versioning     docs/versioning.md
-    └── release        CHANGELOG.md and docs/ci-release.md
+    └── release        CHANGELOG.md + docs/ci-release.md
 ```
 
 ## Skill library
 
-Every skill is a directory with a required `SKILL.md`. Optional
-`references/`, `scripts/`, `examples/`, or `assets/` directories are created
-only when the skill has real supporting content. The portable entrypoint keeps
-the capability, boundaries, workflow, decisions, failure modes, output, and
-validation close together.
+Every skill directory has required `SKILL.md`. Optional `references/`, `scripts/`, `examples/`, `assets/` only when real supporting content. Keep capability, boundaries, workflow, decisions, failure modes, output, validation close together.
 
-- `common/` contains reusable engineering, data, security, delivery, and agent
-  workflows.
-- `personal/` contains Ryan's workflow preferences and domain foundations. Its
-  primary career axis is `engineering/core` plus Data, AI, and Backend
-  Engineering cores; `statistics` supports those domains and `quant` focuses
-  on research and production workflow.
-- `meta/` contains guidance about the skill system itself.
+- `common/`: reusable engineering, data, security, delivery, agent workflows.
+- `personal/`: Ryan-specific preferences and domain foundations.
+- `meta/`: skill-system procedures.
 
-The personal engineering hierarchy is intentionally layered:
+## Discovery
 
-```text
-engineering/core
-├── data/core
-├── ai/core
-└── backend/core
-
-statistics ── supports data, AI, and quant reasoning
-quant/research ── quant hypothesis and evaluation
-quant/production-workflow ── research-to-production engineering
-```
-
-Language-specific backend skills, infrastructure, frontend, product, workflow,
-and decision skills remain narrower implementation or operating routes. They do
-not replace the shared engineering foundations.
-
-Use `common/README.md`, `personal/README.md`, and `meta/README.md` as curated
-category navigation. Use the generated global registry for complete discovery.
-
-## Discovery and integration
-
-The agent should discover the smallest relevant skill before loading full
-instructions:
+Smallest relevant skill before full instructions:
 
 ```text
 user intent
-  → AGENTS.md and applicable runtime guidance
-  → optional local.md project state
-  → generated index and candidate descriptions
-  → router SKILL.md when a category has one
+  → AGENTS.md + runtime guidance
+  → optional local.md
+  → generated index + candidate descriptions
+  → router SKILL.md
   → selected leaf SKILL.md
-  → conditional references/scripts/assets
-  → execution, validation, and report
+  → conditional resources
+  → execution, validation, report
 ```
 
-`docs/skill-index.md` is human-readable. `data/skills.json` is the machine
-registry. `docs/discovery.md` defines selection rules. `docs/integration.md`
-defines copy, selected sync, runtime adapters, and Git subtree integration.
+Canonical ID path-based, e.g. `common/engineering/testing`. Installed adapter name hyphenated canonical ID, e.g. `common-engineering-testing`. Runtime discovery root `.agents/skills/`, not `.agent/skills`. `docs/discovery.md` defines selection. `docs/integration.md` defines safe install. `docs/bundles.md` defines bundle manifests.
 
-## Quality and lifecycle
+## Quality
 
-Quality is layered:
+1. Structural metadata, paths, links, generated files checked by validator.
+2. Representative + boundary cases checked by evaluation harness.
+3. Regression tests protect harness/tooling.
+4. CI runs checks on PRs and pushes to `main`.
+5. Skill SemVer + repository tags distribution.
 
-1. Structural metadata, paths, links, and generated files are checked by the
-   validator.
-2. Representative and boundary cases are checked by the evaluation harness.
-3. Regression tests protect the harness and deterministic tooling.
-4. GitHub Actions runs the checks on pull requests and pushes to `main`.
-5. Skill SemVer and repository release tags describe lifecycle and distribution.
+Runtime-specific behavior belongs in adapters/runtime notes, not portable meaning.
 
-The architecture is intentionally portable. Runtime-specific behavior belongs
-in adapters or runtime notes, not in the portable meaning of a common skill.
-
-## Related guides
+## Related
 
 - [Agent operating model](agent-operating-model.md)
 - [Integration](integration.md)

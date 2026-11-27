@@ -1,11 +1,10 @@
 # Skill bundles
 
-A bundle is a named, reviewed selection of skill IDs. It is a distribution
-manifest, not a second copy of skill content.
+Named reviewed selection of skill IDs. Distribution manifest, not second copy.
 
 ## Registry contract
 
-The source of truth is `data/bundles.json`:
+Source truth `data/bundles.json`:
 
 ```json
 {
@@ -23,32 +22,14 @@ The source of truth is `data/bundles.json`:
 }
 ```
 
-Every bundle has a lowercase kebab-case `id`, a useful description, a scope,
-the `portable` runtime target, an explicit deprecated-skill policy, and a list
-of canonical skill IDs.
+Kebab-case id; useful description; scope; `portable` runtime target; explicit deprecated policy; canonical skill IDs. Universal bundles only reusable skills. Personal bundles may add `personal`; separate universal distribution. Current `feature-delivery` has **5** skills. Current bundles listed by `python3 scripts/install_skills.py --list-bundles`.
 
-Universal bundles may contain only reusable skills. Personal bundles may add
-`personal` skills but remain separate from universal distribution.
+## Distribution
 
-## Distribution behavior
+Resolve canonical ID. Copy referenced skill + supporting resources. Don't copy unrelated repo files. Installed adapter name hyphenated canonical ID under `.agents/skills`; supporting resources stay next to `SKILL.md`. Not claim preserve `common/...` path inside `.agents/skills`. Use [integration](integration.md).
 
-Bundles are resolved by canonical skill ID. Sync copies each referenced skill
-with its supporting resources while preserving the repository-relative layout.
-It does not copy unrelated repository files.
-
-Check mode must resolve and validate every bundle member without writing. A
-normal sync reports existing target paths before replacing them. Deprecated
-skills are rejected unless the bundle explicitly opts in with
-`allow_deprecated: true`.
+Check mode resolves + validates no write. Normal safe sync **stops when target exists**; existing target not overwritten. Confirm remove/replace. Deprecated rejected unless `allow_deprecated: true`. `scripts/install_skills.py`, not `scripts/sync_skills.py`.
 
 ## Compatibility
 
-Adding a bundle is additive. Removing or changing a member is a distribution
-change and must be recorded in the changelog or release notes. Consumers that
-need reproducibility should record the source commit or release tag together
-with the bundle ID.
-
-Promotion is tracked separately in `data/promoted.json`. A promoted skill must
-be a member of at least one supported bundle, but not every bundle member is
-promoted. This keeps experimental primitives available for deliberate use
-without presenting the entire library as a stable default.
+Adding bundle additive. Removing/changing member distribution change; record changelog/release notes. Consumers needing reproducibility record source commit/release tag + bundle ID. Promotion separate `data/promoted.json`. Promoted skill in supported bundle; not every member promoted. `status` lifecycle separate from promotion. See [promotion](promotion.md).

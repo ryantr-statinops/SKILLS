@@ -1,41 +1,10 @@
 # Skill distribution
 
-The preferred consumer integration is Git subtree. It vendors a reviewed copy
-of the library into a project while keeping the consumer usable when the
-source repository is unavailable.
+Canonical installed runtime root `.agents/skills`. Source repo `common/`, `personal/`, `meta/`. `.agent/skills` not canonical.
 
-## Continuous updates
+## Direct install
 
-Use the `main` branch when the consumer wants deliberate updates from the
-latest repository state:
-
-```bash
-git fetch skills main
-git subtree pull --prefix=.agent/skills skills main --squash
-```
-
-Review the diff, run the source checks, and test a representative consumer task
-before accepting the update.
-
-## Reproducible updates
-
-Use a reviewed commit or release tag when a consumer needs a reproducible
-snapshot. Record the source commit/tag in the consumer's integration notes.
-Do not silently update a production project to a moving branch.
-
-## Consumer boundaries
-
-- Keep project-specific instructions outside the subtree.
-- Preserve `.agent/skills/` and relative resource paths.
-- Do not edit vendored files as local overrides; change the source repository
-  and pull a new reviewed snapshot instead.
-- Keep secrets, private data, and project-only procedures outside the public
-  library.
-- Use `scripts/install_skills.py` when a project needs a selected export instead
-  of the complete library.
-
-For a reviewed capability set, install a named bundle instead of listing skill
-paths manually:
+Prefer `scripts/install_skills.py` for selected export:
 
 ```bash
 python3 scripts/install_skills.py --list-bundles
@@ -43,13 +12,27 @@ python3 scripts/install_skills.py --bundle bug-fixing --project /path/to/project
 python3 scripts/install_skills.py --bundle bug-fixing --project /path/to/project
 ```
 
-Bundle sync is conflict-safe: check mode never writes, and a normal sync stops
-when a selected target path already exists. Review or remove the existing
-target deliberately before retrying.
+`--check` no write. Normal safe sync stops when target exists. Review/remove existing target deliberately before retrying; confirm. `--global` symlink source; `--project` copy. Removed source not automatically cleaned. `.skill-catalog.json` only if provided by consumer sync; `scripts/install_skills.py` doesn't write it.
 
-## Contributing back
+## Git subtree vendoring
 
-Use subtree push only when the consumer intentionally contributes a portable
-change back to SKILLS. Project-specific changes must remain in the consumer
-repository. Review conflicts manually, especially for `SKILL.md`, references,
-scripts, and evaluation files.
+For vendoring reviewed source library, subtree prefix is consumer-specific. Source repo root contains `common/`, `personal/`, `meta/`, not pre-installed `.agents/skills`. Don't confuse vendored source layout with runtime output. Example only; verify source layout:
+
+```bash
+git fetch skills main
+git subtree pull --prefix=<subtree-prefix> skills main --squash
+```
+
+Use `main` for deliberate latest; reviewed commit/tag for reproducible snapshot. Don't silently update production to moving branch. Record source commit/tag. Review diff, run source checks, representative consumer task. Review subtree conflicts manually, especially `SKILL.md`, references, scripts, evaluation files. No destructive cleanup. Prefer changing source repo + pulling reviewed snapshot over editing vendored files as local overrides.
+
+## Consumer boundaries
+
+- Keep project-specific instructions outside installed skills/subtree.
+- Preserve relative resource paths.
+- Keep secrets/private data/project-only procedures out.
+- No push/tag/release/publish without explicit request.
+- Contributing back via subtree push only intentional portable changes; project-specific stays consumer.
+
+## Change compatibility
+
+Adding additive; removing/changing member/layout distribution change; record changelog/release notes. Registry schema version 3; discovery accepts 1–3; old `requires` defaults `[]`; re-sync writes current. Safe sync preserves conflicts + check/no-write path. See [compatibility](compatibility.md), [versioning](versioning.md).

@@ -1,8 +1,6 @@
 # Agent operating model
 
-This repository is designed for an agent to read the library, select the
-smallest relevant capability, perform authorized work, and explain the result
-to the user.
+Goal: load context, select smallest relevant capability, perform authorized work, validate, report honestly.
 
 ## Lifecycle
 
@@ -20,48 +18,40 @@ context loading
 
 ## Loading order
 
-Use the narrowest source that provides the required context:
-
 1. Root `AGENTS.md` and applicable runtime instructions.
-2. `local.md` if present; use it for current project state only, never as a
-   portable rule or public source.
+2. `local.md` if present; local-only current state, never portable rule or public source.
 3. `docs/skill-index.md` or `data/skills.json` for candidate discovery.
-4. A category/router `SKILL.md` when one exists.
-5. The selected leaf `SKILL.md`.
-6. Only the references, scripts, examples, or assets required by the task.
+4. Category/router `SKILL.md` when one exists.
+5. Selected leaf `SKILL.md`.
+6. Only required references, scripts, examples, assets.
 
-Do not load every skill to compensate for uncertain routing. If no skill is a
-clear match, continue with repository guidance and state that no skill was
-activated.
+Do not load every skill. If no skill clearly applies, continue with repository guidance and state no skill activated.
 
 ## Selection explanation
 
-Before a risky or multi-step task, tell the user briefly:
+Before risky or multi-step tasks, briefly state:
 
 - selected skill ID(s);
-- why they match the requested outcome;
-- important assumptions and exclusions;
-- whether any mutation or external action requires confirmation.
+- why match outcome;
+- assumptions/exclusions;
+- mutation or external action requiring confirmation.
 
-This is an explanation of the operating choice, not a request for the user to
-manually execute the skill.
+This is not manual execution instruction to user.
 
 ## Autonomy and confirmation
 
-The agent may inspect, reason, edit in scope, and run relevant validation when
-the user has authorized the task. Pause and ask before:
+Agent may inspect, reason, edit in scope, run validation when authorized. Pause before:
 
-- deleting, resetting, overwriting, or broad destructive cleanup;
-- writing to external systems or services;
-- pushing, tagging, releasing, or publishing when not explicitly requested;
-- making an irreversible or materially scope-expanding decision.
+- deleting, resetting, overwriting, broad destructive cleanup;
+- writing external systems/services;
+- pushing, tagging, releasing, publishing when not explicitly requested;
+- irreversible or materially scope-expanding decisions.
 
-Preserve unrelated user changes and stop on unexpected conflicts or remote
-state. Do not infer permission from a skill being available.
+Preserve unrelated user changes. Stop on unexpected conflicts or remote state. Do not infer permission from skill availability. Safe sync stops before overwriting existing targets; confirm any removal/replacement.
 
 ## Final report
 
-The final response should include, when relevant:
+Include when relevant:
 
 ```text
 Selected skill(s):
@@ -72,5 +62,4 @@ Unresolved risks or assumptions:
 Next action:
 ```
 
-Keep the report proportional to the task. Link to important files and expose
-uncertainty instead of claiming a check or action that did not happen.
+Report actual actions and checks; don't claim unrun checks. Keep proportional. Expose uncertainty.

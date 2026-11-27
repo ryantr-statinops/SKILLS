@@ -1,85 +1,65 @@
 # Agent-driven integration
 
-This guide explains how to expose selected SKILLS capabilities to a project or coding-agent runtime.
+Expose selected SKILLS capabilities to project/coding-agent runtime.
 
-## Core Integration Architecture
+## Canonical layout
 
-Modern runtimes (Codex, OpenCode, `omp`, Claude Code, Antigravity) look for skills in `.agents/skills/<skill-name>/SKILL.md` (or user-level `~/.agents/skills/`).
+Modern runtimes discover `.agents/skills/<hyphenated-id>/SKILL.md`, user-level `~/.agents/skills/`. Canonical installed root **`.agents/skills/`**, not `.agent/skills`. Source repo `common/`, `personal/`, `meta/` separate. Installed adapter name hyphenated canonical ID, e.g. `common-workflow-feature-delivery`. `scripts/install_skills.py` converts `common/workflow/feature-delivery` → `common-workflow-feature-delivery`.
 
-SKILLS supports two direct installation modes via `scripts/install_skills.py`:
+## Installer
 
 ```text
-SKILLS Repository
-   ├── --global   ──> symlink into ~/.agents/skills/<adapter-name>
-   └── --project  ──> copy into <project>/.agents/skills/<adapter-name>
+SKILLS repository
+   ├── --global   → symlink into ~/.agents/skills/<hyphenated-id> (or --target)
+   └── --project  → copy into <project>/.agents/skills/<hyphenated-id>
 ```
 
----
-
-## 1. Global Installation (Recommended for Local Workstation)
-
-Install skills once at the user level. Any project opened on your machine can access the skills without adding files to the project repository:
-
 ```bash
-# Preview links
+# Preview no-write
 python3 scripts/install_skills.py --bundle engineering-core --global --check
-
-# Install as symlinks into ~/.agents/skills
-python3 scripts/install_skills.py --bundle engineering-core --global
-```
-
-To link into another runtime directory (e.g. `~/.codex/skills/`):
-
-```bash
-python3 scripts/install_skills.py --bundle feature-delivery --target ~/.codex/skills --global
-```
-
----
-
-## 2. Project-Local Installation (When Repository Needs to Self-Contain)
-
-Copy specific skills or bundles directly into a project's `.agents/skills` directory:
-
-```bash
-# Preview copy
 python3 scripts/install_skills.py --bundle feature-delivery --project /path/to/project --check
 
-# Copy skills
+# Install
+python3 scripts/install_skills.py --bundle engineering-core --global
 python3 scripts/install_skills.py --bundle feature-delivery --project /path/to/project
-```
 
-This creates:
-```text
-/path/to/project/.agents/skills/
-├── common-workflow-feature-delivery/SKILL.md
-├── common-foundation-requirements-analysis/SKILL.md
-├── common-foundation-task-planning/SKILL.md
-├── common-engineering-testing/SKILL.md
-└── common-engineering-code-review/SKILL.md
-```
+# Custom target
+python3 scripts/install_skills.py --bundle feature-delivery --target ~/.codex/skills --global
 
----
-
-## 3. Bundles Overview
-
-List available bundles:
-
-```bash
+# List bundles
 python3 scripts/install_skills.py --list-bundles
 ```
 
-| Bundle | Purpose |
-| --- | --- |
-| `portable-agent-baseline` | Basic context, recovery, requirements, and onboarding |
-| `engineering-core` | Implementation, testing, debugging, review, and git |
-| `feature-delivery` | Full lifecycle for building features |
-| `bug-fixing` | Reproducing, fixing, regression-testing defects |
-| `research-decision` | Evidence-backed trade-offs and tech selection |
-| `data-analysis` | End-to-end data validation and reproducible analysis |
-| `personal-python` | Ryan's Python backend foundation and API practices |
+`--project` copies; `--global` symlinks; `--target` overrides destination. `--check` no write. **Conflict-safe:** normal sync stops when selected target exists; existing non-symlinks aren't overwritten; symlinks pointing elsewhere aren't replaced. `--check` reports conflicts. Remove/replace existing target only after explicit confirmation. `scripts/sync_skills.py` doesn't exist; use `scripts/install_skills.py`. `scripts/install_skills.py` doesn't generate `.skill-catalog.json`; don't claim it does.
 
----
+Project example after `feature-delivery`:
 
-## 4. Shared Project Context
+```text
+<project>/.agents/skills/
+├── common-workflow-feature-delivery/
+├── common-foundation-requirements-analysis/
+├── common-foundation-task-planning/
+├── common-engineering-testing/
+└── common-engineering-code-review/
+```
 
-In consumer projects, copy [`templates/CONTEXT.md`](../templates/CONTEXT.md) into the project root. This file provides project-specific domain vocabulary, architecture boundaries, test seams, and artifact locations without polluting portable skills.
+## Bundles
+
+`data/bundles.json` source truth. `feature-delivery` currently **5 skills**. See [bundles](bundles.md). No consumer copy of skill content.
+
+## Shared context
+
+Copy `templates/CONTEXT.md` into consumer project root. Provides domain vocabulary, architecture boundaries, test seams, artifact locations without polluting portable skills. Project instructions stay outside installed skills.
+
+## Recovering an installation mismatch
+
+1. Inspect `git status` + consumer `.agents/skills`.
+2. Run `scripts/install_skills.py ... --check`.
+3. Distinguish project-local vs user-level vs bundled skills.
+4. Preserve user-managed files; don't overwrite.
+5. Move/remove known generated target only after confirmation; then re-run safe sync.
+6. Re-check runtime discovery + representative task.
+
+## Adapter lifetime and ownership
+
+Installed adapters generated from source. Source repo canonical; consumer project instructions outside `.agents/skills`. For `--project`, re-sync after source changes; don't edit installed copy as source. For `--global`, symlink source updates visible if runtime follows symlinks, but verify. Removed source not automatically cleaned; no removed-source cleanup promised. Conflicting target stops sync. Preserve user-managed entries.

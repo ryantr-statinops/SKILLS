@@ -1,59 +1,37 @@
 # Codex CLI integration
 
-Codex CLI discovers project skills from `.agents/skills/` (or user-level `~/.agents/skills/`).
+Codex discovers project skills `.agents/skills/`; user-level `~/.agents/skills/`. Canonical `.agents/skills`, not `.agent/skills`. `scripts/install_skills.py`.
 
-## Install selected skills
+## Install selected
 
-Run these commands from the SKILLS checkout. Replace the project path with the
-consumer repository:
+From SKILLS checkout; replace consumer path:
 
 ```bash
-# Preview
+# Preview no-write
 python3 scripts/install_skills.py --bundle feature-delivery --project /path/to/project --check
 
-# Install directly into <project>/.agents/skills
+# Copy into <project>/.agents/skills
 python3 scripts/install_skills.py --bundle feature-delivery --project /path/to/project
-```
 
-Or install globally as symlinks into `~/.agents/skills/`:
-
-```bash
+# Global symlinks
 python3 scripts/install_skills.py --bundle feature-delivery --global
 ```
 
-## Verify local discovery
+`feature-delivery` **5 skills**. Conflict-safe: `--check` no write; normal sync stops existing target; not overwrite; confirm remove. Installed adapter hyphenated ID. `scripts/sync_skills.py` doesn't exist.
 
-In the project, record the CLI version and inspect model-visible prompt inputs:
+## Verify local discovery
 
 ```bash
 codex --version
 codex debug prompt-input "Inspect the installed skills"
 ```
 
-`debug prompt-input` prints JSON without starting a model turn. Confirm the
-project skill appears in the skill list and that its root/location points under
-`.agents/skills/`. This proves local prompt construction exposed the skill
-metadata; it does not prove the model selected, loaded, or followed the skill.
-The output may also include user-level and bundled skills, so distinguish their
-roots from project-local entries.
+`debug prompt-input` prints JSON no model turn. Confirm project skill + root/location under `.agents/skills`. Local prompt construction only; not model selected/loaded/followed. Output includes user-level + bundled; distinguish roots. No `codex exec` static discovery; starts agent + may contact provider. Behavior needs representative + boundary task through normal Codex when model use authorized; inspect artifacts; report CLI version/task/output/limits. Model-free doesn't prove reasoning quality.
 
-To assess behavior, run a representative task and a nearby boundary task through
-the normal Codex CLI only when model use is authorized. Inspect the resulting
-artifacts and report the CLI version, task, output, and limits of the run. Do not
-use `codex exec` as part of a static discovery check: it starts an agent session
-and may contact a configured provider.
+## Updating + recovery
 
-## Updating and recovery
-
-Edit or update skills in `.agent/skills/`; existing native symlinks expose those
-changes. Re-run the exporter after adding skills. It is additive: removed source
-skills leave links behind, and existing conflicts are not overwritten. Preserve
-user-managed files in `.agents/skills/`; see [integration recovery](integration.md#recovering-an-installation-mismatch)
-and [adapter lifecycle](integration.md#adapter-lifetime-and-ownership).
+Don't edit installed copy as source. Update source skill; for `--project` re-sync after confirming/removing generated target; for `--global` verify symlink source. Re-run safe check. Removed source not automatically cleaned. Existing conflicts not overwritten. Preserve user-managed `.agents/skills`. See [integration recovery](integration.md#recovering-an-installation-mismatch) + [adapter lifecycle](integration.md#adapter-lifetime-and-ownership). `.agent/skills` not canonical. Re-run exporter equivalent `scripts/install_skills.py`, not nonexistent exporter. Correct links manually; markdown file check not anchor check.
 
 ## Evidence boundary
 
-Record the Codex CLI version, project root, skill path shown by
-`debug prompt-input`, and whether any model-backed task was run. A local prompt
-inspection is static discovery evidence only. Codex does not expose a
-model-free command that proves skill reasoning quality.
+Record Codex version, project root, skill path from `debug prompt-input`, whether model-backed task ran. Static discovery only static evidence. No model-free command proves skill reasoning quality.

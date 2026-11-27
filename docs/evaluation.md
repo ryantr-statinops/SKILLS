@@ -1,64 +1,50 @@
 # Skill evaluation
 
-Evaluation checks whether a skill improves agent behavior on realistic tasks,
-not merely whether its Markdown looks complete.
+Evaluation checks skill improves agent behavior on realistic tasks, not only Markdown completeness. Static checks not evidence agent followed skill/produced correct work. Behavioral evidence only tasks actually run, runtime/version, outputs.
 
 ## Minimum evaluation set
 
-For every new or changed skill, define:
+Every new/changed skill:
 
-1. A representative task that should activate the skill.
-2. A nearby boundary task that should not activate it.
-3. Expected behavior and observable output.
-4. Failure conditions and safe handling.
-5. The validation command or review criteria.
+1. representative task activates skill;
+2. nearby boundary task doesn't;
+3. expected observable output;
+4. failure conditions + safe handling;
+5. validation command/review criteria.
 
-The repository format for these cases is defined in the
-[evaluation case contract](evaluation-contract.md). Common and personal
-skills keep the case beside the skill in `examples/evaluation.md`.
+Format [evaluation contract](evaluation-contract.md). Common, personal, meta keep `examples/evaluation.md` beside skill when required. Harness includes every `SKILL.md` common/personal/meta regardless promotion. `docs/metadata` generated registry references checked.
 
-## Evaluation levels
+## Levels
 
 ### Structural
-
-Run:
 
 ```bash
 python3 scripts/validate_skills.py
 ```
 
-This checks names, frontmatter, placeholders, resource directories, and local
-Markdown links.
+Checks names, frontmatter, placeholders, resource directories, local links. `scripts/check_markdown_links.py` separate; doesn't check anchors.
 
 ### Behavioral
 
-Run the representative task with the skill available. Confirm that the agent
-uses the intended procedure, loads only relevant resources, handles failure
-conditions, and produces the expected result.
+Run representative with skill available. Confirm intended procedure, relevant resources only, failure handling, expected result.
 
 ### Boundary
 
-Run the nearby task that should not activate the skill. Confirm that the skill's
-description and exclusions prevent misrouting.
+Run nearby out-of-scope task. Confirm description/exclusions prevent misrouting. Router selects child + not unrelated; leaf output; draft defer. Unrelated keyword doesn't activate.
 
-## Regression practice
+## Regression
 
-Keep useful evaluation cases when a skill is revised. A change to activation,
-scope, procedure, or expected output should trigger the representative and
-boundary checks again.
+Keep useful cases. Activation/scope/procedure/output change rerun representative + boundary. Fix narrowest demonstrated problem; no broad rules from single speculative failure. No LLM self-grading or arbitrary command execution. Allowlisted validation commands rejected unless match; skipped default; `--run-commands` explicit. No arbitrary Markdown commands. See [harness](evaluation-harness.md).
 
-Fix the narrowest demonstrated problem. Do not add broad rules based on a
-single speculative failure.
+## CLI
 
-## Common skill evaluation
+```bash
+python3 scripts/run_evaluations.py
+python3 scripts/run_evaluations.py --format json
+python3 scripts/run_evaluations.py --output /tmp/skill-evaluation.md
+python3 scripts/check_observable_evaluations.py --format json
+```
 
-Each common and personal skill keeps its representative and boundary scenarios
-in `examples/evaluation.md`. These scenarios test routing intent and expected
-behavior; they are not a substitute for running the task in a real project.
+## Codex common
 
-For Codex, additionally verify that:
-
-- `common/README.md` routes the task to the intended skill.
-- `common/CODEX.md` is read as runtime guidance without leaking into portable skill semantics.
-- The selected `SKILL.md` is loaded before conditional resources.
-- The portable procedure still makes sense outside Codex.
+Each `examples/evaluation.md`. `common/README.md` routes; `common/CODEX.md` runtime guidance not portable; selected `SKILL.md` before resources; portable outside Codex. Codex behavioral evidence only tasks actually run.

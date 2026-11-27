@@ -1,84 +1,47 @@
 # Compatibility
 
-`SKILLS` stores skills as plain Markdown plus optional local resources. This
-makes the library portable, but each agent runtime may differ in discovery,
-directory conventions, symlink support, and script execution. Codex and
-OpenCode now have verified discovery layouts; only Codex has an optional model
-evaluation job.
+Plain Markdown + optional local resources; portable. Runtimes differ discovery, directory conventions, symlinks, script execution.
 
-## Baseline assumptions
+## Baseline
 
-- A skill is a directory containing `SKILL.md`.
-- The runtime can read Markdown and follow relative links.
-- Optional resources remain next to the skill entrypoint.
-- Project-specific instructions live in the selected agent directory's `AGENTS.md`.
-- Scripts are not trusted automatically; review them before execution.
+- Skill directory with `SKILL.md`.
+- Runtime can read Markdown + relative links.
+- Optional resources next to entrypoint.
+- Project instructions selected agent directory `AGENTS.md`.
+- Scripts not trusted automatically; review before execution.
+- Skills don't require runtime-specific metadata beyond optional documented fields.
+- Keep executable helpers self-contained + prerequisites.
+- Separate portable procedure from personal/runtime integration.
 
-## Integration compatibility
+## Integration check
 
-When integrating into another runtime, verify:
+Verify:
 
-1. Which directory the runtime scans for agent instructions and skills.
-2. Whether the runtime recognizes `SKILL.md` and YAML frontmatter.
-3. Whether nested `references/`, `scripts/`, `examples/`, and `assets/` paths are accessible.
-4. Whether scripts need a particular interpreter or dependency.
-5. How project instructions and skill instructions are prioritized.
+1. runtime scans which directory;
+2. recognizes `SKILL.md` + YAML;
+3. nested `references/`, `scripts/`, `examples/`, `assets/` accessible;
+4. script interpreter/dependencies;
+5. project/skill instruction priority.
 
-Use `.agents/skills/` as the standard discovery layout for modern runtimes.
-Generate or link skills directly with:
-
-```bash
-python3 scripts/install_skills.py --bundle feature-delivery --project /path/to/project
-```
-
-The adapter uses symlinked skill directories so portable relative resources
-remain valid. A runtime-specific project may map the same payload to another
-directory, such as `.claude/` or `.codex/`, but that adapter must be verified
-before it is treated as supported.
-
-The directory name alone does not prove that a runtime will discover skills.
-Record the tested runtime version, layout, and representative task result.
-
-Do not claim runtime support until a representative task has been tested in
-that runtime.
-
-## Portability rules
-
-- Prefer relative links and standard Markdown.
-- Avoid runtime-specific metadata unless documented as optional.
-- Keep executable helpers self-contained and state their prerequisites.
-- Separate portable procedure from personal or runtime-specific integration.
+Canonical modern layout `.agents/skills/<hyphenated-id>/SKILL.md`; user-level `~/.agents/skills`. Not `.agent/skills`. Installed adapter name hyphenated canonical ID; supporting resources remain. Runtime support requires tested version, layout, representative task, validation result; directory name not proof. Don't claim runtime support until tested. `scripts/install_skills.py`.
 
 ## Change compatibility contract
 
-Changes to the library must preserve existing consumer integrations unless a
-breaking change is explicitly documented.
+Preserve existing consumer integrations unless breaking change documented.
 
-- The generated skill registry is schema version 3. Discovery reads versions 1–3;
-  old records without `requires` default to `[]`, while present dependency lists
-  are retained and validated. Sync writes the current schema on the next update.
-- Other additive metadata fields require a migration path or documented default.
-- Future registry schema changes must update the schema version and preserve a
-  compatibility reader when older consumers can be supported safely.
-- Sync changes must preserve the selected target layout, report conflicts, and
-  provide a check or dry-run path before overwriting files.
-- A runtime adapter must not change the portable meaning of a `SKILL.md`.
-- Runtime support claims require a fixture, tested layout, runtime version,
-  representative task, and validation result.
+- Registry schema version **3**. Discovery reads **1–3**; old records without `requires` default `[]`; present dependency lists retained + validated. Sync writes current. Breaking schema changes update version + compatibility reader when safe.
+- Additive metadata needs migration/default.
+- Adapter must not change portable meaning.
+- **Safe sync:** `--check` no write; normal sync stops when target exists; no overwrite; confirm removal; preserve selected target layout + conflicts. `scripts/install_skills.py`.
+- Runtime support claims require fixture, tested layout, runtime version, representative task, validation result.
+- `.skill-catalog.json` only if provided; schema 1–3; don't claim installer generates.
 
-Record confirmed runtime behavior here as evidence accumulates. Keep uncertain
-assumptions explicit instead of presenting them as a universal standard.
+## Verified runtime matrix
 
-| Runtime | Layout | Verification | Scope of guarantee |
-| --- | --- | --- | --- |
-| Codex CLI 0.160.0 ([guide](runtime-codex.md)) | `.agents/skills/<path-id>/SKILL.md` | `codex debug prompt-input` fixture run: all 6 `feature-delivery` skills visible under project root `r5` | local prompt construction only; no model selection or behavior claim |
-| OpenCode 1.18.35 ([guide](runtime-opencode.md)) | `.agents/skills/<path-id>/SKILL.md` | `opencode debug skill --pure` fixture run: all 6 `feature-delivery` skills with project `location` | discovery and frontmatter loading; no model quality claim |
-| oh-my-pi `omp` 18.6.3 ([guide](runtime-omp.md)) | `.agents/skills/<path-id>/SKILL.md` | `omp skill list` fixture run: all 6 `feature-delivery` skills with project `filePath` | local discovery only; repeated display names namespace, no behavior claim |
+| Runtime | Layout | Verification | Scope |
+|---|---|---|---|
+| Codex CLI 0.160.0 ([guide](runtime-codex.md)) | `.agents/skills/<hyphenated-id>/SKILL.md` | `codex debug prompt-input` fixture: all 5 `feature-delivery` skills visible under project root `r5` | local prompt construction only; no model selection/behavior |
+| OpenCode 1.18.35 ([guide](runtime-opencode.md)) | `.agents/skills/<hyphenated-id>/SKILL.md` | `opencode debug skill --pure` fixture: all 5 `feature-delivery` skills with project `location` | discovery + frontmatter loading; no model quality |
+| oh-my-pi `omp` 18.6.3 ([guide](runtime-omp.md)) | `.agents/skills/<hyphenated-id>/SKILL.md` | `omp skill list` fixture: all 5 `feature-delivery` skills with project `filePath` | local discovery only; repeated display names namespace; no behavior |
 
-## Ecosystem research
-
-The current comparison and adoption decisions are recorded in the
-[ecosystem matrix](ecosystem-matrix.md) and
-[ecosystem decisions](ecosystem-decisions.md). They are research inputs, not
-runtime support claims. A runtime becomes supported only after a fixture,
-version, layout, representative task, and validation result are recorded.
+CI Codex action version separate. Runtime behavior changes; re-verify. Ecosystem research not support claim.
