@@ -2,16 +2,16 @@
 
 ## Scope
 
-This review covers the 23 common skills currently in the repository. It
+This review covers the 16 common skills currently in the repository. It
 validates routing artifacts, portable entrypoints, evaluation scenarios, and
 Codex-specific guidance without executing external project mutations.
 
 ## Results
 
-- 23 common `SKILL.md` files discovered.
-- 23 representative/boundary evaluation files discovered.
+- 16 common `SKILL.md` files discovered.
+- 16 representative/boundary evaluation files discovered.
 - Every common skill has `When to use`, `When not to use`, workflow or decision guidance, failure handling, expected output, and validation.
-- `common/README.md` provides quick routing links for all 23 skills.
+- `common/README.md` provides quick routing links for common skills.
 - `common/CODEX.md` keeps Codex-only guidance outside portable skills.
 - `docs/skill-index.md` and `data/skills.json` are synchronized.
 - Duplicate names and canonical IDs are rejected by the validator.
@@ -36,9 +36,9 @@ Both commands pass for the current repository.
 | Investigate a reproducible failure | `common/engineering/debugging` |
 | Design tests for changed behavior | `common/engineering/testing` |
 | Research a technical question | `common/research/research` |
-| Compare technical options | `common/research/comparison` |
+| Compare technical options | `common/workflow/research-decision` |
 | Review a security boundary | `common/security/security-review` |
-| Prepare a release | `common/delivery/release` |
+| Prepare a release | No common release skill; use `docs/ci-release.md` |
 
 Unrelated requests should not activate a common skill solely because they
 contain a matching technology keyword.
