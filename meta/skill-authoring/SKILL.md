@@ -63,11 +63,3 @@ Run `python3 scripts/validate_skills.py`, the relevant evaluation cases, and
 `python3 scripts/generate_skill_index.py --check` from the repository root.
 Use [the evaluation checklist](references/evaluation-checklist.md) when assessing
 representative and boundary behavior.
-
-## Agent handoff
-
-- Selected when: The requested outcome is creating or changing a skill's content, boundary, resources, or metadata in this repository.
-- Do not activate when: The task only selects a skill, evaluates behavior without authoring, or implements a domain feature.
-- Expected output: A reviewed skill entrypoint and the required linked resources, evaluation case, and generated registry updates.
-- User-facing report: State the outcome and boundary encoded, files/resources changed, validation run, and remaining uncertainty.
-- Confirmation boundary: Ask before destructive lifecycle changes, external publication, or copying content with unresolved license terms.

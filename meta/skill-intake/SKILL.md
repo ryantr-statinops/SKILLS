@@ -76,11 +76,3 @@ the preference-specific extension in `personal/`.
 Record the disposition, classification, evidence, license/attribution duties,
 dependencies, migration path, and next authoring/evaluation step. Intake itself
 does not claim behavioral validation of an unauthored skill.
-
-## Agent handoff
-
-- Selected when: An external capability or demonstrated recurring workflow needs an adopt/adapt/rebuild/reject decision.
-- Do not activate when: The task only selects a skill, authors an already accepted skill, evaluates its behavior, or implements domain work.
-- Expected output: A disposition and evidence record with license, classification, dependencies, and migration obligations.
-- User-facing report: Explain the evidence, chosen disposition, attribution/migration duties, and follow-up validation.
-- Confirmation boundary: Ask before copying under uncertain license, destructive changes, external writes, publication, or irreversible acceptance.

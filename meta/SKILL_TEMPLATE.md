@@ -55,11 +55,3 @@ Read only when needed:
 ## Expected output and validation
 
 Describe the observable result and how to verify it.
-
-## Agent handoff
-
-- Selected when: State the task outcome that activates this skill.
-- Do not activate when: State the nearest boundary or competing scope.
-- Expected output: Name the observable artifact, decision, or result.
-- User-facing report: Summarize scope, result, validation, and unresolved risks.
-- Confirmation boundary: State which destructive, external, or irreversible actions require confirmation.

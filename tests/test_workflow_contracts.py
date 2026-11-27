@@ -24,7 +24,6 @@ class WorkflowContractTests(unittest.TestCase):
             "## Decision rules",
             "## Failure modes",
             "## Expected output and validation",
-            "## Agent handoff",
         )
         for name, artifact in WORKFLOWS.items():
             directory = ROOT / "common/workflow" / name
