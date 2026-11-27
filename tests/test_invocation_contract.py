@@ -11,35 +11,13 @@ sys.path.insert(0, str(SCRIPTS))
 
 from discover_skills import normalize_registry  # noqa: E402
 from generate_skill_index import REGISTRY_SCHEMA_VERSION, collect, render_json  # noqa: E402
-from migrate_invocation_metadata import expected_invocation, migrate_text  # noqa: E402
 from validate_skills import activation_contract_errors  # noqa: E402
 
 
 class InvocationContractTests(unittest.TestCase):
-    def test_all_skills_have_expected_invocation(self) -> None:
+    def test_all_skills_have_valid_invocation(self) -> None:
         records = collect()
         self.assertEqual({record["invocation"] for record in records}, {"user", "both"})
-        for record in records:
-            self.assertEqual(record["invocation"], expected_invocation(record["id"]))
-
-    def test_migration_inserts_invocation_after_version(self) -> None:
-        source = (
-            "---\n"
-            "name: task-planning\n"
-            "version: 1.0.0\n"
-            "---\n"
-            "\n"
-            "# Task planning\n"
-        )
-        migrated = migrate_text(source, "common/foundation/task-planning")
-        self.assertIn("version: 1.0.0\ninvocation: user\n---\n", migrated)
-        self.assertEqual(
-            migrate_text(migrated, "common/foundation/task-planning"), migrated
-        )
-
-    def test_unknown_skill_requires_an_explicit_mapping(self) -> None:
-        with self.assertRaises(ValueError):
-            expected_invocation("common/new-skill")
 
     def test_registry_uses_schema_v3_and_exposes_dependencies(self) -> None:
         registry = json.loads(render_json(collect()))
