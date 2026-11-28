@@ -70,5 +70,14 @@
     "boundary_skill": "personal/workflow/project-init",
     "artifact_or_validation": "settled Orca dispatch outcomes, evidence, and unresolved blockers",
     "reason": "Project initialization does not require supervised Orca workers."
+  },
+  {
+    "name": "solo-pipeline",
+    "representative_query": "solo pipeline autonomous delivery problems PR self check",
+    "expected_skill": "personal/workflow/solo-pipeline",
+    "boundary_query": "supervise Orca workers coordinate task DAG dispatch monitor wait for results",
+    "boundary_skill": "personal/workflow/orca-orchestration",
+    "artifact_or_validation": "isolated worktree, PR, transparent self-check, and consolidated report",
+    "reason": "Supervising external Orca workers belongs to orca-orchestration."
   }
 ]
