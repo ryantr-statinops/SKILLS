@@ -533,6 +533,19 @@
       "invocation": "both",
       "path": "personal/workflow/project-init/SKILL.md",
       "requires": []
+    },
+    {
+      "id": "personal/workflow/solo-pipeline",
+      "name": "solo-pipeline",
+      "description": "Execute an autonomous single-agent delivery pipeline from problem statements to merged PRs. Break problems into dependency-ordered tasks, isolate each in its own branch or worktree, implement with tests, open PRs, self-check transparently without fake verdicts, merge safe changes, and stop with PRs open on money paths or blockers.",
+      "category": "personal",
+      "subject": "workflow",
+      "scope": "personal",
+      "status": "experimental",
+      "version": "1.0.0",
+      "invocation": "user",
+      "path": "personal/workflow/solo-pipeline/SKILL.md",
+      "requires": []
     }
   ]
 }
