@@ -20,7 +20,10 @@ Before acting on a repository task:
 6. Explain selected skills, assumptions, and confirmation boundaries when the
    task is multi-step or has material side effects.
 7. Preserve unrelated work, validate the result, and report changed files,
-   checks, risks, and next actions in user-facing language.
+   checks, risks, and next actions in user-facing language. When opening or
+   completing a Pull Request, provide the direct clickable PR link
+   (e.g. `https://github.com/ryantr-statinops/SKILLS/pull/<number>`) so the
+   maintainer can review and merge with one click.
 
 Follow the detailed lifecycle in
 [`docs/agent-operating-model.md`](docs/agent-operating-model.md).
@@ -45,5 +48,9 @@ Follow the detailed lifecycle in
 
 ## Change discipline
 
-Use focused commits with imperative Conventional Commit messages. Run the
-relevant validation and `git diff --check` before committing.
+Follow [`CONTRIBUTING.md`](CONTRIBUTING.md) for branch, PR, and commit workflows:
+branch off `main`, use short-lived branches (`feat/`, `fix/`, `docs/`, `chore/`),
+and open PRs instead of pushing directly to `main`. Use focused commits with
+imperative Conventional Commit messages. Run the relevant validation and
+`git diff --check` before committing. When completing a PR, always supply the
+clickable PR link in the final response.
